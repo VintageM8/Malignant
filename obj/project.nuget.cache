@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Yi0QXMuT+Ll3lfGZu5vX3acYdmADhYx8FowwWBvc1rPWSTtK5JvlDay/gWETfILT4t+ABobNJZVzewnCyDvn/Q==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ta922\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\Malignant\\Malignant.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ta922\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
+  ],
+  "logs": []
+}
