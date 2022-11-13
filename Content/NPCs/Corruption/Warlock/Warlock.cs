@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Malignant.Content.NPCs.Corruption.Warlock
 {
@@ -20,8 +21,8 @@ namespace Malignant.Content.NPCs.Corruption.Warlock
         }
         public override void SetDefaults()
         {
-            NPC.width = 120;
-            NPC.height = 120;
+            NPC.width = 65;
+            NPC.height = 65;
             NPC.damage = 60;
             NPC.defense = 24;
             NPC.lifeMax = 40500;
@@ -38,11 +39,20 @@ namespace Malignant.Content.NPCs.Corruption.Warlock
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            for (int num331 = 0; num331 < 20; num331++)
+            /*
+            for (int num331 = 0; num331 < 20; num331++)s
             {
                 DustHelper.DrawCircle(NPC.Center, DustID.ChlorophyteWeapon, 2, 4, 4, 1, 2, nogravity: true);
             }
-
+            */
+            DustHelper.NewDustCircular(
+                    NPC.Center,
+                    18,
+                    i => Main.rand.NextFromList(DustID.Blood, DustID.t_Flesh, DustID.Bone),
+                    Main.rand.Next(7, 11),
+                    minMaxSpeedFromCenter: (2, 7),
+                    dustAction: dust => dust.scale = Main.rand.NextFloat(0.85f, 1.7f)
+                    );
         }
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
@@ -66,8 +76,6 @@ namespace Malignant.Content.NPCs.Corruption.Warlock
         public override void AI()
         {
             Player player = Main.player[NPC.target];
-
-
 
             //Despawning stuff
             if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
@@ -544,6 +552,31 @@ namespace Malignant.Content.NPCs.Corruption.Warlock
             {
                 NPC.frame.Y = 0; 
             }
+        }
+
+        Vector2 lastPosNoDash = Vector2.Zero;
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            float velLengthSQ = NPC.velocity.LengthSquared();
+            if (NPC.ai[0] == 4 && velLengthSQ > 0f)
+            {
+                Vector2[] positions = new Vector2[15];
+                float diff = (NPC.Center - lastPosNoDash).Length() / positions.Length;
+                Vector2 dir = NPC.Center.DirectionTo(lastPosNoDash);
+                for (int i = 1; i < positions.Length; i++)
+                {
+                    positions[i] = NPC.Center + dir * diff * i;
+                }
+
+                NPC.EasyDrawAfterImage(drawColor * velLengthSQ * 0.5f, positions);
+            }
+            else
+            {
+                lastPosNoDash = NPC.Center;
+            }
+
+            NPC.EasyDrawNPC(drawColor, origin: new Vector2(80, 70));
+            return false;
         }
     }
 }

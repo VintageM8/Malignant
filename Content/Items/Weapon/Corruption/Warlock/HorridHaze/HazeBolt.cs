@@ -11,6 +11,8 @@ namespace Malignant.Content.Items.Weapon.Warlock.HorridHaze
 {
     public class HazeBolt : ModProjectile
     {
+        public override string Texture => "Terraria/Images/Item_0";
+
         public override void SetStaticDefaults()
         {
             base.DisplayName.SetDefault("Haze Bolt");

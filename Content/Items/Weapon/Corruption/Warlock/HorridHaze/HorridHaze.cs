@@ -9,6 +9,8 @@ namespace Malignant.Content.Items.Weapon.Warlock.HorridHaze
 
     public class HorridHaze : ModItem
     {
+        public override string Texture => "Terraria/Images/Item_0";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Horrid Haze");
