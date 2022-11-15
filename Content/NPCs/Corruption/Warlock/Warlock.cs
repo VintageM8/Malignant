@@ -575,7 +575,7 @@ namespace Malignant.Content.NPCs.Corruption.Warlock
                 lastPosNoDash = NPC.Center;
             }
 
-            NPC.EasyDrawNPC(drawColor, origin: new Vector2(80, 70));
+            NPC.EasyDraw(drawColor, origin: new Vector2(80, 70));
             return false;
         }
     }

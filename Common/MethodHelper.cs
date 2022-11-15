@@ -8,7 +8,7 @@ using Terraria.ID;
 
 namespace Malignant.Common
 {
-    public static class MethodHelper
+    public static partial class MethodHelper
     {
         public static void SlowRotation(this ref float currentRotation, float targetAngle, float speed)
         {
@@ -121,60 +121,15 @@ namespace Malignant.Common
             return projectiles;
         }
 
-        public static int WhoAmIType(this Projectile projectile)
+        public static T[] ForEach<T>(this T[] arr, Func<T, T> predicate)
         {
-            int whoAmI = 0;
-            foreach (Projectile proj in Main.projectile)
+            T[] values = new T[arr.Length];
+            for (int i = 0; i < arr.Length; i++)
             {
-                if (proj.whoAmI == projectile.whoAmI)
-                    break;
-                if (proj.type == projectile.type)
-                    whoAmI++;
+                values[i] = predicate(arr[i]);
             }
 
-            return whoAmI;
-        }
-        
-        public static void EasyDrawNPC(this NPC npc, Color color, Vector2? position = null, Vector2? origin = null, SpriteEffects? spriteEffects = null)
-        {
-            Texture2D tex = TextureAssets.Npc[npc.type].Value;
-
-            Vector2 drawOrigin = origin ?? (npc.frame.Size() * 0.5f);
-
-            Main.spriteBatch.Draw(
-                tex,
-                (position ?? npc.Center) - Main.screenPosition,
-                npc.frame,
-                color,
-                npc.rotation,
-                drawOrigin,
-                npc.scale,
-                spriteEffects ?? (npc.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None),
-                0
-                );
-        }
-
-        public static void EasyDrawAfterImage(this NPC npc, Color? color = null, Vector2[] oldPos = null, Vector2? origin = null, SpriteEffects? spriteEffects = null)
-        {
-            Texture2D tex = TextureAssets.Npc[npc.type].Value;
-
-            Vector2[] positions = oldPos ?? npc.oldPos;
-            for (int i = 0; i < positions.Length; i++)
-            {
-                Vector2 position = positions[i];
-
-                Main.spriteBatch.Draw(
-                    tex,
-                    position - Main.screenPosition,
-                    npc.frame,
-                    (color ?? Color.White) * ((float)(positions.Length - (i + 1)) / positions.Length),
-                    npc.rotation,
-                    origin ?? npc.frame.Size() * 0.5f,
-                    npc.scale,
-                    spriteEffects ?? (npc.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None),
-                    0
-                );
-            }
+            return values;
         }
     }
 }
