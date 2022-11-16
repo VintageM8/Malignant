@@ -43,17 +43,23 @@ namespace Malignant.Content.NPCs.Crimson.Heart
         int moveSpeedY = 0;
         float HomeY = 100f;
 
+         public override float SpawnChance(NPCSpawnInfo spawnInfo) => spawnInfo.Player.ZoneCrimson && spawnInfo.Player.ZoneOverworldHeight ? .075f : 0f;
+
         public override void AI()
         {
             NPC.spriteDirection = NPC.direction;
             Player target = Main.player[NPC.target];
             float distance = NPC.DistanceSQ(target.Center);
+            bool expertMode = Main.expertMode;
             if (distance < 200 * 200)
             {
                 if (!aggroed)
                     SoundEngine.PlaySound(SoundID.Zombie53, NPC.Center);
                 aggroed = true;
             }
+
+            /*if (Main.netMode != NetmodeID.Server && Main.rand.Next(60) == 0)
+                SoundEngine.PlaySound(new SoundStyle("Malignant/Assets/Sounds/HeartbeatFx"), NPC.position);*/
 
             if (!aggroed)
             {
@@ -73,6 +79,7 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                     NPC.netUpdate = true;
                 }
                 NPC.velocity.Y = MathHelper.Clamp(NPC.velocity.Y + 0.009f * NPC.localAI[1], -.25f, .25f);
+
             }
             else
             {
@@ -103,6 +110,14 @@ namespace Malignant.Content.NPCs.Crimson.Heart
 
                 if (NPC.ai[0] >= 720)
                     NPC.ai[0] = 0;
+
+                Vector2 velocity = Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2) * new Vector2(5f, 3f);
+                int damage = Main.expertMode ? 12 : 18;
+                int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X - 10, NPC.Center.Y - 10, velocity.X, velocity.Y, ModContent.ProjectileType<BloodSpurt>(), damage, 0.0f, Main.myPlayer, 0.0f, NPC.whoAmI);
+                Main.projectile[p].hostile = true;
+
+                NPC.ai[0] = 0;
+                NPC.netUpdate = true;
             }
 
             Lighting.AddLight((int)(NPC.Center.X / 16f), (int)(NPC.Center.Y / 16f), 0.122f, .5f, .48f);
