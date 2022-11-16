@@ -25,8 +25,6 @@ namespace Malignant.Content.NPCs.Crimson.Heart
             NPC.damage = 25;
             NPC.HitSound = SoundID.NPCHit2;
             NPC.DeathSound = SoundID.NPCDeath2;
-            NPC.buffImmune[BuffID.Poisoned] = true;
-            NPC.buffImmune[BuffID.Venom] = true;
             NPC.buffImmune[BuffID.Confused] = true;
             NPC.value = 1200f;
             NPC.knockBackResist = 0.75f;
