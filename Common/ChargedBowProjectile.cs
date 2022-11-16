@@ -41,6 +41,7 @@ namespace Malignant.Common
             Projectile.tileCollide = false;
             Projectile.timeLeft = 9999;
             Projectile.netImportant = true;
+            Projectile.extraUpdates = 1;
 
             SetNewDefaults();
         }
@@ -49,36 +50,38 @@ namespace Malignant.Common
         public virtual int ShootProjectileCount => 1;
         public override void OnSpawn(IEntitySource source)
         {
+            if (Main.myPlayer != Player.whoAmI)
+                return;
+
+            int ammoItemType = (source as EntitySource_ItemUse_WithAmmo)?.AmmoItemIdUsed ?? ItemID.None;
+            Item ammoItem = ammoItemType != ItemID.None ? ContentSamples.ItemsByType[ammoItemType] : null;
+
             int projType = ShootProjectileType;
 
             EntitySource_ItemUse_WithAmmo itemSource = source as EntitySource_ItemUse_WithAmmo;
 
             if (projType == ProjectileID.None)
             {
-                if (itemSource is not null)
-                {
-                    projType = ContentSamples.ItemsByType[itemSource.AmmoItemIdUsed].shoot;
-                }
-                else
-                {
-                    // Throw error or something
-                }
+                projType = ammoItem?.shoot ?? ProjectileID.None;
             }
-
+            
+            
             projectiles = new Projectile[ShootProjectileCount];
             for (int i = 0; i < ShootProjectileCount; i++)
             {
-                Projectile proj = Projectile.NewProjectileDirect(source, Projectile.Center, Vector2.Zero, projType, itemSource?.Item.damage ?? 0, itemSource?.Item.knockBack ?? 0, Player.whoAmI);
+                Projectile proj = Projectile.NewProjectileDirect(source, Projectile.Center, Vector2.Zero, projType, (itemSource?.Item.damage + (ammoItem?.damage ?? 0)) ?? 0, itemSource?.Item.knockBack ?? 0, Player.whoAmI);
                 proj.GetGlobalProjectile<GlobalChargingProjectile>().IsBeingCharged = true;
+                proj.friendly = false;
                 projectiles[i] = proj;
             }
-        }
+            
+        } 
 
         public override bool ShouldUpdatePosition() => false;
 
-        public virtual int ChargeFramesMax => 50;
-        public virtual int ShootFramesMax => 4;
-        public virtual int PostShootFramesMax => 5;
+        public virtual int ChargeFramesMax => 100;
+        public virtual int ShootFramesMax => 6;
+        public virtual int PostShootFramesMax => 20;
 
         public Player Player => Main.player[Projectile.owner];
         public Vector2 directionToMouse;
@@ -123,6 +126,9 @@ namespace Malignant.Common
 
         public override void PostAI()
         {
+            if (Main.myPlayer != Player.whoAmI)
+                return;
+
             if (frameTimer > ChargeFramesMax)
             {
                 PostCharge();
@@ -146,17 +152,20 @@ namespace Malignant.Common
             if (!shotProjectiles)
             {
                 shotProjectiles = true;
-                Array.ForEach(projectiles, p => p.GetGlobalProjectile<GlobalChargingProjectile>().IsBeingCharged = false);
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                    Shoot(projectiles);
+
+                Array.ForEach(projectiles, p => 
+                    {
+                        p.GetGlobalProjectile<GlobalChargingProjectile>().IsBeingCharged = false;
+                        p.friendly = true;
+                        p.damage = (int)(p.damage * shootStrenght);
+                    });
+
+                SoundEngine.PlaySound(ShootSound with { Pitch = shootStrenght - 0.5f }, Projectile.Center);
+                Shoot(projectiles);
             }
         }
 
         float shootStrenght = 1f;
-        /// <summary>
-        /// Override the shooting of projectiles. Runs on singleplayer and server-side.
-        /// </summary>
-        /// <param name="projectiles"></param>
         public virtual void Shoot(Projectile[] projectiles)
         {
             projectiles[0].velocity = Projectile.rotation.ToRotationVector2() * Projectile.velocity.Length() * shootStrenght;

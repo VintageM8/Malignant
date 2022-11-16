@@ -15,7 +15,7 @@ namespace Malignant.Content.Items.Weapon.Corruption.Warlock
     {
         public override (Vector2, Vector2) StringTexturePositions => (new Vector2(3, 9), new Vector2(3, 50));
         public override int ShootProjectileType => ModContent.ProjectileType<BoeyrSkullProjectile>();
-
+        public override int StringThickness => 2;
         public override void Charge(Projectile[] projectiles)
         {
             Vector2 rotVector = Projectile.rotation.ToRotationVector2();

@@ -77,7 +77,7 @@ namespace Malignant.Content.NPCs.Norse.Zolzar
         {
             NPC.aiStyle = -1;
             NPC.width = 102;
-            NPC.height = 102;
+            NPC.height = 165;
             NPC.damage = 45;
             NPC.defense = 18;
             NPC.lifeMax = 35000;
@@ -670,6 +670,13 @@ namespace Malignant.Content.NPCs.Norse.Zolzar
                 bufferCount = 0;
             }
         }*/
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            NPC.EasyDraw(drawColor, origin: NPC.spriteDirection == 1 ? new Vector2(110, 110) : new Vector2(70, 110));
+            return false;
+        }
+
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             MalignantGlobalNPC globalnpc = NPC.GetGlobalNPC<MalignantGlobalNPC>();
@@ -694,7 +701,7 @@ namespace Malignant.Content.NPCs.Norse.Zolzar
             }
             if (!npcDashing)
             {
-                NPC.spriteDirection = factor;
+                NPC.spriteDirection = -factor;
             }
             while (npcDashing == true && NPC.spriteDirection != spriteDirectionStore)
             {

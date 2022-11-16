@@ -107,6 +107,7 @@ namespace Malignant.Content.Items.Weapon.Corruption.Warlock
             else
             {
                 Projectile.frame = 1;
+                Projectile.scale = 1;
 
                 if (!Projectile.GetGlobalProjectile<GlobalChargingProjectile>().IsBeingCharged)
                 {
@@ -117,7 +118,7 @@ namespace Malignant.Content.Items.Weapon.Corruption.Warlock
                 Projectile.spriteDirection = Projectile.direction;
             }
 
-            Projectile.alpha = (int)((float)Projectile.timeLeft / (TIME_LEFT_ONHIT * 0.1f) * 255);
+            Projectile.alpha = (int)Math.Clamp((TIME_LEFT_ONHIT * 0.3f -  Projectile.timeLeft) / (TIME_LEFT_ONHIT * 0.3f) * 255, 0, 255);
         }
 
         public override bool ShouldUpdatePosition() => !Projectile.GetGlobalProjectile<GlobalChargingProjectile>().IsBeingCharged;
@@ -168,7 +169,7 @@ namespace Malignant.Content.Items.Weapon.Corruption.Warlock
             Vector2 texDrawOrigin = Projectile.spriteDirection == -1 ? new Vector2(13, 14) : new Vector2(25, 14);
 
             Projectile.EasyDrawAfterImage(lightColor * 0.8f, Projectile.oldPos.ForEach(pos => pos + Projectile.Hitbox.Size() * 0.5f + Main.rand.NextVector2Unit() * 4), origin: texDrawOrigin);
-            Projectile.EasyDraw(lightColor * (Projectile.alpha / 255f), origin: texDrawOrigin);
+            Projectile.EasyDraw(lightColor * ((255 - Projectile.alpha) / 255f), origin: texDrawOrigin);
             return false;
         }
     }
