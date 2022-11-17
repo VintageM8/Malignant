@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -86,11 +87,11 @@ namespace Malignant.Common
         public Player Player => Main.player[Projectile.owner];
         public Vector2 directionToMouse;
         Projectile[] projectiles;
-        ref float frameTimer => ref Projectile.ai[0];
+        ref float FrameTimer => ref Projectile.ai[0];
         public sealed override void AI()
         {
             int maxFrames = ChargeFramesMax + ShootFramesMax + PostShootFramesMax;
-            if (frameTimer >= maxFrames)
+            if (FrameTimer >= maxFrames)
             {
                 Projectile.Kill();
                 return;
@@ -115,13 +116,13 @@ namespace Malignant.Common
             Player.CompositeArmStretchAmount frontAront = stringCenterPos.DistanceSQ(Projectile.Center) > 20 ? Player.CompositeArmStretchAmount.Full : Player.CompositeArmStretchAmount.Quarter;
             Player.SetCompositeArmFront(true, frontAront, Projectile.Center.DirectionTo(stringCenterPos).ToRotation() - MathHelper.PiOver2);
 
-            if (!Player.controlUseItem && frameTimer < ChargeFramesMax)
+            if (!Player.controlUseItem && FrameTimer < ChargeFramesMax)
             {
-                shootStrenght = frameTimer / maxFrames;
-                frameTimer = ChargeFramesMax;
+                shootStrenght = FrameTimer / maxFrames;
+                FrameTimer = ChargeFramesMax;
             }
 
-            frameTimer++;
+            FrameTimer++;
         }
 
         public override void PostAI()
@@ -129,7 +130,7 @@ namespace Malignant.Common
             if (Main.myPlayer != Player.whoAmI)
                 return;
 
-            if (frameTimer > ChargeFramesMax)
+            if (FrameTimer > ChargeFramesMax)
             {
                 PostCharge();
             }
@@ -190,19 +191,19 @@ namespace Malignant.Common
         
         float StringCurve(float linePosition)
         {
-            if (frameTimer >= ChargeFramesMax + ShootFramesMax)
+            if (FrameTimer >= ChargeFramesMax + ShootFramesMax)
                 return 0f;
 
             float multiplier = 18f;
 
             float denominator;
-            if (frameTimer > ChargeFramesMax)
+            if (FrameTimer > ChargeFramesMax)
             {
-                denominator = (1f - (frameTimer - ChargeFramesMax) / ShootFramesMax) * shootStrenght;
+                denominator = (1f - (FrameTimer - ChargeFramesMax) / ShootFramesMax) * shootStrenght;
             }
             else
             {
-                denominator = frameTimer / ChargeFramesMax;
+                denominator = FrameTimer / ChargeFramesMax;
             }
             return MathF.Cos(linePosition * MathHelper.Pi - MathHelper.PiOver2) * denominator * multiplier;
         }
@@ -245,5 +246,23 @@ namespace Malignant.Common
     {
         public override bool InstancePerEntity => true;
         public bool IsBeingCharged { get; set; }
+    }
+
+    public class GlobalChargingItem : GlobalItem
+    {
+
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            tooltips.ForEach(t => Main.NewText(t.Name));
+
+            if (ContentSamples.ProjectilesByType[item.shoot].ModProjectile is ChargedBowProjectile cbp)
+            {
+                TooltipLine speedLine = tooltips.FirstOrDefault(t => t.Name == "Speed");
+                if (speedLine is not null)
+                {
+                    speedLine.Text = $"[c/f57842:{((cbp.ChargeFramesMax + cbp.ShootFramesMax + cbp.PostShootFramesMax) / cbp.Projectile.extraUpdates / 60f).ToString("F2")}s] [c/996a5f:use time]\n[c/f57842:{(cbp.ChargeFramesMax / cbp.Projectile.extraUpdates / 60f).ToString("F2")}s] [c/996a5f:max charge time]";
+                }
+            }
+        }
     }
 }
