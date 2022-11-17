@@ -118,7 +118,7 @@ namespace Malignant.Common
 
             if (!Player.controlUseItem && FrameTimer < ChargeFramesMax)
             {
-                shootStrenght = FrameTimer / maxFrames;
+                shootVelocityMultiplier = FrameTimer / maxFrames;
                 FrameTimer = ChargeFramesMax;
             }
 
@@ -137,6 +137,7 @@ namespace Malignant.Common
             else
             {
                 Charge(projectiles);
+                Array.ForEach(projectiles, p => p.netUpdate = true);
             }
         }
 
@@ -154,22 +155,22 @@ namespace Malignant.Common
             {
                 shotProjectiles = true;
 
-                Array.ForEach(projectiles, p => 
-                    {
-                        p.GetGlobalProjectile<GlobalChargingProjectile>().IsBeingCharged = false;
-                        p.friendly = true;
-                        p.damage = (int)(p.damage * shootStrenght);
-                    });
-
-                SoundEngine.PlaySound(ShootSound with { Pitch = shootStrenght - 0.5f }, Projectile.Center);
+                SoundEngine.PlaySound(ShootSound with { Pitch = shootVelocityMultiplier - 0.5f }, Projectile.Center);
                 Shoot(projectiles);
+
+                Array.ForEach(projectiles, p =>
+                {
+                    p.GetGlobalProjectile<GlobalChargingProjectile>().IsBeingCharged = false;
+                    p.friendly = true;
+                    p.netUpdate = true;
+                });
             }
         }
 
-        float shootStrenght = 1f;
+        float shootVelocityMultiplier = 1f;
         public virtual void Shoot(Projectile[] projectiles)
         {
-            projectiles[0].velocity = Projectile.rotation.ToRotationVector2() * Projectile.velocity.Length() * shootStrenght;
+            projectiles[0].velocity = Projectile.rotation.ToRotationVector2() * Projectile.velocity.Length() * shootVelocityMultiplier;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -199,7 +200,7 @@ namespace Malignant.Common
             float denominator;
             if (FrameTimer > ChargeFramesMax)
             {
-                denominator = (1f - (FrameTimer - ChargeFramesMax) / ShootFramesMax) * shootStrenght;
+                denominator = (1f - (FrameTimer - ChargeFramesMax) / ShootFramesMax) * shootVelocityMultiplier;
             }
             else
             {
@@ -250,17 +251,15 @@ namespace Malignant.Common
 
     public class GlobalChargingItem : GlobalItem
     {
-
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            tooltips.ForEach(t => Main.NewText(t.Name));
-
             if (ContentSamples.ProjectilesByType[item.shoot].ModProjectile is ChargedBowProjectile cbp)
             {
                 TooltipLine speedLine = tooltips.FirstOrDefault(t => t.Name == "Speed");
                 if (speedLine is not null)
                 {
-                    speedLine.Text = $"[c/f57842:{((cbp.ChargeFramesMax + cbp.ShootFramesMax + cbp.PostShootFramesMax) / cbp.Projectile.extraUpdates / 60f).ToString("F2")}s] [c/996a5f:use time]\n[c/f57842:{(cbp.ChargeFramesMax / cbp.Projectile.extraUpdates / 60f).ToString("F2")}s] [c/996a5f:max charge time]";
+                    speedLine.Text = $"[c/f57842:{((cbp.ChargeFramesMax + cbp.ShootFramesMax + cbp.PostShootFramesMax) / cbp.Projectile.extraUpdates / 60f).ToString("F2")}s] [c/996a5f:use time]\n" +
+                        $"[c/f57842:{(cbp.ChargeFramesMax / cbp.Projectile.extraUpdates / 60f).ToString("F2")}s] [c/996a5f:max charge time]";
                 }
             }
         }

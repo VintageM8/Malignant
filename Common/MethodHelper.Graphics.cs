@@ -11,8 +11,8 @@ namespace Malignant.Common
 {
     public partial class MethodHelper
     {
-        public static Texture2D LineTexture;
-        public static void DrawRectangle(Rectangle rectangle, Color? color = null)
+        static Texture2D LineTexture;
+        public static void DrawRectangle(this Rectangle rectangle, Color? color = null)
         {
             if (LineTexture is null)
             {
