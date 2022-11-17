@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Malignant.Common;
+using Malignant.Content.PrayerAbilities;
 
 namespace Malignant.Content.Items
 { 
@@ -24,18 +25,14 @@ namespace Malignant.Content.Items
         }
         public override bool? UseItem(Player player)
         {
-
             PrayerSystem p = player.GetModPlayer<PrayerSystem>();
-            if (p.CurrentA == PrayerSystem.AbiltyID.Sabbath)
-            {
+            if (p.currentAbility is SabbathAbility)
                 return false;
-            }
-            else
-            {
-                CombatText.NewText(new Rectangle((int)player.Center.X, (int)player.Center.Y, 50, 50), new Color(0, 200, 0), "E A SPORTS");
-                p.CurrentA = PrayerSystem.AbiltyID.Sabbath;
-                return true;
-            }
+
+            CombatText.NewText(new Rectangle((int)player.Center.X, (int)player.Center.Y, 50, 50), new Color(0, 200, 0), "E A SPORTS");
+            p.currentAbility = new SabbathAbility();
+
+            return true;
         }
     }
 }
