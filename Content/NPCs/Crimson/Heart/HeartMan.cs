@@ -58,8 +58,8 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                 aggroed = true;
             }
 
-            /*if (Main.netMode != NetmodeID.Server && Main.rand.Next(60) == 0)
-                SoundEngine.PlaySound(new SoundStyle("Malignant/Assets/Sounds/HeartbeatFx"), NPC.position);*/
+            if (Main.netMode != NetmodeID.Server && Main.rand.Next(60) == 0)
+                SoundEngine.PlaySound(new SoundStyle("Malignant/Assets/Sounds/HeartbeatFx"), NPC.position);
 
             if (!aggroed)
             {
@@ -113,7 +113,7 @@ namespace Malignant.Content.NPCs.Crimson.Heart
 
                 Vector2 velocity = Vector2.UnitY.RotatedByRandom(MathHelper.PiOver2) * new Vector2(5f, 3f);
                 int damage = Main.expertMode ? 12 : 18;
-                int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X - 10, NPC.Center.Y - 10, velocity.X, velocity.Y, ModContent.ProjectileType<BloodSpurt>(), damage, 0.0f, Main.myPlayer, 0.0f, NPC.whoAmI);
+                int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X + 10, NPC.Center.Y + 10, velocity.X, velocity.Y, ModContent.ProjectileType<BloodSpurt>(), damage, 0.0f, Main.myPlayer, 0.0f, NPC.whoAmI);
                 Main.projectile[p].hostile = true;
 
                 NPC.ai[0] = 0;
