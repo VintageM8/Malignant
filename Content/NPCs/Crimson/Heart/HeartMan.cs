@@ -59,7 +59,7 @@ namespace Malignant.Content.NPCs.Crimson.Heart
             }
 
             if (Main.netMode != NetmodeID.Server && Main.rand.Next(60) == 0)
-                SoundEngine.PlaySound(new SoundStyle("Malignant/Assets/Sounds/HeartbeatFx"), NPC.position);
+                SoundEngine.PlaySound(new SoundStyle("Malignant/Assets/SFX/HeartbeatFx"), NPC.position);
 
             if (!aggroed)
             {
