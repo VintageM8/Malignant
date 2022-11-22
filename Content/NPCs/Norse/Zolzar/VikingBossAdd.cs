@@ -183,8 +183,8 @@ namespace Malignant.Content.NPCs.Norse.Zolzar
 			Player target = Main.player[NPC.target];
 			if (AI_Timer == 0) {
 				float time = 0;
-				Vector2 npcVel = ModTargeting.LinearAdvancedTargeting(NPC.Center, target.Center, IntSpeed, DashSpeed, ref time);
-				ModTargeting.FallingTargeting(NPC, target, new Vector2(0, -28), (int)DashSpeed, ref time, ref npcVel);
+				Vector2 npcVel = MethodHelper.LinearAdvancedTargeting(NPC.Center, target.Center, IntSpeed, DashSpeed, ref time);
+				MethodHelper.FallingTargeting(NPC, target, new Vector2(0, -28), (int)DashSpeed, ref time, ref npcVel);
 				if (time > 15) DashTime = time * OverDashFactor;
 				else DashTime = 15 * OverDashFactor;
 				//if (npcVel != Vector2.Zero)
@@ -244,8 +244,8 @@ namespace Malignant.Content.NPCs.Norse.Zolzar
 				if ((AI_Timer - 120) == AddID * FollowTime && (AI_Timer - 120) > 0)
 				{
 					float time = 0;
-					Vector2 projVel = ModTargeting.LinearAdvancedTargeting(NPC.Center, target.Center, IntSpeed, 7 * 4, ref time);
-					ModTargeting.FallingTargeting(NPC, target, new Vector2(0, -28), 7 * 4, ref time, ref projVel);
+					Vector2 projVel = MethodHelper.LinearAdvancedTargeting(NPC.Center, target.Center, IntSpeed, 7 * 4, ref time);
+					MethodHelper.FallingTargeting(NPC, target, new Vector2(0, -28), 7 * 4, ref time, ref projVel);
 					Projectile.NewProjectile(NPC.GetSource_FromAI(),NPC.Center, projVel / 4, ProjectileID.CultistBossLightningOrbArc, LightningDMG, LightningKB, Main.myPlayer, projVel.ToRotation(), AI_Timer);
 				}
 

@@ -3,7 +3,7 @@ using Terraria;
 
 namespace Malignant.Common; 
 
-public class ModTargeting
+public partial class MethodHelper
 {
     public static Vector2 LinearAdvancedTargeting(Vector2 sourcepos, Vector2 targetpos, Vector2 targetvel, float shotspeed, ref float t)
     {
@@ -67,7 +67,7 @@ public class ModTargeting
             {
                 Vector2 newPos = target.Center + Yoffset + target.velocity * temp;
                 delay = (newPos - npc.position).Length() / ShotSpeed;
-                projectileVel = ModTargeting.TargetPosition(newPos, npc.Center, ShotSpeed);
+                projectileVel = TargetPosition(newPos, npc.Center, ShotSpeed);
             }
         }
     }
