@@ -2,9 +2,11 @@
 using Malignant.Content.Projectiles.Prayer;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -19,11 +21,11 @@ namespace Malignant.Content.Items.Prayer
     public class PaladinAbility : PrayerAbility
     {
         public override string Texture => base.Texture.Replace(nameof(PaladinAbility), "PrayerTest");
+        public override int Cooldown => 30;
 
-        protected override int OnUseAbility(Player player)
+        protected override void OnUseAbility(Player player, EntitySource_PrayerAbility source)
         {
-            Projectile.NewProjectile(player.GetSource_Misc("Paladin"), Main.MouseWorld + new Vector2(0, -50), new Vector2(0, 0), ModContent.ProjectileType<WindsofGod>(), 10, 0f, player.whoAmI);
-            return 10;
+            Projectile.NewProjectile(source, player.Center, player.Center.DirectionTo(Main.MouseWorld) * 21, ModContent.ProjectileType<WindsofGod>(), 45, 0f, player.whoAmI);
         }
     }
 }

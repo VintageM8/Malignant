@@ -45,7 +45,7 @@ namespace Malignant.Content.NPCs.Corruption.Warlock
                 DustHelper.DrawCircle(NPC.Center, DustID.ChlorophyteWeapon, 2, 4, 4, 1, 2, nogravity: true);
             }
             */
-            DustHelper.NewDustCircular(
+            MethodHelper.NewDustCircular(
                     NPC.Center,
                     18,
                     i => Main.rand.NextFromList(DustID.Blood, DustID.t_Flesh, DustID.Bone),
@@ -128,7 +128,7 @@ namespace Malignant.Content.NPCs.Corruption.Warlock
                                 int damage = expertMode ? 32 : 48;
                                 int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X + Main.rand.Next(-60, 60), NPC.Center.Y + Main.rand.Next(-60, 60), Main.rand.NextFloat(-5.3f, 5.3f), Main.rand.NextFloat(-5.3f, 5.3f), ModContent.ProjectileType<LeechingBlast>(), damage, 1, Main.myPlayer, 0, 0);
                                 Main.projectile[p].scale = Main.rand.NextFloat(.6f, .8f);
-                                DustHelper.DrawStar(Main.projectile[p].Center, 272, pointAmount: 6, mainSize: .9425f, dustDensity: 2, dustSize: .5f, pointDepthMult: 0.3f, noGravity: true);
+                                MethodHelper.DrawStar(Main.projectile[p].Center, 272, pointAmount: 6, mainSize: .9425f, dustDensity: 2, dustSize: .5f, pointDepthMult: 0.3f, noGravity: true);
 
                                 if (Main.projectile[p].velocity == Vector2.Zero)
                                     Main.projectile[p].velocity = new Vector2(2.25f, 2.25f);
@@ -171,7 +171,7 @@ namespace Malignant.Content.NPCs.Corruption.Warlock
                             for (int i = 0; i < (difficulty > 4 ? 1 : 7); i++)
                             {
                                 //int damage = expertMode ? 32 : 48;
-                                DustHelper.DrawStar(NPC.Center, 163, pointAmount: 163, mainSize: 2.7425f, dustDensity: 4, dustSize: .65f, pointDepthMult: 3.6f, noGravity: true);
+                                MethodHelper.DrawStar(NPC.Center, 163, pointAmount: 163, mainSize: 2.7425f, dustDensity: 4, dustSize: .65f, pointDepthMult: 3.6f, noGravity: true);
                                 SoundEngine.PlaySound(SoundID.NPCDeath55 with { PitchVariance = 0.2f }, NPC.Center);
                                 float spread = 10f * 0.0174f;
                                 double startAngle = Math.Atan2(6, 6) - spread / 2;

@@ -77,7 +77,7 @@ namespace Malignant.Content.Items.Weapon.Corruption.Warlock
 
                             Vector2 rotDir = Projectile.rotation.ToRotationVector2() * Projectile.spriteDirection;
 
-                            DustHelper.NewDustCircular(
+                            MethodHelper.NewDustCircular(
                                 Projectile.Center + rotDir * 8,
                                 2,
                                 i => Main.rand.NextFromList(DustID.Blood, DustID.Blood, DustID.Bone),
@@ -146,7 +146,7 @@ namespace Malignant.Content.Items.Weapon.Corruption.Warlock
         {
             if (!shouldStickToTarget)
             {
-                DustHelper.NewDustCircular(
+                MethodHelper.NewDustCircular(
                         Projectile.Center,
                         5,
                         i => Main.rand.NextFromList(DustID.Bone, DustID.Blood),

@@ -1,18 +1,16 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Terraria;
-using Terraria.ModLoader;
+using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
-using Malignant.Content.Buffs;
-using Malignant.Content.Projectiles.Prayer;
-using Malignant.Content.Projectiles.Enemy.Warlock;
-using System;
-using System.Collections.Generic;
+using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using System.Linq;
-using Microsoft.Xna.Framework.Graphics;
-using System.Reflection;
-using ReLogic.Content;
 
 namespace Malignant.Common
 {
@@ -24,6 +22,7 @@ namespace Malignant.Common
         public PrayerAbility SelectedAbility => SelectedAbilityIndex < Abilities.Count ? Abilities[SelectedAbilityIndex] : null;
 
         const string AbilitiesKey = "Abilities";
+        const string SelectedAbilityIndexKey = "SelectedAbilityIndex";
         public override void SaveData(TagCompound tag)
         {
             List<int> types = new List<int>();
@@ -31,6 +30,9 @@ namespace Malignant.Common
                 types.Add(ability.Type);
 
             tag[AbilitiesKey] = types;
+            tag[SelectedAbilityIndexKey] = SelectedAbilityIndex;
+
+            AbilityUseCoroutines.Clear();
         }
 
         public override void LoadData(TagCompound tag)
@@ -41,35 +43,102 @@ namespace Malignant.Common
                 foreach (int type in types)
                     Abilities.Add(PrayerContent.PrayerAbilities[type]);
             }
+
+            if (tag.ContainsKey(SelectedAbilityIndexKey))
+            {
+                SelectedAbilityIndex = tag.GetInt(SelectedAbilityIndexKey);
+            }
+        }
+
+        public override void Unload()
+        {
+            AbilityUseCoroutines.Clear();
         }
 
         public override void PostUpdate()
         {
+            ManageCooldowns();
+            ManageCoroutines();
+        }
+
+        void ManageCooldowns()
+        {
             for (int i = 0; i < SharedCooldowns.Length; i++)
                 if (SharedCooldowns[i] > 0)
                     SharedCooldowns[i]--;
-                
+
             foreach (PrayerAbility ability in Abilities)
                 if (ability.CooldownIndex >= 0)
-                    ability.Cooldown = SharedCooldowns[Math.Clamp(SelectedAbility.CooldownIndex, 0, SharedCooldowns.Length - 1)];
+                    ability.CooldownTimer = SharedCooldowns[Math.Clamp(SelectedAbility.CooldownIndex, 0, SharedCooldowns.Length - 1)];
                 else
-                    ability.Cooldown--;
+                    ability.CooldownTimer--;
+        }
+
+        public static List<Coroutine> AbilityUseCoroutines { get; private set; } = new List<Coroutine>();
+        static void ManageCoroutines()
+        {
+            for (int i = 0; i < AbilityUseCoroutines.Count; i++)
+            {
+                Coroutine routine = AbilityUseCoroutines[i];
+
+                routine.Update();
+
+                if (!routine.Active)
+                {
+                    AbilityUseCoroutines.Remove(routine);
+                }
+            }
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
-            Player player = Main.player[Main.myPlayer];
-            if (Malignant.UseAbilty.JustPressed && SelectedAbility is not null)
+            Player player = Main.LocalPlayer;
+            if (MalignantKeybingSystem.UsePrayerAbility.JustPressed && SelectedAbility is not null)
             {
-                int cooldown = SelectedAbility.TryUseAbility(player);
-                if (cooldown > 0)
+                if (SelectedAbility.TryUseAbility(player, new EntitySource_PrayerAbility(SelectedAbility)))
                 {
                     if (SelectedAbility.CooldownIndex < 0)
-                        SelectedAbility.Cooldown = cooldown;
+                        SelectedAbility.CooldownTimer = SelectedAbility.Cooldown;
                     else
-                        SharedCooldowns[Math.Clamp(SelectedAbility.CooldownIndex, 0, SharedCooldowns.Length - 1)] = cooldown;
+                        SharedCooldowns[Math.Clamp(SelectedAbility.CooldownIndex, 0, SharedCooldowns.Length - 1)] = SelectedAbility.Cooldown;
                 }
             }
+            else if (MalignantKeybingSystem.ChangePrayerAbility.JustPressed)
+            {
+                SelectedAbilityIndex++;
+                if (SelectedAbilityIndex >= Abilities.Count)
+                    SelectedAbilityIndex = 0;
+
+                // Temporary cuz no UI
+                Main.NewText(SelectedAbility?.Name  ?? "..");
+            }
+        }
+    }
+
+    public class PrayerDrawLayer /* heh （￣︶￣)　*/ : PlayerDrawLayer
+    {
+        public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.ArmOverItem);
+        protected override void Draw(ref PlayerDrawSet drawInfo)
+        {
+            /*
+            for (int i = 0; i < PrayerSystem.DrawCoroutines.Count; i++)
+            {
+                Coroutine drawCR = PrayerSystem.DrawCoroutines[i];
+
+                if (drawCR.Enumerator.Current is DrawData data)
+                {
+                    drawInfo.DrawDataCache.Add(data);
+                    Main.NewText("lol");
+                }
+
+                drawCR.Update();
+
+                if (!drawCR.Active)
+                {
+                    PrayerSystem.DrawCoroutines.Remove(drawCR);
+                }
+            }
+            */
         }
     }
 
@@ -99,6 +168,7 @@ namespace Malignant.Common
 
     public abstract class PrayerAbility
     {
+        public string Name => GetType().Name;
         public int Type => PrayerContent.PrayerAbilities.IndexOf(this);
 
         public virtual string Texture => (GetType().Namespace + "." + GetType().Name).Replace('.', '/');
@@ -109,13 +179,15 @@ namespace Malignant.Common
             AbilityTexture = ModContent.Request<Texture2D>(Texture, AssetRequestMode.ImmediateLoad).Value;
         }
 
-        public int TryUseAbility(Player player)
+        public bool TryUseAbility(Player player, EntitySource_PrayerAbility source)
         {
-            if (CanUseAbility())
+            if (CanUseAbility(player))
             {
-                return OnUseAbility(player);
+                BeginFXCouroutine(OnUseAbilityRoutine(player, source));
+                OnUseAbility(player, source);
+                return true;
             }
-            return 0;
+            return false;
         }
 
         /// <summary>
@@ -123,19 +195,46 @@ namespace Malignant.Common
         /// If it's set to something higher than 0 it will have a shared cooldown with any other abilities with the same index.
         /// </summary>
         public virtual int CooldownIndex => 0;
+        public virtual int Cooldown => 60;
 
-        int _cooldown;
-        public int Cooldown { get => _cooldown; set => _cooldown = value; }
-        public virtual bool CanUseAbility() => Cooldown <= 0;
+        int _cooldownTimer;
+        public int CooldownTimer { get => _cooldownTimer; set => _cooldownTimer = value; }
+        public virtual bool CanUseAbility(Player player) => CooldownTimer <= 0;
 
         /// <summary>
         /// This method runs when player uses the ability.
         /// </summary>
         /// <param name="player"></param>
-        /// <returns>This ability's cooldown.</returns>
-        protected virtual int OnUseAbility(Player player)
+        /// <returns>Ability's cooldown.</returns>
+        protected virtual void OnUseAbility(Player player, EntitySource_PrayerAbility source) { }
+
+        static void BeginFXCouroutine(IEnumerator enumerator)
         {
-            return 60;
+            Coroutine coroutine = new Coroutine(enumerator);
+            PrayerSystem.AbilityUseCoroutines.Add(coroutine);
+        }
+
+        /// <summary>
+        /// Allows async doing stuff.
+        /// </summary>
+        /// <returns>
+        /// <para>yield return null: Wait one frame.</para>
+        /// yield return WaitFor.Frames(n): Wait n frames.
+        /// </returns>
+        public virtual IEnumerator OnUseAbilityRoutine(Player player, EntitySource_PrayerAbility source)
+        {
+            yield return null;
+        }
+    }
+
+    public class EntitySource_PrayerAbility : IEntitySource
+    {
+        public string Context => Ability.GetType().Name;
+        public readonly PrayerAbility Ability;
+
+        public EntitySource_PrayerAbility(PrayerAbility ability)
+        {
+            Ability = ability;
         }
     }
 
