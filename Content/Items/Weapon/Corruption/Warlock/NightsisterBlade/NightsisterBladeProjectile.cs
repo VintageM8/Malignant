@@ -51,8 +51,11 @@ namespace Malignant.Content.Items.Weapon.Corruption.Warlock.NightsisterBlade
 
                 if (Main.myPlayer == Player.whoAmI)
                 {
-                    Projectile.rotation = Projectile.Center.DirectionTo(Main.MouseWorld).ToRotation();
+                    Projectile.ai[0] = Projectile.Center.DirectionTo(Main.MouseWorld).ToRotation();
+                    Projectile.netUpdate = true;
                 }
+
+                Projectile.rotation = Projectile.ai[0];
 
                 if (!Player.controlUseItem)
                 {

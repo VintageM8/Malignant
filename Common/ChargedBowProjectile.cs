@@ -10,6 +10,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace Malignant.Common
 {
@@ -48,36 +49,29 @@ namespace Malignant.Common
         }
 
         public virtual int ShootProjectileType => ProjectileID.None;
-        public virtual int ShootProjectileCount => 1;
         public override void OnSpawn(IEntitySource source)
         {
-            if (Main.myPlayer != Player.whoAmI)
-                return;
-
-            int ammoItemType = (source as EntitySource_ItemUse_WithAmmo)?.AmmoItemIdUsed ?? ItemID.None;
-            Item ammoItem = ammoItemType != ItemID.None ? ContentSamples.ItemsByType[ammoItemType] : null;
-
-            int projType = ShootProjectileType;
-
-            EntitySource_ItemUse_WithAmmo itemSource = source as EntitySource_ItemUse_WithAmmo;
-
-            if (projType == ProjectileID.None)
+            if (Player.whoAmI == Main.myPlayer)
             {
-                projType = ammoItem?.shoot ?? ProjectileID.None;
-            }
-            
-            
-            projectiles = new Projectile[ShootProjectileCount];
-            for (int i = 0; i < ShootProjectileCount; i++)
-            {
-                Projectile proj = Projectile.NewProjectileDirect(source, Projectile.Center, Vector2.Zero, projType, (itemSource?.Item.damage + (ammoItem?.damage ?? 0)) ?? 0, itemSource?.Item.knockBack ?? 0, Player.whoAmI);
-                proj.GetGlobalProjectile<GlobalChargingProjectile>().IsBeingCharged = true;
-                proj.friendly = false;
-                projectiles[i] = proj;
-            }
-            
-        } 
+                int ammoItemType = (source as EntitySource_ItemUse_WithAmmo)?.AmmoItemIdUsed ?? ItemID.None;
+                Item ammoItem = ammoItemType != ItemID.None ? ContentSamples.ItemsByType[ammoItemType] : null;
 
+                int projType = ShootProjectileType;
+
+                EntitySource_ItemUse_WithAmmo itemSource = source as EntitySource_ItemUse_WithAmmo;
+
+                if (projType == ProjectileID.None)
+                {
+                    projType = ammoItem?.shoot ?? ProjectileID.None;
+                }
+
+                ShootVelocityMultiplier = 1f;
+
+
+                arrow = Projectile.NewProjectileDirect(source, Projectile.Center, Vector2.Zero, projType, (itemSource?.Item.damage + (ammoItem?.damage ?? 0)) ?? 0, itemSource?.Item.knockBack ?? 0, Player.whoAmI);
+                arrow.netUpdate = true;
+            }
+        }
         public override bool ShouldUpdatePosition() => false;
 
         public virtual int ChargeFramesMax => 100;
@@ -86,7 +80,7 @@ namespace Malignant.Common
 
         public Player Player => Main.player[Projectile.owner];
         public Vector2 directionToMouse;
-        Projectile[] projectiles;
+        public Projectile arrow;
         ref float FrameTimer => ref Projectile.ai[0];
         public sealed override void AI()
         {
@@ -100,7 +94,11 @@ namespace Malignant.Common
             Player.heldProj = Projectile.whoAmI;
 
             if (Main.myPlayer == Player.whoAmI)
+            {
                 directionToMouse = Projectile.Center.DirectionTo(Main.MouseWorld);
+                Projectile.netUpdate = true;
+            }
+                
 
             float mouseRot = directionToMouse.ToRotation();
 
@@ -118,7 +116,7 @@ namespace Malignant.Common
 
             if (!Player.controlUseItem && FrameTimer < ChargeFramesMax)
             {
-                shootVelocityMultiplier = FrameTimer / maxFrames;
+                ShootVelocityMultiplier = FrameTimer / maxFrames;
                 FrameTimer = ChargeFramesMax;
             }
 
@@ -127,25 +125,23 @@ namespace Malignant.Common
 
         public override void PostAI()
         {
-            if (Main.myPlayer != Player.whoAmI)
-                return;
-
-            if (FrameTimer > ChargeFramesMax)
-            {
-                PostCharge();
-            }
-            else
-            {
-                Charge(projectiles);
-                Array.ForEach(projectiles, p => p.netUpdate = true);
-            }
+            if (Player.whoAmI == Main.myPlayer)
+                if (FrameTimer > ChargeFramesMax)
+                {
+                    PostCharge();
+                }
+                else
+                {
+                    Charge();
+                    arrow.netUpdate = true;
+                }
         }
 
-        public virtual void Charge(Projectile[] projectiles)
+        public virtual void Charge()
         {
-            projectiles[0].Center = StringPoint(0.5f) + Projectile.rotation.ToRotationVector2() * projectiles[0].width * 0.45f;
-            projectiles[0].rotation = Projectile.rotation;
-            projectiles[0].velocity = Vector2.Zero;
+            arrow.Center = StringPoint(0.5f) + Projectile.rotation.ToRotationVector2() * arrow.width * 0.45f;
+            arrow.rotation = Projectile.rotation;
+            arrow.velocity = Vector2.Zero;
         }
 
         public bool shotProjectiles;
@@ -155,34 +151,27 @@ namespace Malignant.Common
             {
                 shotProjectiles = true;
 
-                SoundEngine.PlaySound(ShootSound with { Pitch = shootVelocityMultiplier - 0.5f }, Projectile.Center);
-                Shoot(projectiles);
-
-                Array.ForEach(projectiles, p =>
-                {
-                    p.GetGlobalProjectile<GlobalChargingProjectile>().IsBeingCharged = false;
-                    p.friendly = true;
-                    p.netUpdate = true;
-                });
+                SoundEngine.PlaySound(ShootSound with { Pitch = ShootVelocityMultiplier - 0.5f }, Projectile.Center);
+                Shoot();
             }
         }
 
-        float shootVelocityMultiplier = 1f;
-        public virtual void Shoot(Projectile[] projectiles)
+        ref float ShootVelocityMultiplier => ref Projectile.ai[1];
+        public virtual void Shoot()
         {
-            projectiles[0].velocity = Projectile.rotation.ToRotationVector2() * Projectile.velocity.Length() * shootVelocityMultiplier;
+            arrow.velocity = Projectile.rotation.ToRotationVector2() * Projectile.velocity.Length() * ShootVelocityMultiplier;
+
+            arrow.netUpdate = true;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
         {
-            writer.Write(directionToMouse.X);
-            writer.Write(directionToMouse.Y);
+            writer.WriteVector2(directionToMouse);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            directionToMouse.X = reader.ReadSingle();
-            directionToMouse.Y = reader.ReadSingle();
+            directionToMouse = reader.ReadVector2();
         }
 
         public virtual Rectangle? DrawFrame => null;
@@ -200,7 +189,7 @@ namespace Malignant.Common
             float denominator;
             if (FrameTimer > ChargeFramesMax)
             {
-                denominator = (1f - (FrameTimer - ChargeFramesMax) / ShootFramesMax) * shootVelocityMultiplier;
+                denominator = (1f - (FrameTimer - ChargeFramesMax) / ShootFramesMax) * ShootVelocityMultiplier;
             }
             else
             {

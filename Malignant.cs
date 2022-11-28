@@ -1,3 +1,4 @@
+using Malignant.Common;
 using Terraria.ModLoader;
 
 namespace Malignant
@@ -22,6 +23,7 @@ namespace Malignant
         {
             UseAbilty = KeybindLoader.RegisterKeybind(Mod, "Use Abilty", "R");
 
+            PrayerContent.Load(Mod);
         }
     }
 }

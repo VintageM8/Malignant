@@ -18,11 +18,13 @@ namespace Malignant.Content.Items.Weapon.Corruption.Warlock
         public override int StringThickness => 1;
 
         public override int ChargeFramesMax => 70;
-        public override void Charge(Projectile[] projectiles)
+        public override void Charge()
         {
             Vector2 rotVector = Projectile.rotation.ToRotationVector2();
-            projectiles[0].Center = StringPoint(0.5f) + rotVector * 34;
-            projectiles[0].velocity = rotVector;
+            arrow.Center = StringPoint(0.5f) + rotVector * 34;
+            arrow.velocity = rotVector;
+
+            arrow.netUpdate = true;
         }
     }
 }
