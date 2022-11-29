@@ -44,7 +44,7 @@ namespace Malignant.Common
                                 string path = file.Replace(endsWith, string.Empty);
                                 string name = path.Replace(startsWith, string.Empty);
 
-                                Sounds[name] = new SoundStyle(path);
+                                Sounds[name] = new SoundStyle("Malignant/" + path);
                             }
                             
                         }

@@ -31,7 +31,7 @@ namespace Malignant.Common
         const string SelectedAbilityIndexKey = "SelectedAbilityIndex";
         public override void SaveData(TagCompound tag)
         {
-            List<int> types = new List<int>();
+            List<string> types = new List<string>();
             foreach (PrayerAbility ability in Abilities)
                 types.Add(ability.Type);
 
@@ -45,9 +45,13 @@ namespace Malignant.Common
         {
             if (tag.ContainsKey(AbilitiesKey))
             {
-                List<int> types = tag.Get<List<int>>(AbilitiesKey);
-                foreach (int type in types)
-                    Abilities.Add(PrayerContent.PrayerAbilities[type]);
+                List<string> types = tag.Get<List<string>>(AbilitiesKey);
+                foreach (string type in types)
+                {
+                    PrayerAbility ability = PrayerContent.GetAbility(type);
+                    if (ability is not null)
+                        Abilities.Add(ability);
+                }
             }
 
             if (tag.ContainsKey(SelectedAbilityIndexKey))
@@ -59,12 +63,17 @@ namespace Malignant.Common
         public override void Unload()
         {
             AbilityUseCoroutines.Clear();
+            Abilities.ForEach(ability => ability.Unload());
         }
 
+        public override void PostUpdateEquips()
+        {
+            ManageCoroutines();
+        }
+        
         public override void PostUpdate()
         {
             ManageCooldowns();
-            ManageCoroutines();
         }
 
         void ManageCooldowns()
@@ -74,10 +83,15 @@ namespace Malignant.Common
                     SharedCooldowns[i]--;
 
             foreach (PrayerAbility ability in Abilities)
-                if (ability.CooldownIndex >= 0)
-                    ability.CooldownTimer = SharedCooldowns[Math.Clamp(SelectedAbility.CooldownIndex, 0, SharedCooldowns.Length - 1)];
-                else
-                    ability.CooldownTimer--;
+            {
+                if (ability is not null)
+                {
+                    if (ability.CooldownIndex >= 0)
+                        ability.CooldownTimer = SharedCooldowns[Math.Clamp(SelectedAbility.CooldownIndex, 0, SharedCooldowns.Length - 1)];
+                    else
+                        ability.CooldownTimer--;
+                }
+            }
         }
 
         public static List<Coroutine> AbilityUseCoroutines { get; private set; } = new List<Coroutine>();
@@ -115,9 +129,12 @@ namespace Malignant.Common
                 if (SelectedAbilityIndex >= Abilities.Count)
                     SelectedAbilityIndex = 0;
 
-                drawProgress = 1;
+                if (SelectedAbility is not null)
+                {
+                    drawProgress = 1;
 
-                SoundEngine.PlaySound(SelectedAbility?.SwapSound ?? SoundID.Tink, Player.Center);
+                    SoundEngine.PlaySound(SelectedAbility.SwapSound, Player.Center);
+                }
             }
         }
 
@@ -126,17 +143,17 @@ namespace Malignant.Common
         {
             if (SelectedAbility is not null && drawProgress > 0.01f)
             {
-                Vector2 drawPos = Player.Center - Vector2.UnitY * 75 * Math.Clamp((1 - drawProgress) * 2, 0, 1) - Main.screenPosition;
-                Vector2 scale = new Vector2(Math.Clamp((1 - drawProgress) * 2, 0, 1), Math.Clamp(drawProgress * 3, 1, 3));
+                Vector2 drawPos = Player.Center - Vector2.UnitY * 75 * Math.Clamp((1 - drawProgress) * 2.2f, 0, 1) - Main.screenPosition;
+                Vector2 scale = new Vector2(Math.Clamp((1 - drawProgress) * 2, 0, 1), Math.Clamp(drawProgress * 2.5f, 1, 3));
                 float alpha = MathF.Pow(MathF.Sin(drawProgress * MathHelper.Pi), 5);
 
                 Main.spriteBatch.Draw(
-                    SelectedAbility.AbilityTexture,
+                    SelectedAbility.Texture,
                     drawPos,
                     null,
                     Color.White * alpha,
                     0,
-                    SelectedAbility.AbilityTexture.Size() * 0.5f,
+                    SelectedAbility.Texture.Size() * 0.5f,
                     scale,
                     SpriteEffects.None,
                     0
@@ -148,14 +165,14 @@ namespace Malignant.Common
                     Main.spriteBatch,
                     font,
                     SelectedAbility.DisplayName,
-                    drawPos + Vector2.UnitY * (SelectedAbility.AbilityTexture.Height * 0.5f + 10),
+                    drawPos + Vector2.UnitY * (SelectedAbility.Texture.Height * 0.5f + 10),
                     Color.LightGoldenrodYellow * alpha,
                     0,
                     font.MeasureString(SelectedAbility.DisplayName) * 0.5f,
                     textScale
                     );
 
-                drawProgress = MathHelper.Lerp(drawProgress, 0, 0.036f);
+                drawProgress = MathHelper.Lerp(drawProgress, 0, 0.02f);
             }
         }
     }
@@ -189,10 +206,10 @@ namespace Malignant.Common
 
     public class PrayerContent
     {
-        public static List<PrayerAbility> PrayerAbilities { get; private set; }
+        static Dictionary<string, PrayerAbility> prayerAbilities;
         public static void Load(Mod mod)
         {
-            PrayerAbilities = new List<PrayerAbility>();
+            prayerAbilities = new Dictionary<string, PrayerAbility>();
             foreach (Type type in mod.Code.GetTypes())
             {
                 if (type.GetTypeInfo().IsSubclassOf(typeof(PrayerAbility)))
@@ -200,30 +217,51 @@ namespace Malignant.Common
                     PrayerAbility prayerAbility = Activator.CreateInstance(type) as PrayerAbility;
                     prayerAbility.Load();
 
-                    PrayerAbilities.Add(prayerAbility);
+                    prayerAbilities[prayerAbility.Type] = prayerAbility;
                 }
             }
         }
 
-        public static int AbilityType<T>() where T : PrayerAbility
+        public static PrayerAbility GetAbility(string internalName)
         {
-            return PrayerAbilities.IndexOf(PrayerAbilities.First(ability => ability is T));
+            return prayerAbilities.ContainsKey(internalName) ? prayerAbilities[internalName] : null;
+        }
+
+        public static string AbilityType<T>() where T : PrayerAbility
+        {
+            return typeof(T).Name;
         }
     }
 
     public abstract class PrayerAbility
     {
-        public virtual string DisplayName => GetType().Name;
-        public int Type => PrayerContent.PrayerAbilities.IndexOf(this);
-
-        public virtual string Texture => (GetType().Namespace + "." + GetType().Name).Replace('.', '/');
-        public Texture2D AbilityTexture { get; private set; }
+        public string Type => GetType().Name;
+        public virtual string DisplayName => Type;
+        public virtual string Description => string.Empty;
+        public virtual string TexturePath => (GetType().Namespace + "." + GetType().Name).Replace('.', '/');
+        public Texture2D Texture { get; private set; }
 
         public virtual SoundStyle SwapSound => SoundID.Tink;
 
         public void Load()
         {
-            AbilityTexture = ModContent.Request<Texture2D>(Texture, AssetRequestMode.ImmediateLoad).Value;
+            Texture = ModContent.Request<Texture2D>(TexturePath, AssetRequestMode.ImmediateLoad).Value;
+            OnLoad();
+        }
+
+        public void Unload()
+        {
+            OnUnload();
+        }
+
+        public virtual void OnLoad()
+        {
+            
+        }
+
+        public virtual void OnUnload()
+        {
+
         }
 
         public bool TryUseAbility(Player player, EntitySource_PrayerAbility source)
@@ -239,9 +277,9 @@ namespace Malignant.Common
 
         /// <summary>
         /// Setting this to anything less than 0 allows for the ability to have individual cooldown.
-        /// If it's set to something higher than 0 it will have a shared cooldown with any other abilities with the same index.
+        /// If it's set to something higher or equal to 0 it will have a shared cooldown with any other abilities with the same index.
         /// </summary>
-        public virtual int CooldownIndex => 0;
+        public virtual int CooldownIndex => -1;
         public virtual int Cooldown => 60;
 
         int _cooldownTimer;
@@ -292,12 +330,12 @@ namespace Malignant.Common
 
     public interface IPrayerItem
     {
-        int AbilityType { get; }
+        string AbilityType { get; }
     }
 
     public abstract class PrayerItem : ModItem, IPrayerItem
     {
-        public abstract int AbilityType { get; }
+        public abstract string AbilityType { get; }
 
         public sealed override void SetDefaults()
         {
@@ -323,7 +361,7 @@ namespace Malignant.Common
 
             bool shouldAddAbility = !prayerSystem.Abilities.Any(ability => ability.Type == AbilityType);
             if (shouldAddAbility)
-                prayerSystem.Abilities.Add(PrayerContent.PrayerAbilities[AbilityType]);
+                prayerSystem.Abilities.Add(PrayerContent.GetAbility(AbilityType));
 
             return shouldAddAbility;
         }

@@ -14,7 +14,7 @@ namespace Malignant.Content.Items.Weapon.Corruption.Warlock
     {
         public override void SetStaticDefaults()
         {
-            
+            DisplayName.SetDefault("Death's Bite");
         }
 
         public override void SetDefaults()

@@ -15,12 +15,12 @@ namespace Malignant.Content.Items.Prayer
     public class PaladinPrayer : PrayerItem
     {
         public override string Texture => base.Texture.Replace(nameof(PaladinPrayer), "PrayerTest");
-        public override int AbilityType => PrayerContent.AbilityType<PaladinAbility>();
+        public override string AbilityType => PrayerContent.AbilityType<PaladinAbility>();
     }
 
     public class PaladinAbility : PrayerAbility
     {
-        public override string Texture => base.Texture.Replace(nameof(PaladinAbility), "PrayerTest");
+        public override string TexturePath => base.TexturePath.Replace(nameof(PaladinAbility), "PrayerTest");
         public override string DisplayName => "Paladin";
         public override int Cooldown => 30;
 
