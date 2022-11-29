@@ -18,6 +18,13 @@ namespace Malignant.Common
             "SFX"
         };
 
+        static readonly string[] soundTypes = new string[]
+        {
+            "wav",
+            "ogg",
+            "mp3"
+        };
+
         public static void Load(Mod mod)
         {
             Sounds = new Dictionary<string, SoundStyle>();
@@ -27,12 +34,20 @@ namespace Malignant.Common
                 {
                     string startsWith = $"Assets/{folder}/";
 
-                    if (file.StartsWith(startsWith) && (file.EndsWith(".wav") || file.EndsWith(".ogg") || file.EndsWith(".mp3")))
+                    if (file.StartsWith(startsWith))
                     {
-                        string path = file.Replace(".xnb", string.Empty);
-                        string name = path.Replace(startsWith, string.Empty);
+                        foreach (string type in soundTypes)
+                        {
+                            string endsWith = "." + type;
+                            if (file.EndsWith(endsWith))
+                            {
+                                string path = file.Replace(endsWith, string.Empty);
+                                string name = path.Replace(startsWith, string.Empty);
 
-                        Sounds[name] = new SoundStyle(path);
+                                Sounds[name] = new SoundStyle(path);
+                            }
+                            
+                        }
                     }
                 }
             }
