@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using Terraria.Audio;
 
 namespace Malignant.Content.Items.Prayer
 {
@@ -24,7 +25,9 @@ namespace Malignant.Content.Items.Prayer
     public class SabbathAbility : PrayerAbility
     {
         public override string Texture => base.Texture.Replace(nameof(SabbathAbility), "PrayerTest");
+        public override string DisplayName => "Sabbath";
         public override int Cooldown => 80;
+        public override SoundStyle SwapSound => SoundID.DD2_BallistaTowerShot;
 
         protected override void OnUseAbility(Player player, EntitySource_PrayerAbility source)
         {

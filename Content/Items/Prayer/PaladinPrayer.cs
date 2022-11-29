@@ -21,6 +21,7 @@ namespace Malignant.Content.Items.Prayer
     public class PaladinAbility : PrayerAbility
     {
         public override string Texture => base.Texture.Replace(nameof(PaladinAbility), "PrayerTest");
+        public override string DisplayName => "Paladin";
         public override int Cooldown => 30;
 
         protected override void OnUseAbility(Player player, EntitySource_PrayerAbility source)

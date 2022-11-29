@@ -1,16 +1,22 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using ReLogic.Graphics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Terraria;
+using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.UI.Chat;
 
 namespace Malignant.Common
 {
@@ -109,8 +115,47 @@ namespace Malignant.Common
                 if (SelectedAbilityIndex >= Abilities.Count)
                     SelectedAbilityIndex = 0;
 
-                // Temporary cuz no UI
-                Main.NewText(SelectedAbility?.Name  ?? "..");
+                drawProgress = 1;
+
+                SoundEngine.PlaySound(SelectedAbility?.SwapSound ?? SoundID.Tink, Player.Center);
+            }
+        }
+
+        float drawProgress = 0;
+        public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
+        {
+            if (SelectedAbility is not null && drawProgress > 0.01f)
+            {
+                Vector2 drawPos = Player.Center - Vector2.UnitY * 75 * Math.Clamp((1 - drawProgress) * 2, 0, 1) - Main.screenPosition;
+                Vector2 scale = new Vector2(Math.Clamp((1 - drawProgress) * 2, 0, 1), Math.Clamp(drawProgress * 3, 1, 3));
+                float alpha = MathF.Pow(MathF.Sin(drawProgress * MathHelper.Pi), 5);
+
+                Main.spriteBatch.Draw(
+                    SelectedAbility.AbilityTexture,
+                    drawPos,
+                    null,
+                    Color.White * alpha,
+                    0,
+                    SelectedAbility.AbilityTexture.Size() * 0.5f,
+                    scale,
+                    SpriteEffects.None,
+                    0
+                    );
+
+                DynamicSpriteFont font = FontAssets.ItemStack.Value;
+                Vector2 textScale = scale * 0.8f;
+                ChatManager.DrawColorCodedStringWithShadow(
+                    Main.spriteBatch,
+                    font,
+                    SelectedAbility.DisplayName,
+                    drawPos + Vector2.UnitY * (SelectedAbility.AbilityTexture.Height * 0.5f + 10),
+                    Color.LightGoldenrodYellow * alpha,
+                    0,
+                    font.MeasureString(SelectedAbility.DisplayName) * 0.5f,
+                    textScale
+                    );
+
+                drawProgress = MathHelper.Lerp(drawProgress, 0, 0.036f);
             }
         }
     }
@@ -168,11 +213,13 @@ namespace Malignant.Common
 
     public abstract class PrayerAbility
     {
-        public string Name => GetType().Name;
+        public virtual string DisplayName => GetType().Name;
         public int Type => PrayerContent.PrayerAbilities.IndexOf(this);
 
         public virtual string Texture => (GetType().Namespace + "." + GetType().Name).Replace('.', '/');
         public Texture2D AbilityTexture { get; private set; }
+
+        public virtual SoundStyle SwapSound => SoundID.Tink;
 
         public void Load()
         {
@@ -199,13 +246,18 @@ namespace Malignant.Common
 
         int _cooldownTimer;
         public int CooldownTimer { get => _cooldownTimer; set => _cooldownTimer = value; }
+        /// <summary>
+        /// By default this checks if CooldownTimer <= 0 so if you plan on overriding this make sure to check for that too if you want the cooldown to work.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         public virtual bool CanUseAbility(Player player) => CooldownTimer <= 0;
 
         /// <summary>
         /// This method runs when player uses the ability.
         /// </summary>
         /// <param name="player"></param>
-        /// <returns>Ability's cooldown.</returns>
+        /// <param name="source"></param>
         protected virtual void OnUseAbility(Player player, EntitySource_PrayerAbility source) { }
 
         static void BeginFXCouroutine(IEnumerator enumerator)
