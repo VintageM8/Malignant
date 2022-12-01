@@ -1,4 +1,4 @@
-﻿using Malignant.Common;
+using Malignant.Common;
 using Malignant.Content.Projectiles.Enemy.Warlock;
 using Malignant.Core;
 using Microsoft.Xna.Framework;
@@ -40,13 +40,13 @@ namespace Malignant.Content.NPCs.Crimson.Heart
 
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo) => spawnInfo.Player.ZoneCrimson && spawnInfo.Player.ZoneOverworldHeight ? .075f : 0f;
+       //public override float SpawnChance(NPCSpawnInfo spawnInfo) => spawnInfo.Player.ZoneCrimson && spawnInfo.Player.ZoneOverworldHeight ? .075f : 0f;
 
         private const int Intro = 0;
-        private const int Banshee = 0;
-        private const int Ghastroot = 1;
-        private const int Bulwark = 2;
-        private const int Lich = 3;
+        private const int Dash = 0;
+        private const int BloodBurst = 1;
+        private const int BloodRain = 2;
+        private const int Heal = 3;
 
         int difficulty;
         public float AIState
@@ -80,7 +80,7 @@ namespace Malignant.Content.NPCs.Crimson.Heart
 
             Lighting.AddLight((int)(NPC.Center.X / 16f), (int)(NPC.Center.Y / 16f), 0.122f, .5f, .48f);
 
-            if (AIState == Banshee)
+            if (AIState == Dash)
             {
                 Main.NewText("AI 1");
 
@@ -137,10 +137,10 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                     AITimer = 0;
                     AITimer2 = 0;
                     NPC.ai[3] = 0;
-                    AIState = Ghastroot;
+                    AIState = BloodBurst;
                 }
             }
-            else if (AIState == Ghastroot)
+            else if (AIState == BloodBurst)
             {
                 Main.NewText("AI 2");
                 AITimer++;
@@ -168,11 +168,11 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                     AITimer = 0;
                     AITimer2 = 0;
                     NPC.ai[3] = 0;
-                    AIState = Bulwark;
+                    AIState = BloodRain;
                     NPC.velocity = Vector2.Zero;
                 }
             }
-            else if (AIState == Bulwark)
+            else if (AIState == BloodRain)
             {
                 Main.NewText("AI 3");
                 AITimer++;
@@ -230,14 +230,14 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                 {
                     NPC.noTileCollide = true;
                     NPC.damage = 0;
-                    AIState = Lich;
+                    AIState = Heal;
                     NPC.aiStyle = 0;
                     AITimer = 0;
                     AITimer2 = 0;
                     NPC.ai[3] = 0;
                 }
             }
-            else if (AIState == Lich)
+            else if (AIState == Heal)
             {
                 Main.NewText("AI 4");
                 AITimer++;
@@ -248,7 +248,7 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                     }
                 if (AITimer >= 200)
                 {
-                    AIState = Banshee;
+                    AIState = Dash;
                     AITimer = 0;
                     AITimer2 = 0;
                     NPC.ai[3] = 0;
