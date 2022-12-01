@@ -15,9 +15,7 @@ namespace Malignant.Content.Items.Consumeable.Summons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cursed Skull");
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 4));
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
-            ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }
 
         public override void SetDefaults()
