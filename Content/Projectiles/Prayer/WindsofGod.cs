@@ -1,4 +1,4 @@
-﻿using Malignant.Common;
+﻿using Malignant.Common.Helper;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
