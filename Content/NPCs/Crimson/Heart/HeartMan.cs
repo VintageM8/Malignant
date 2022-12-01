@@ -40,8 +40,6 @@ namespace Malignant.Content.NPCs.Crimson.Heart
 
         }
 
-       //public override float SpawnChance(NPCSpawnInfo spawnInfo) => spawnInfo.Player.ZoneCrimson && spawnInfo.Player.ZoneOverworldHeight ? .075f : 0f;
-
         private const int Intro = 0;
         private const int Dash = 0;
         private const int BloodBurst = 1;
@@ -115,7 +113,7 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                     }
                     else
                     {
-                        Terraria.Audio.SoundStyle ae = new Terraria.Audio.SoundStyle("Malignant/Assets/Sounds/HeartbeatFx")
+                        Terraria.Audio.SoundStyle ae = new Terraria.Audio.SoundStyle("Malignant/Assets/SFX/HeartbeatFx")
                         {
                             Pitch = -0.5f
                         };
@@ -215,7 +213,7 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                 if (AITimer2 == 2)
                 {
                     NPC.noTileCollide = false;
-                    Terraria.Audio.SoundStyle ae = new Terraria.Audio.SoundStyle("Malignant/Assets/Sounds/HeartbeatFx")
+                    Terraria.Audio.SoundStyle ae = new Terraria.Audio.SoundStyle("Malignant/Assets/SFX/HeartbeatFx")
                     {
                         Pitch = -0.25f
                     };
