@@ -1,7 +1,7 @@
 ﻿using Malignant.Content.Projectiles.Enemy.Warlock;
 using Malignant.Core;
 using Microsoft.Xna.Framework;
-using Malignant.Common;
+using Malignant.Common.Helper;
 using System;
 using Terraria;
 using Terraria.Audio;
