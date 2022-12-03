@@ -7,7 +7,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Malignant.Common
+namespace Malignant.Common.Helper
 {
     public partial class MethodHelper
     {

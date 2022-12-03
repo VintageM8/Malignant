@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 
-namespace Malignant.Common
+namespace Malignant.Common.Helper
 {
     public static partial class MethodHelper
     {

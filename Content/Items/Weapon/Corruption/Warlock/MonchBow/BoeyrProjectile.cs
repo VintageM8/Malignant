@@ -1,4 +1,4 @@
-﻿using Malignant.Common;
+﻿using Malignant.Common.Projectiles;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Malignant.Content.Items.Weapon.Corruption.Warlock
+namespace Malignant.Content.Items.Weapon.Corruption.Warlock.MonchBow
 {
     public class BoeyrProjectile : ChargedBowProjectile
     {

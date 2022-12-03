@@ -2,7 +2,7 @@
 using System;
 using Terraria;
 using Terraria.ModLoader;
-using Malignant.Common;
+using Malignant.Common.Helper;
 using Malignant.Common.Projectiles.Orbiting;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;

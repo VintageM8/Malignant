@@ -2,7 +2,7 @@
 using Terraria;
 using Microsoft.Xna.Framework;
 
-namespace Malignant.Common
+namespace Malignant.Common.Helper
 {
     public static partial class MethodHelper
     {

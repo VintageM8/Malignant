@@ -10,9 +10,10 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Malignant.Common.Helper;
 using Terraria.Utilities;
 
-namespace Malignant.Common
+namespace Malignant.Common.Projectiles
 {
     public interface IChargedBow
     {

@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Malignant.Common;
+using Malignant.Common.Helper;
 
 namespace Malignant.Content.Items.Dedicated.Addi
 {
