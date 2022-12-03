@@ -32,14 +32,10 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
         {
             NPC.width = 136;
             NPC.height = 114;
-            NPC.lifeMax = 4000;
-            /*if (Main.expertMode)
-                NPC.lifeMax = 5000;
-            if (Main.masterMode)
-                NPC.lifeMax = 5900;*/
-            NPC.defense = 5;
+            NPC.lifeMax = 50000;
+            NPC.defense = 38;
             NPC.aiStyle = 0;
-            NPC.damage = 10;
+            NPC.damage = 69;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.noGravity = true;
             NPC.knockBackResist = 0f;
