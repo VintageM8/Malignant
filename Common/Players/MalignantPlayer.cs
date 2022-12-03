@@ -22,8 +22,13 @@ namespace Malignant.Common
         public int lastSelectedItem;
         public int BuildCount = 0;
 
+        //Accessories
+        public bool Moniter;
+
         public override void ResetEffects()
         {
+        
+            Moniter = false;
 
             if (itemComboReset <= 0)
             {
@@ -100,5 +105,20 @@ namespace Malignant.Common
             }
             else RotationTimer = 0;
         }
+        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        {
+            if (Moniter)
+            {
+                int projectiles = 3;
+                if (Main.netMode != NetmodeID.MultiplayerClient && Main.myPlayer == Player.whoAmI)
+                {
+                    for (int i = 0; i < projectiles; i++)
+                    {
+                        Projectile.NewProjectile(Player.GetSource_OnHurt(null), Player.Center, new Vector2(7).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<BloodRune>(), 19, 2, Player.whoAmI);
+                    }
+                }
+            }
+        }
+
     }
 }
