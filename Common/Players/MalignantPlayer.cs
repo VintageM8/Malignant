@@ -22,6 +22,13 @@ namespace Malignant.Common
         public int lastSelectedItem;
         public int BuildCount = 0;
 
+         //Boss Stuff
+        public int bossTextProgress, bossMaxProgress;
+        public string bossName, biomeName;
+        public string bossTitle, biomeTitle;
+        public int bossStyle;
+        public Color bossColor;
+
         public override void ResetEffects()
         {
 
@@ -88,6 +95,17 @@ namespace Malignant.Common
         //This is where we make our central timer that the orbiting projectile uses.
         public override void PostUpdate()
         {
+            if (bossTextProgress > 0)
+                bossTextProgress--;
+            if (bossTextProgress == 0)
+            {
+                bossName = null;
+                bossTitle = null;
+                bossMaxProgress = 0;
+                bossStyle = -1;
+                bossColor = Color.White;
+            }
+            
             bool temp = false;
             for (int i = 0; i < 5; i++)
             {
