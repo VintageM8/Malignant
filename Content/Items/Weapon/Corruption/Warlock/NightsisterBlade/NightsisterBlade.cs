@@ -43,11 +43,5 @@ namespace Malignant.Content.Items.Weapon.Corruption.Warlock.NightsisterBlade
                 .AddTile(TileID.Anvils)
                 .Register();
         }
-        public override bool CanUseItem(Player player)
-        {
-            
-
-            return true;
-        }
     }
 }

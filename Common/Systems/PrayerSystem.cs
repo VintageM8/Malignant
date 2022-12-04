@@ -115,8 +115,11 @@ namespace Malignant.Common
             Player player = Main.LocalPlayer;
             if (MalignantKeybingSystem.UsePrayerAbility.JustPressed && SelectedAbility is not null)
             {
+
                 if (SelectedAbility.TryUseAbility(player, new EntitySource_PrayerAbility(SelectedAbility)))
                 {
+                    onUseAlpha = 2;
+
                     if (SelectedAbility.CooldownIndex < 0)
                         SelectedAbility.CooldownTimer = SelectedAbility.Cooldown;
                     else
@@ -132,26 +135,28 @@ namespace Malignant.Common
                 if (SelectedAbility is not null)
                 {
                     drawProgress = 1;
+                    onUseAlpha = 0;
 
-                    SoundEngine.PlaySound(SelectedAbility.SwapSound, Player.Center);
+                    SoundEngine.PlaySound(SelectedAbility.SelectSound, Player.Center);
                 }
             }
         }
 
         float drawProgress = 0;
+        float onUseAlpha = 0;
         public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
         {
-            if (SelectedAbility is not null && drawProgress > 0.01f)
+            if (SelectedAbility is not null && (drawProgress > 0.001f || onUseAlpha > 0.001f))
             {
                 Vector2 drawPos = Player.Center - Vector2.UnitY * 75 * Math.Clamp((1 - drawProgress) * 2.2f, 0, 1) - Main.screenPosition;
-                Vector2 scale = new Vector2(Math.Clamp((1 - drawProgress) * 2, 0, 1), Math.Clamp(drawProgress * 2.5f, 1, 3));
-                float alpha = MathF.Pow(MathF.Sin(drawProgress * MathHelper.Pi), 5);
+                Vector2 scale = new Vector2(Math.Clamp((1 - drawProgress) * 2, 0, 1), Math.Clamp(drawProgress * 2.5f, 1, 3)) * (1 + onUseAlpha * 0.25f);
+                float alpha = -MathF.Pow(2 * drawProgress - 1, 10) + 1 + onUseAlpha;
 
                 Main.spriteBatch.Draw(
                     SelectedAbility.Texture,
                     drawPos,
                     null,
-                    Color.White * alpha,
+                    Color.Lerp(Color.White, Color.LightGoldenrodYellow, onUseAlpha) * alpha,
                     0,
                     SelectedAbility.Texture.Size() * 0.5f,
                     scale,
@@ -165,7 +170,7 @@ namespace Malignant.Common
                     Main.spriteBatch,
                     font,
                     SelectedAbility.DisplayName,
-                    drawPos + Vector2.UnitY * (SelectedAbility.Texture.Height * 0.5f + 10),
+                    drawPos + Vector2.UnitY * (SelectedAbility.Texture.Height * 0.5f + 10 * (1 + onUseAlpha * 0.5f)),
                     Color.LightGoldenrodYellow * alpha,
                     0,
                     font.MeasureString(SelectedAbility.DisplayName) * 0.5f,
@@ -173,6 +178,7 @@ namespace Malignant.Common
                     );
 
                 drawProgress = MathHelper.Lerp(drawProgress, 0, 0.02f);
+                onUseAlpha *= 0.98f;
             }
         }
     }
@@ -241,7 +247,8 @@ namespace Malignant.Common
         public virtual string TexturePath => (GetType().Namespace + "." + GetType().Name).Replace('.', '/');
         public Texture2D Texture { get; private set; }
 
-        public virtual SoundStyle SwapSound => SoundID.Tink;
+        public virtual SoundStyle SelectSound => SoundID.Tink;
+        public virtual SoundStyle UseSound => SoundID.Unlock;
 
         public void Load()
         {
@@ -270,6 +277,9 @@ namespace Malignant.Common
             {
                 BeginFXCouroutine(OnUseAbilityRoutine(player, source));
                 OnUseAbility(player, source);
+
+                SoundEngine.PlaySound(UseSound, player.Center);
+
                 return true;
             }
             return false;
@@ -361,7 +371,11 @@ namespace Malignant.Common
 
             bool shouldAddAbility = !prayerSystem.Abilities.Any(ability => ability.Type == AbilityType);
             if (shouldAddAbility)
+            {
+                Main.NewText("You've learned the " + PrayerContent.GetAbility(AbilityType).DisplayName + " prayer.");
                 prayerSystem.Abilities.Add(PrayerContent.GetAbility(AbilityType));
+            }
+                
 
             return shouldAddAbility;
         }

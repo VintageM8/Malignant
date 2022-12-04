@@ -12,6 +12,8 @@ namespace Malignant.Content.Tiles
 {
     public class CocytusAlter : ModTile
     {
+        public override string Texture => "Terraria/Images/Item_0";
+
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;

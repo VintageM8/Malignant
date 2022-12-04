@@ -11,19 +11,17 @@ using Terraria.ModLoader;
 
 namespace Malignant.Content.Items.Prayer
 {
-    // needs name change
-    public class FireratePrayer : PrayerItem
+    public class HolySpeedPrayer : PrayerItem
     {
-        public override string Texture => base.Texture.Replace(nameof(FireratePrayer), "PrayerTest");
-        public override string AbilityType => PrayerContent.AbilityType<FirerateAbility>();
+        public override string Texture => base.Texture.Replace(nameof(HolySpeedPrayer), "PrayerTest");
+        public override string AbilityType => PrayerContent.AbilityType<HolySpeedAbility>();
     }
 
-    public class FirerateAbility: PrayerAbility
+    public class HolySpeedAbility : PrayerAbility
     {
-        public override string TexturePath => base.TexturePath.Replace(nameof(FirerateAbility), "PrayerTest");
-        public override string DisplayName => "Firerate (change name lol)";
+        public override string DisplayName => "Holy Speed";
         public override int Cooldown => 660; // also temporary, TODO balance
-
+        
         public override IEnumerator OnUseAbilityRoutine(Player player, EntitySource_PrayerAbility source)
         {
             // temporary sounds
@@ -31,7 +29,7 @@ namespace Malignant.Content.Items.Prayer
 
             for (int i = 0; i < 600; i++)
             {
-                player.GetAttackSpeed(DamageClass.Ranged) += 1f;
+                player.GetAttackSpeed(DamageClass.Generic) += 1f;
                 yield return null;
             }
 

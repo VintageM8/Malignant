@@ -10,16 +10,15 @@ using Terraria.ModLoader;
 
 namespace Malignant.Content.Items.Prayer
 {
-    public class LifeEssencePrayer : PrayerItem
+    public class BloodOfAnointedPrayer : PrayerItem
     {
-        public override string Texture => base.Texture.Replace(nameof(LifeEssencePrayer), "PrayerTest");
-        public override string AbilityType => PrayerContent.AbilityType<LifeEssenceAbility>();
+        public override string Texture => base.Texture.Replace(nameof(BloodOfAnointedPrayer), "PrayerTest");
+        public override string AbilityType => PrayerContent.AbilityType<BloodOfAnointedAbility>();
     }
 
-    public class LifeEssenceAbility : PrayerAbility
+    public class BloodOfAnointedAbility : PrayerAbility
     {
-        public override string TexturePath => base.TexturePath.Replace(nameof(LifeEssenceAbility), "PrayerTest");
-        public override string DisplayName => "Life Essence";
+        public override string DisplayName => "Blood of Anointed";
         public override int Cooldown => 180;
         public override IEnumerator OnUseAbilityRoutine(Player player, EntitySource_PrayerAbility source)
         {
