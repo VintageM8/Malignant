@@ -17,16 +17,16 @@ namespace Malignant.Content.Items.Weapon.Spider.WebbedBlade
 
         public override void SetDefaults()
         {
-            Item.damage = 51;
+            Item.damage = 27;
             Item.DamageType = DamageClass.Melee;
             Item.width = 40;
             Item.height = 40;
             Item.useTime = 25;
             Item.useAnimation = 25;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.knockBack = 6;
+            Item.knockBack = 2;
             Item.value = Item.sellPrice(silver: 460);
-            Item.rare = ItemRarityID.Pink;
+            Item.rare = ItemRarityID.Orange;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<WebbedSlash>();
