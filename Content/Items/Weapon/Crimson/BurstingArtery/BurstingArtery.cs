@@ -18,10 +18,10 @@ namespace Malignant.Content.Items.Weapon.Crimson.BurstingArtery
 
         public override void SetDefaults()
         {
-            Item.damage = 168;
+            Item.damage = 89;
             Item.DamageType = DamageClass.Ranged;
-            Item.useTime = 45;
-            Item.useAnimation = 45;
+            Item.useTime = 22;
+            Item.useAnimation = 22;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 5;
 
@@ -29,11 +29,10 @@ namespace Malignant.Content.Items.Weapon.Crimson.BurstingArtery
             Item.UseSound = SoundID.Item5;
             Item.width = 32;
             Item.height = 74;
-            Item.shootSpeed = 4;
             Item.noMelee = true;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<BurstingArtyProj>();
-            Item.shootSpeed = 7f;
+            Item.shootSpeed = 10f;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
