@@ -1,8 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using System;
 using Terraria.ID;
+using Malignant.Content.Items.Accessories.Expert.Moniter;
 
 namespace Malignant.Common
 {
@@ -26,9 +27,15 @@ namespace Malignant.Common
         public bool Moniter;
         public bool Lich;
 
+        //Boss Stuff
+        public int bossTextProgress, bossMaxProgress;
+        public string bossName, biomeName;
+        public string bossTitle, biomeTitle;
+        public int bossStyle;
+        public Color bossColor;
+
         public override void ResetEffects()
         {
-        
             Moniter = false;
             Lich = false;
 
@@ -95,6 +102,17 @@ namespace Malignant.Common
         //This is where we make our central timer that the orbiting projectile uses.
         public override void PostUpdate()
         {
+            if (bossTextProgress > 0)
+                bossTextProgress--;
+            if (bossTextProgress == 0)
+            {
+                bossName = null;
+                bossTitle = null;
+                bossMaxProgress = 0;
+                bossStyle = -1;
+                bossColor = Color.White;
+            }
+
             bool temp = false;
             for (int i = 0; i < 5; i++)
             {
@@ -107,6 +125,7 @@ namespace Malignant.Common
             }
             else RotationTimer = 0;
         }
+
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
         {
             if (Moniter)
@@ -134,6 +153,7 @@ namespace Malignant.Common
             }
 
         }
+
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
         {
             if (Lich)
@@ -145,6 +165,6 @@ namespace Malignant.Common
                     Player.statLife += healAmount;
                 }
             }
-        }       
+        }
     }
 }
