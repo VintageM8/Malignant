@@ -24,11 +24,13 @@ namespace Malignant.Common
 
         //Accessories
         public bool Moniter;
+        public bool Lich;
 
         public override void ResetEffects()
         {
         
             Moniter = false;
+            Lich = false;
 
             if (itemComboReset <= 0)
             {
@@ -119,6 +121,30 @@ namespace Malignant.Common
                 }
             }
         }
+        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        {
+            if (Lich)
+            {
+                if (target.CountsAsACritter)
+                {
+                    int healAmount = (int)MathHelper.Min(Player.statLifeMax2 - Player.statLife, 10);
+                    Player.HealEffect(10);
+                    Player.statLife += healAmount;
+                }
+            }
 
+        }
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+        {
+            if (Lich)
+            {
+                if (target.CountsAsACritter)
+                {
+                    int healAmount = (int)MathHelper.Min(Player.statLifeMax2 - Player.statLife, 10);
+                    Player.HealEffect(10);
+                    Player.statLife += healAmount;
+                }
+            }
+        }       
     }
 }
