@@ -27,7 +27,7 @@ namespace Malignant.Content.NPCs.Corruption.CursedOccultist
 
         public override void SetDefaults()
         {
-            NPC.aiStyle = 3;
+            NPC.aiStyle = 44;
             NPC.lifeMax = 150;
             NPC.defense = 7;
             NPC.value = 100f;
@@ -63,6 +63,7 @@ namespace Malignant.Content.NPCs.Corruption.CursedOccultist
 
         public override void FindFrame(int frameHeight)
         {
+            NPC.spriteDirection = -NPC.direction;
             NPC.frameCounter++;
             if ((NPC.velocity.X != 0f && NPC.velocity.Y == 0f))
             {

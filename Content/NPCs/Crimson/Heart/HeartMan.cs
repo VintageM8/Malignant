@@ -1,4 +1,5 @@
 using Malignant.Common;
+using Malignant.Common.Systems;
 using Malignant.Content.Projectiles.Enemy.Warlock;
 using Malignant.Core;
 using Microsoft.Xna.Framework;
@@ -12,7 +13,7 @@ using Terraria.ModLoader;
 
 namespace Malignant.Content.NPCs.Crimson.Heart
 {
-    public class HeartMan : ModNPC
+    public class HeartMan : ModNPC //its not even a man lol
     {
         public override void SetStaticDefaults()
         {
@@ -22,11 +23,11 @@ namespace Malignant.Content.NPCs.Crimson.Heart
 
         public override void SetDefaults()
         {
-            NPC.width = 40;
-            NPC.height = 90;
-            NPC.lifeMax = 155;
-            NPC.defense = 14;
-            NPC.damage = 25;
+            NPC.width = 80;
+            NPC.height = 102;
+            NPC.lifeMax = 9800;
+            NPC.defense = 20;
+            NPC.damage = 45;
             NPC.HitSound = SoundID.NPCHit2;
             NPC.DeathSound = SoundID.NPCDeath2;
             NPC.buffImmune[BuffID.Confused] = true;
@@ -37,8 +38,12 @@ namespace Malignant.Content.NPCs.Crimson.Heart
             //NPC.chaseable = true;
             NPC.noTileCollide = true;
             NPC.lavaImmune = true;
+            NPC.boss = true; 
+            Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Viscera");
 
         }
+
+        //public override float SpawnChance(NPCSpawnInfo spawnInfo) => spawnInfo.Player.ZoneCrimson && spawnInfo.Player.ZoneOverworldHeight ? .075f : 0f;
 
         private const int Intro = 0;
         private const int Dash = 0;
@@ -80,12 +85,12 @@ namespace Malignant.Content.NPCs.Crimson.Heart
 
             if (AIState == Dash)
             {
-                Main.NewText("AI 1");
+                //Main.NewText("AI 1");
 
-
+                NPC.damage = 0;
                 for (int i = 0; i < (difficulty > 4 ? 10 : 7); i++)
                 {
-                    int damage = expertMode ? 32 : 48;
+                    int damage = expertMode ? 0 : 0;
                     int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X + Main.rand.Next(-60, 60), NPC.Center.Y + Main.rand.Next(-60, 60), Main.rand.NextFloat(-5.3f, 5.3f), Main.rand.NextFloat(-5.3f, 5.3f), ModContent.ProjectileType<BloodSpurt>(), damage, 1, Main.myPlayer, 0, 0);;
                     Main.projectile[p].scale = Main.rand.NextFloat(.6f, .8f);
                     DustHelper.DrawStar(Main.projectile[p].Center, 272, pointAmount: 6, mainSize: .9425f, dustDensity: 2, dustSize: .5f, pointDepthMult: 0.3f, noGravity: true);
@@ -106,7 +111,6 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                 {
                     if (player.direction != NPC.direction)
                     {
-
                         AITimer++;
                         AITimer2 = 0;
                         NPC.ai[3] = 0;
@@ -122,9 +126,11 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                 }
                 if (AITimer2 >= 205)
                 {
+                    NPC.damage = 0;
                     AITimer++;
                     AITimer2 = 0;
                     NPC.ai[3] = 0;
+
                 }
                 if (AITimer2 > 90)
                 {
@@ -140,7 +146,7 @@ namespace Malignant.Content.NPCs.Crimson.Heart
             }
             else if (AIState == BloodBurst)
             {
-                Main.NewText("AI 2");
+                //Main.NewText("AI 2");
                 AITimer++;
                 if (player.Center.Distance(NPC.Center) > (16 * 2) && AITimer >= 30)
                     NPC.velocity = Utility.FromAToB(NPC.Center, player.Center, true) * 1.75f;
@@ -149,7 +155,6 @@ namespace Malignant.Content.NPCs.Crimson.Heart
 
                 
                     float rotation = MathHelper.ToRadians(45);
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.Item9);
                     Vector2 pos = NPC.Center - Vector2.UnitY * 23;
                     for (int i = 0; i < 2; i++)
                     {
@@ -172,7 +177,7 @@ namespace Malignant.Content.NPCs.Crimson.Heart
             }
             else if (AIState == BloodRain)
             {
-                Main.NewText("AI 3");
+                //Main.NewText("AI 3");
                 AITimer++;
                 if (AITimer == 1)
                 {
@@ -188,7 +193,6 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                 }
                 if (AITimer2 == 0)
                 {
-                    NPC.damage = 0;
                     NPC.velocity = Vector2.Zero;
                     NPC.Center = Vector2.Lerp(NPC.Center, player.Center + Vector2.UnitX * 340 * NPC.ai[3], 0.035f);
                 }
@@ -206,18 +210,13 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                     NPC.direction = NPC.velocity.X > 1 ? 1 : -1;
                 if (NPC.collideX && AITimer2 == 1)
                 {
-                    //RegreSystem.ScreenShakeAmount = 15;
+                    CameraSystem.ScreenShakeAmount = 8;
                     NPC.velocity = Vector2.Zero;
                     AITimer2 = 3;
                 }
                 if (AITimer2 == 2)
                 {
                     NPC.noTileCollide = false;
-                    Terraria.Audio.SoundStyle ae = new Terraria.Audio.SoundStyle("Malignant/Assets/SFX/HeartbeatFx")
-                    {
-                        Pitch = -0.25f
-                    };
-                    Terraria.Audio.SoundEngine.PlaySound(ae);
                     AITimer2 = 1;
                     NPC.damage = 15;
                     Vector2 vector9 = new Vector2(NPC.position.X + (NPC.width * 0.5f), NPC.position.Y + (NPC.height * 0.5f));
@@ -227,7 +226,6 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                 if (AITimer >= 200)
                 {
                     NPC.noTileCollide = true;
-                    NPC.damage = 0;
                     AIState = Heal;
                     NPC.aiStyle = 0;
                     AITimer = 0;
@@ -237,13 +235,15 @@ namespace Malignant.Content.NPCs.Crimson.Heart
             }
             else if (AIState == Heal)
             {
-                Main.NewText("AI 4");
+                //Main.NewText("AI 4");
                 AITimer++;
                 if (AITimer == 1 || AITimer == 100)
+                    
                     for (int i = 0; i < 3; i++)
                     {
                         Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HealingChunk>(), 0, 0, player.whoAmI, 0, 0);
                     }
+                NPC.damage = 0;
                 if (AITimer >= 200)
                 {
                     AIState = Dash;

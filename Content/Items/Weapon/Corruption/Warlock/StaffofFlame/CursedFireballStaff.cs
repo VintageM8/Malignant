@@ -57,12 +57,12 @@ namespace Malignant.Content.Items.Weapon.Corruption.Warlock.StaffofFlame
             if (Player.altFunctionUse == 2)
             {
                 Item.useStyle = ItemUseStyleID.Shoot;               
-                Item.mana = 15;
+                Item.mana = 16;
             }
             else
             {
                 Item.useStyle = ItemUseStyleID.Shoot;
-                Item.mana = 5;
+                Item.mana = 16;
             }
             return base.CanUseItem(Player);
         }

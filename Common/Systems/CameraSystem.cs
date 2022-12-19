@@ -33,5 +33,20 @@ namespace Malignant.Common.Systems
                 ShakeTimer = 0;
             }
         }
+        public class BossTitleStyleID
+        {
+            public static readonly int Generic = -1;
+            public static readonly int Arterion = 0;
+        }
+        public static void SetBossTitle(int progress, string name, Color color, string title = null, int style = -1)
+        {
+            MalignantPlayer player = Main.LocalPlayer.GetModPlayer<MalignantPlayer>();
+            player.bossTextProgress = progress;
+            player.bossMaxProgress = progress;
+            player.bossName = name;
+            player.bossTitle = title;
+            player.bossColor = color;
+            player.bossStyle = style;
+        }
     }
 }

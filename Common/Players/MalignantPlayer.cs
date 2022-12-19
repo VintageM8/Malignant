@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using System;
@@ -25,11 +25,19 @@ namespace Malignant.Common
 
         //Accessories
         public bool Moniter;
+        public bool Lich;
+
+        //Boss Stuff
+        public int bossTextProgress, bossMaxProgress;
+        public string bossName, biomeName;
+        public string bossTitle, biomeTitle;
+        public int bossStyle;
+        public Color bossColor;
 
         public override void ResetEffects()
         {
-        
             Moniter = false;
+            Lich = false;
 
             if (itemComboReset <= 0)
             {
@@ -94,6 +102,17 @@ namespace Malignant.Common
         //This is where we make our central timer that the orbiting projectile uses.
         public override void PostUpdate()
         {
+            if (bossTextProgress > 0)
+                bossTextProgress--;
+            if (bossTextProgress == 0)
+            {
+                bossName = null;
+                bossTitle = null;
+                bossMaxProgress = 0;
+                bossStyle = -1;
+                bossColor = Color.White;
+            }
+
             bool temp = false;
             for (int i = 0; i < 5; i++)
             {
@@ -106,6 +125,7 @@ namespace Malignant.Common
             }
             else RotationTimer = 0;
         }
+
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
         {
             if (Moniter)
@@ -120,6 +140,31 @@ namespace Malignant.Common
                 }
             }
         }
+        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        {
+            if (Lich)
+            {
+                if (target.CountsAsACritter)
+                {
+                    int healAmount = (int)MathHelper.Min(Player.statLifeMax2 - Player.statLife, 10);
+                    Player.HealEffect(10);
+                    Player.statLife += healAmount;
+                }
+            }
 
+        }
+
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+        {
+            if (Lich)
+            {
+                if (target.CountsAsACritter)
+                {
+                    int healAmount = (int)MathHelper.Min(Player.statLifeMax2 - Player.statLife, 10);
+                    Player.HealEffect(10);
+                    Player.statLife += healAmount;
+                }
+            }
+        }
     }
 }

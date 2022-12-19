@@ -46,7 +46,7 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                 {
                     int healAmt = 1;
                     if (npc.type == ModContent.NPCType<HeartMan>())
-                        healAmt = 20;
+                        healAmt = 1;
                     if (npc.life <= npc.lifeMax - healAmt)
                     {
                         npc.life += healAmt;
