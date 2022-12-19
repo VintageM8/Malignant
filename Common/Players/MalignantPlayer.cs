@@ -21,8 +21,12 @@ namespace Malignant.Common
         public int itemComboReset;
         public int lastSelectedItem;
         public int BuildCount = 0;
+        
+        //Accessories
+        public bool Moniter;
+        public bool Lich;
 
-         //Boss Stuff
+        //Boss Stuff
         public int bossTextProgress, bossMaxProgress;
         public string bossName, biomeName;
         public string bossTitle, biomeTitle;
@@ -118,5 +122,45 @@ namespace Malignant.Common
             }
             else RotationTimer = 0;
         }
+        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        {
+            if (Moniter)
+            {
+                int projectiles = 3;
+                if (Main.netMode != NetmodeID.MultiplayerClient && Main.myPlayer == Player.whoAmI)
+                {
+                    for (int i = 0; i < projectiles; i++)
+                    {
+                        Projectile.NewProjectile(Player.GetSource_OnHurt(null), Player.Center, new Vector2(7).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<BloodRune>(), 19, 2, Player.whoAmI);
+                    }
+                }
+            }
+        }
+        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        {
+            if (Lich)
+            {
+                if (target.CountsAsACritter)
+                {
+                    int healAmount = (int)MathHelper.Min(Player.statLifeMax2 - Player.statLife, 10);
+                    Player.HealEffect(10);
+                    Player.statLife += healAmount;
+                }
+            }
+
+        }
+
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+        {
+            if (Lich)
+            {
+                if (target.CountsAsACritter)
+                {
+                    int healAmount = (int)MathHelper.Min(Player.statLifeMax2 - Player.statLife, 10);
+                    Player.HealEffect(10);
+                    Player.statLife += healAmount;
+                }
+            }
+        }        
     }
 }
