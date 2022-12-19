@@ -1,8 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using System;
 using Terraria.ID;
+using Malignant.Content.Items.Accessories.Expert.Moniter;
 
 namespace Malignant.Common
 {
@@ -21,7 +22,7 @@ namespace Malignant.Common
         public int itemComboReset;
         public int lastSelectedItem;
         public int BuildCount = 0;
-        
+
         //Accessories
         public bool Moniter;
         public bool Lich;
@@ -35,6 +36,8 @@ namespace Malignant.Common
 
         public override void ResetEffects()
         {
+            Moniter = false;
+            Lich = false;
 
             if (itemComboReset <= 0)
             {
@@ -109,7 +112,7 @@ namespace Malignant.Common
                 bossStyle = -1;
                 bossColor = Color.White;
             }
-            
+
             bool temp = false;
             for (int i = 0; i < 5; i++)
             {
@@ -122,6 +125,7 @@ namespace Malignant.Common
             }
             else RotationTimer = 0;
         }
+
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
         {
             if (Moniter)
@@ -161,6 +165,6 @@ namespace Malignant.Common
                     Player.statLife += healAmount;
                 }
             }
-        }        
+        }
     }
 }
