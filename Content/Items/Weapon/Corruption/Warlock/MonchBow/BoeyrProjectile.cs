@@ -13,6 +13,7 @@ namespace Malignant.Content.Items.Weapon.Corruption.Warlock.MonchBow
 {
     public class BoeyrProjectile : ChargedBowProjectile
     {
+        public override string Texture => base.Texture.Replace("Projectile", string.Empty);
         public override (Vector2, Vector2) StringTexturePositions => (new Vector2(3, 9), new Vector2(3, 50));
         public override int ShootProjectileType => ModContent.ProjectileType<BoeyrSkullProjectile>();
         public override int StringThickness => 1;

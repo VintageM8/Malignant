@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Malignant.Common;
 
-namespace Malignant.Content.Items.Accessories.Moniter
+namespace Malignant.Content.Items.Accessories.Expert.Moniter
 {
     public class HeartMoniter : ModItem
     {
