@@ -4,6 +4,11 @@ using Terraria.ModLoader;
 using Terraria.Audio;
 using Microsoft.Xna.Framework;
 using Malignant.Content.Projectiles.Enemy.Njor;
+using Terraria.GameContent.ItemDropRules;
+using static Terraria.ModLoader.ModContent;
+using Malignant.Content.Items.Weapon.Njor;
+using Malignant.Content.Items.Weapon.Njor.NjorStaff;
+using Malignant.Content.Items.Weapon.Njor.NjorSword;
 
 namespace Malignant.Content.NPCs.Norse.Njor
 {
@@ -54,6 +59,20 @@ namespace Malignant.Content.NPCs.Norse.Njor
 		public bool enragedMode = false;
 		public bool screamed = false;
 
+       	        #region Drops
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
+		{
+		 	npcLoot.Add(ItemDropRule.OneFromOptions(1, new int[]
+			{				
+				ItemType<NjorsStaff>(),
+				ItemType<IceSword>(),
+				ItemType<IcyTundra>(),
+			}
+		));
+
+		}
+		#endregion
+
 		#region Attack Stuff
 		public int prepareAttack = 0;
 		public int attackChoice = -1;
@@ -64,7 +83,7 @@ namespace Malignant.Content.NPCs.Norse.Njor
 		public bool isChargingSpike = false;
 		public bool fireSpike = false;
 		public bool firedSide1 = false;
-        #endregion
+                #endregion
 
         public override void AI()
         {
