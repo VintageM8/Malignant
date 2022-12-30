@@ -12,6 +12,11 @@ using Malignant.Common.Systems;
 using Malignant.Core;
 using Malignant.Content.NPCs.Corruption.Warlock;
 using Malignant.Content.Projectiles.Enemy.Warlock;
+using static Terraria.ModLoader.ModContent;
+using Terraria.GameContent.ItemDropRules;
+using Malignant.Content.Items.Weapon.Crimson.Arterion.BurstingArtery;
+using Malignant.Content.Items.Weapon.Crimson.Arterion.HerzanfallDagger;
+using Malignant.Content.Items.Weapon.Crimson.Arterion.StaveofCarnem;
 
 namespace Malignant.Content.NPCs.Crimson.HeartBoss
 {
@@ -64,6 +69,20 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
             }
             return true;
         }
+
+        #region Drops
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.OneFromOptions(1, new int[]
+            {
+                ItemType<BurstingArtery>(),
+                ItemType<HerzanfallDagger>(),
+                ItemType<StaffofCarnem>(),
+            }
+            ));
+
+        }
+        #endregion
         /*public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (damage >= NPC.life && !ded)
