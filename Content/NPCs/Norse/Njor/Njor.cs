@@ -62,6 +62,11 @@ namespace Malignant.Content.NPCs.Norse.Njor
        	        #region Drops
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
+                        for (int d = 0; d < 20; d++)
+			{
+				Dust.NewDust(NPC.position, NPC.width, NPC.height, 101, 0f, 0f, 150);
+			}
+
 		 	npcLoot.Add(ItemDropRule.OneFromOptions(1, new int[]
 			{				
 				ItemType<NjorsStaff>(),
@@ -448,13 +453,5 @@ namespace Malignant.Content.NPCs.Norse.Njor
 				NPC.frame.Y = (int)Frame.Chasing3 * frameHeight;
 			}
 		}*/
-
-		public override void ModifyNPCLoot(NPCLoot npcLoot)
-		{
-			for (int d = 0; d < 20; d++)
-			{
-				Dust.NewDust(NPC.position, NPC.width, NPC.height, 101, 0f, 0f, 150);
-			}
-		}
 	}
 }
