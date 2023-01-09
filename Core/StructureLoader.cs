@@ -6,6 +6,7 @@ using System.Text;
 using Terraria.ID;
 using System;
 using System.Collections.Generic;
+using Malignant.Common;
 
 namespace Malignant.Core
 {
@@ -14,6 +15,90 @@ namespace Malignant.Core
     /// </summary>
     public static class StructureLoader
     {
+        public static int[] TestReadStruct(Point BottomLeft)
+        {
+            try
+            {
+                using (var stream = File.Open(Main.SavePath + "/SavedStruct.str", FileMode.Open))
+                {
+                    using (var reader = new BinaryReader(stream, Encoding.UTF8, false))
+                    {
+                        List<int> ChestIndexs = new List<int>();
+                        int Xlenght = reader.ReadInt32();
+                        int Ylenght = reader.ReadInt32();
+                        for (int i = 0; i <= Xlenght; i++)
+                        {
+
+                            for (int j = 0; j <= Ylenght; j++)
+                            {
+                                Tile t = Framing.GetTileSafely((int)(BottomLeft.X + i), (int)(BottomLeft.Y - j));
+                                t.ClearEverything();
+                                //tile
+                                bool hastile = reader.ReadBoolean();
+                                t.LiquidType = reader.ReadInt32();
+                                t.LiquidAmount = reader.ReadByte();
+                                t.BlueWire = reader.ReadBoolean();
+                                t.RedWire = reader.ReadBoolean();
+                                t.GreenWire = reader.ReadBoolean();
+                                t.YellowWire = reader.ReadBoolean();
+                                t.HasActuator = reader.ReadBoolean();
+                                t.IsActuated = reader.ReadBoolean();
+                                if (hastile)
+                                {
+                                    t.HasTile = hastile;
+                                    bool Modded = reader.ReadBoolean();
+                                    int TileType = 0;
+                                    if (Modded)
+                                    {
+                                        TileType = ReadModTile(reader);
+                                    }
+                                    else
+                                    {
+                                        TileType = reader.ReadInt16();
+                                    }
+                                    t.TileType = (ushort)TileType;
+                                    t.BlockType = (BlockType)reader.ReadByte();
+                                    t.IsHalfBlock = reader.ReadBoolean();
+                                    //t.LiquidType = reader.ReadInt32();
+                                    t.Slope = (SlopeType)reader.ReadByte();
+                                    t.TileFrameNumber = reader.ReadInt32();
+                                    t.TileFrameX = reader.ReadInt16();
+                                    t.TileFrameY = reader.ReadInt16();
+                                    bool Chest = reader.ReadBoolean();
+                                    if (Chest)
+                                    {
+                                        ChestIndexs.Add(Terraria.Chest.CreateChest((int)(BottomLeft.X + i), (int)(BottomLeft.Y - j)));
+                                    }
+                                    //byte slope = reader.ReadByte();
+
+
+                                }
+                                //wall
+                                int WallType = 0;
+                                bool ModdedWall = reader.ReadBoolean();
+                                if (ModdedWall)
+                                {
+                                    WallType = ReadModWall(reader);
+                                }
+                                else
+                                {
+                                    WallType = reader.ReadInt16();
+                                }
+                                t.WallType = (ushort)WallType;
+                                t.WallFrameX = reader.ReadInt32();
+                                t.WallFrameY = reader.ReadInt32();
+                            }
+                        }
+                        return ChestIndexs.ToArray();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Main.NewText(ex);
+                return null;
+            }
+        }
         static Point? BottomLeft = null;
         static Mod Mod = ModContent.GetInstance<Malignant>();
         /// <summary>
@@ -261,17 +346,23 @@ namespace Malignant.Core
             writer.Write(tModTile.GetType().Name);
         }
     }
+    //Testing Item
     public class SaveItem : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Structure Saver");
+            Tooltip.SetDefault("Item used in mod development, use at your own risk! \n if you are a mod dev, go Bottom Left to Top Right");
+        }
         public override string Texture => $"Terraria/Images/Item_{ItemID.MagicCuffs}"; //I do not do spriting
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.MagicConch);
             Item.useTime = Item.useAnimation = 15;
+
         }
         public override bool? UseItem(Player player)
         {
-
             StructureLoader.SaveStruct(Main.MouseWorld.ToTileCoordinates());
             return true;
         }
@@ -279,6 +370,11 @@ namespace Malignant.Core
     }
     public class PlaceItem : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Structure Tester");
+            Tooltip.SetDefault("Item used in mod development, use at your own risk!");
+        }
         public override string Texture => $"Terraria/Images/Item_{ItemID.Shackle}"; //I do not do  spriting
         public override void SetDefaults()
         {
@@ -287,8 +383,7 @@ namespace Malignant.Core
         }
         public override bool? UseItem(Player player)
         {
-
-            StructureLoader.ReadStruct(Main.MouseWorld.ToTileCoordinates(), "SavedStruct");
+            StructureLoader.TestReadStruct(Main.MouseWorld.ToTileCoordinates());
             return true;
         }
     }
