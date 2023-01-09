@@ -20,7 +20,7 @@ namespace Malignant.Content.Items.Prayer
 
     public class FireballAbility : PrayerAbility
     {
-        public override string DisplayName => "Fireball";
+        public override string DisplayName => "Flames of God";
         public override int Cooldown => 30;
 
         protected override void OnUseAbility(Player player, EntitySource_PrayerAbility source)

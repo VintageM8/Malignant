@@ -5,6 +5,7 @@ using System;
 using Terraria.ID;
 using Malignant.Content.Items.Accessories.Expert.Moniter;
 
+//DONT CHANGE THIS NAMESPACE
 namespace Malignant.Common
 {
     public class MalignantPlayer : ModPlayer

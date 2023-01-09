@@ -16,18 +16,18 @@ using Terraria.Audio;
 
 namespace Malignant.Content.Items.Prayer
 {
-    public class SmiteOfSabbathPrayer : PrayerItem
+    public class SabbathPrayer : PrayerItem
     {
-        public override string Texture => base.Texture.Replace(nameof(SmiteOfSabbathPrayer), "PrayerTest");
-        public override string AbilityType => PrayerContent.AbilityType<SmiteOfSabbathAbility>();
+        public override string Texture => base.Texture.Replace(nameof(SabbathPrayer), "PrayerTest");
+        public override string AbilityType => PrayerContent.AbilityType<SabbathAbility>();
     }
 
-    public class SmiteOfSabbathAbility : PrayerAbility
+    public class SabbathAbility : PrayerAbility
     {
-        public override string TexturePath => base.TexturePath.Replace(nameof(SmiteOfSabbathAbility), "PrayerTest");
-        public override string DisplayName => "Smite of the Sabbath";
+        public override string TexturePath => base.TexturePath.Replace(nameof(SabbathAbility), "PrayerTest");
+        public override string DisplayName => "Sabbath of the Sabbath";
         public override int Cooldown => 80;
-        public override SoundStyle SelectSound => SoundManager.Sounds["Biter"];
+        public override SoundStyle SwapSound => SoundManager.Sounds["Biter"];
 
         protected override void OnUseAbility(Player player, EntitySource_PrayerAbility source)
         {

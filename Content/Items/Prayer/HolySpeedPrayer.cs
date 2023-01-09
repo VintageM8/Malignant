@@ -19,7 +19,7 @@ namespace Malignant.Content.Items.Prayer
 
     public class HolySpeedAbility : PrayerAbility
     {
-        public override string DisplayName => "Holy Speed";
+        public override string DisplayName => "Speed of the Holy";
         public override int Cooldown => 660; // also temporary, TODO balance
         
         public override IEnumerator OnUseAbilityRoutine(Player player, EntitySource_PrayerAbility source)
