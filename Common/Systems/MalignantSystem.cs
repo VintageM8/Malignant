@@ -19,13 +19,13 @@ public class MalignantSystem : ModSystem
     public void CreateChurch(GenerationProgress progress, GameConfiguration g)
     {
         progress.Message = "Creating Church(Maligant)";
-         Point Location = FindChurchLoc();
+         Point Location = FindChurchLoc(out int Move);
         //WorldGen.PlaceTile(Location.X, Location.Y, TileID.AmberGemspark);
         //no chests
         StructureLoader.ReadStruct(Location, "Assets/Structures/Church");
-        for(int i = 0; i < 121; i++)
+        for(int i = -3; i < 135; i++)
         {
-            for(int j = 0; j < 8; j++)
+            for(int j = 0; j < Math.Min(Move, 20); j++)
             {
                 WorldGen.PlaceTile(Location.X + i, Location.Y + j, TileID.Dirt, true, true);
             }
@@ -56,8 +56,7 @@ public class MalignantSystem : ModSystem
                 }
                 else
                 {
-                    if (!Framing.GetTileSafely(n).HasTile || Framing.GetTileSafely(n).TileType == TileID.Trees)
-                    {
+                    if ((!Framing.GetTileSafely(n).HasTile || Framing.GetTileSafely(n).TileType == TileID.Trees) && Framing.GetTileSafely(n).WallType != WallID.DirtUnsafe)                    {
                         return false;
                     }
                 }
@@ -66,7 +65,7 @@ public class MalignantSystem : ModSystem
         return true;
         //idk what I was doing here but it should work
     }
-    public Point FindChurchLoc()
+    public Point FindChurchLoc(out int Move)
     {
         int attemptNum = 0;
         while (attemptNum < MaxAttempts)
@@ -76,10 +75,13 @@ public class MalignantSystem : ModSystem
             Point p = new Point(Main.spawnTileX, (int)Main.worldSurface) + new Point(Main.rand.Next(50, 600) * side, Main.rand.Next(-60, -25));
             if (VaildChurchLoc(p))
             {
+                int Movement = 0; ;
                 while (Framing.GetTileSafely(p).HasTile)
                 {
+                    Movement++;
                     p.Y -= 1;
                 }
+                Move = Movement;
                 return p;
             }
             
