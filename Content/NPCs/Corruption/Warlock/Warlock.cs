@@ -10,11 +10,10 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.ItemDropRules;
 using static Terraria.ModLoader.ModContent;
-using Malignant.Content.Items.Weapon.Corruption.Warlock.CorruptedCord;
-using Malignant.Content.Items.Weapon.Corruption.Warlock.MonchBow;
-using Malignant.Content.Items.Weapon.Corruption.Warlock.NightsisterBlade;
-using Malignant.Content.Items.Weapon.Corruption.Warlock.StaffofFlame;
-
+using Malignant.Content.Items.Corruption.Warlock.CorruptedCord;
+using Malignant.Content.Items.Corruption.Warlock.MonchBow;
+using Malignant.Content.Items.Corruption.Warlock.NightsisterBlade;
+using Malignant.Content.Items.Corruption.Warlock.StaffofFlame;
 
 namespace Malignant.Content.NPCs.Corruption.Warlock
 {

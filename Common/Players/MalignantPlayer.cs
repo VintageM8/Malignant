@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using System;
 using Terraria.ID;
-using Malignant.Content.Items.Accessories.Expert.Moniter;
+using Malignant.Content.Items.Crimson.Arterion.MoniterAccessory
 
 //DONT CHANGE THIS NAMESPACE
 namespace Malignant.Common

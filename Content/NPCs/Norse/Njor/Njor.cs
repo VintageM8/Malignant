@@ -6,9 +6,9 @@ using Microsoft.Xna.Framework;
 using Malignant.Content.Projectiles.Enemy.Njor;
 using Terraria.GameContent.ItemDropRules;
 using static Terraria.ModLoader.ModContent;
-using Malignant.Content.Items.Weapon.Njor;
-using Malignant.Content.Items.Weapon.Njor.NjorStaff;
-using Malignant.Content.Items.Weapon.Njor.NjorSword;
+using Malignant.Content.Items.Snow.Cocytus;
+using Malignant.Content.Items.Snow.Cocytus.NjorStaff;
+using Malignant.Content.Items.Snow.Cocytus.NjorSword;
 
 namespace Malignant.Content.NPCs.Norse.Njor
 {
