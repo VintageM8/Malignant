@@ -1,4 +1,5 @@
 ﻿using Malignant.Common;
+using Malignant.Content.Dusts;
 using System;
 using System.Collections.Generic;
 
@@ -20,6 +21,7 @@ namespace Malignant.Content.Items.Prayer
         public override string DisplayName => "Communion";
         protected override void OnUseAbility(Player player, EntitySource_PrayerAbility source)
         {
+            Dust.NewDust(player.position - Microsoft.Xna.Framework.Vector2.UnitX * player.width * 0.25f, (int)(player.width * 1.5f), player.height, DustID.GoldCoin, Scale: Main.rand.NextFloat(0.8f, 1.2f));
             // TODO: Healing Projectile
         }
     }

@@ -13,6 +13,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.Audio;
+using Malignant.Content.Buffs;
 
 namespace Malignant.Content.Items.Prayer
 {
@@ -26,7 +27,7 @@ namespace Malignant.Content.Items.Prayer
     {
         public override string TexturePath => base.TexturePath.Replace(nameof(SmiteOfSabbathAbility), "PrayerTest");
         public override string DisplayName => "Smite of the Sabbath";
-        public override int Cooldown => 80;
+        public override int Cooldown => 120;
         public override SoundStyle SwapSound => SoundManager.Sounds["Biter"];
 
         protected override void OnUseAbility(Player player, EntitySource_PrayerAbility source)
@@ -37,18 +38,18 @@ namespace Malignant.Content.Items.Prayer
             double deltaAngle = spread / 8f;
             double offsetAngle = startAngle + deltaAngle * (i + i * i) / 2f + 32f * i;
 
-            Projectile.NewProjectile(source, player.Center.X, player.Center.Y, (float)(Math.Sin(offsetAngle) * 3f), (float)(Math.Cos(offsetAngle) * 3f), ModContent.ProjectileType<HolyWind>(), 10, 0f, player.whoAmI);
+            Projectile.NewProjectile(source, player.Center.X, player.Center.Y, (float)(Math.Sin(offsetAngle) * 3f), (float)(Math.Cos(offsetAngle) * 3f), ModContent.ProjectileType<WindsofGod>(), 10, 0f, player.whoAmI);
         }
-
-        /*
+        
+        
         public override IEnumerator OnUseAbilityRoutine(Player player, EntitySource_PrayerAbility source)
         {
-            // Write "fart" every frame for 60 frames
-            for (int i = 0; i < 60; i++)
+            
+            for (int i = 0; i < 120; i++)
             {
-                Main.NewText("fart");
+                Main.NewText("Prayer Cooldown Over");
                 yield return null;
             }
-        }*/
+        }
     }
 }
