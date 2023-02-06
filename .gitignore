@@ -3,3 +3,4 @@ obj/
 bin/
 .idea/
 /Content/Items/Spider/SpiderFangNecklace
+/Common/Players/MalignantPlayer.cs
