@@ -249,7 +249,7 @@ namespace Malignant.Common
 
         public virtual SoundStyle SelectSound => SoundID.Tink;
         public virtual SoundStyle UseSound => SoundID.Unlock;
-
+        public virtual SoundStyle SwapSound => SoundID.Unlock;
         public void Load()
         {
             Texture = ModContent.Request<Texture2D>(TexturePath, AssetRequestMode.ImmediateLoad).Value;

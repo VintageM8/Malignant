@@ -25,7 +25,7 @@ namespace Malignant.Content.Items.Misc.HolyGreatsword
             Item.height = 0;
             Item.useTime = 100;
             Item.useAnimation = 100;
-            Item.useStyle = ItemUseStyleID.Ra;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 4;
             Item.value = 10000;
             Item.noMelee = true;

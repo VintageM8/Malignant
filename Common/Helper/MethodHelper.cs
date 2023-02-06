@@ -47,7 +47,7 @@ namespace Malignant.Common.Helper
         public static void Move(this Projectile projectile, Vector2 vector, float speed, float turnResistance = 10f,
             bool toPlayer = false)
         {
-            Terraria.Player player = Main.player[projectile.owner];
+            Player player = Main.player[projectile.owner];
             Vector2 moveTo = toPlayer ? player.Center + vector : vector;
             Vector2 move = moveTo - projectile.Center;
             float magnitude = Magnitude(move);
