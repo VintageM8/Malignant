@@ -18,7 +18,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
 
-namespace Malignant.Common
+namespace Malignant.Common.Systems
 {
     public class PrayerSystem : ModPlayer
     {
@@ -70,7 +70,7 @@ namespace Malignant.Common
         {
             ManageCoroutines();
         }
-        
+
         public override void PostUpdate()
         {
             ManageCooldowns();
@@ -263,7 +263,7 @@ namespace Malignant.Common
 
         public virtual void OnLoad()
         {
-            
+
         }
 
         public virtual void OnUnload()
@@ -375,7 +375,7 @@ namespace Malignant.Common
                 Main.NewText("You've learned the " + PrayerContent.GetAbility(AbilityType).DisplayName + " prayer.");
                 prayerSystem.Abilities.Add(PrayerContent.GetAbility(AbilityType));
             }
-                
+
 
             return shouldAddAbility;
         }

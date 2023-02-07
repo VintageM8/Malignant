@@ -3,8 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Malignant.Common;
 using Terraria.ModLoader;
+using Malignant.Common.Players;
 
 namespace Malignant.Content.Items.Snow.Cocytus.NjorSword
 {

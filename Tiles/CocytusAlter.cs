@@ -6,9 +6,9 @@ using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Malignant.Common;
+using Malignant.Common.Systems;
 
-namespace Malignant.Content.Tiles
+namespace Malignant.Tiles
 {
     public class CocytusAlter : ModTile
     {
@@ -63,7 +63,7 @@ namespace Malignant.Content.Tiles
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Main.NewText("Cocytus has awoken!", 175, 75, 255);
-                int npcID = NPC.NewNPC(new EntitySource_TileBreak(i, j), i * 16, (j * 16) - 600, ModContent.NPCType<Njor>());
+                int npcID = NPC.NewNPC(new EntitySource_TileBreak(i, j), i * 16, j * 16 - 600, ModContent.NPCType<Njor>());
                 Main.npc[npcID].netUpdate2 = true;
             }
             else

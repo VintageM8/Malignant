@@ -1,7 +1,7 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Malignant.Common;
+using Malignant.Common.Players;
 
 namespace Malignant.Content.Items.Crimson.Arterion.MoniterAccessory
 {

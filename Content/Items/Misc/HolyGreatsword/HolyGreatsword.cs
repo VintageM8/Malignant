@@ -1,11 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Audio;
-using Malignant.Content.Items.Misc.WarbladeofLight;
-using Malignant.Content.Items.Snow.Cocytus.NjorSword;
-using Terraria.DataStructures;
+using static Malignant.Common.CustomSwingStyle;
 
 namespace Malignant.Content.Items.Misc.HolyGreatsword
 {
@@ -21,30 +17,21 @@ namespace Malignant.Content.Items.Misc.HolyGreatsword
         {
             Item.damage = 16;
             Item.DamageType = DamageClass.Melee;
-            Item.width = 0;
-            Item.height = 0;
-            Item.useTime = 100;
-            Item.useAnimation = 100;
-            Item.useStyle = ItemUseStyleID.Swing;
+            Item.width = Item.height = 90;
+            Item.useTime = 20;
+            Item.useAnimation = 20;
+            Item.useStyle = CustomUsestyleID.SwingVersionTwo;
             Item.knockBack = 4;
             Item.value = 10000;
-            Item.noMelee = true;
 
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<HolyGSProj>();
-            Item.shootSpeed = 20f;
+            //Item.noMelee = true;
+            //Item.shoot = ModContent.ProjectileType<HolyGSProj>();
+            //Item.shootSpeed = 20f;
             Item.noUseGraphic = true;
             Item.value = Item.sellPrice(0, 2, 50, 0);
             Item.rare = ItemRarityID.LightPurple;
-        }
-
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-
-            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 1);
-
-            return false;
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Malignant.Common.Projectiles.Orbiting;
-using Malignant.Common;
 using Terraria.GameContent;
 using Malignant.Content.Items.Misc;
 using Microsoft.Xna.Framework;
@@ -9,6 +8,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Malignant.Common.Systems;
+using Malignant.Common.Players;
 
 namespace Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger
 {

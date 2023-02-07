@@ -1,7 +1,7 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Malignant.Content.Tiles;
+using Malignant.Tiles;
 
 namespace Malignant.Content.Items
 {

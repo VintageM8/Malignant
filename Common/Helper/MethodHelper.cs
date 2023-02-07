@@ -131,5 +131,14 @@ namespace Malignant.Common.Helper
 
             return values;
         }
+
+        //LowQualityTrash Xinim Math relate stuff
+        public static float InExpo(float t) => (float)Math.Pow(2, 5 * (t - 1));
+        public static float OutExpo(float t) => 1 - InExpo(1 - t);
+        public static float InOutExpo(float t)
+        {
+            if (t < 0.5) return InExpo(t * 2) / 2;
+            return 1 - InExpo((1 - t) * 2) / 2;
+        }
     }
 }

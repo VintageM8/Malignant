@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
-using Malignant.Common;
 using Terraria.ModLoader;
+using Malignant.Common.Players;
 
 namespace Malignant.Content.Items.Snow.Cocytus.NjorSword
 {

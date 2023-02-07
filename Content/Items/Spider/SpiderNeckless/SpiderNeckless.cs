@@ -1,12 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Security.Cryptography.X509Certificates;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Malignant.Content.Items.Spider.SpiderFangNecklace
+namespace Malignant.Content.Items.Spider.SpiderNeckless
 {
-    internal class SpiderFangNecklace : ModItem
+    [AutoloadEquip(EquipType.Front)]
+    internal class SpiderNeckless : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("Inflict Venom");
+        }
         public override void SetDefaults()
         {
             Item.DefaultToAccessory(30, 32);
@@ -15,14 +21,14 @@ namespace Malignant.Content.Items.Spider.SpiderFangNecklace
         }
         public override void UpdateEquip(Player player)
         {
-            player.GetModPlayer<SpiderNecklessPlayer>().SpiderNeckless = true;
+            player.GetModPlayer<SpiderFangNecklessPlayer>().SpiderFangNeckless = true;
         }
         public override void AddRecipes()
         {
             CreateRecipe()
                 .AddIngredient(ItemID.SharkToothNecklace)
                 .AddIngredient(ItemID.SpiderFang, 10)
-                .AddTile(TileID.Anvils)
+                .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
     }
@@ -31,6 +37,7 @@ namespace Malignant.Content.Items.Spider.SpiderFangNecklace
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 12;
+            Projectile.tileCollide = true;
             Projectile.timeLeft = 100;
             Projectile.friendly = true;
             Projectile.penetrate = 1;
@@ -39,35 +46,43 @@ namespace Malignant.Content.Items.Spider.SpiderFangNecklace
         int count = 0;
         public override void AI()
         {
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             if (count >= 10)
             {
                 Projectile.velocity.Y += Projectile.velocity.Y < 20 ? .5f : 0;
             }
             count++;
+            Projectile.alpha += 2;
+        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.AddBuff(BuffID.Venom, 60);
         }
     }
-    class SpiderNecklessPlayer : ModPlayer
+    class SpiderFangNecklessPlayer : ModPlayer
     {
-        public bool SpiderNeckless = false;
+        public bool SpiderFangNeckless = false;
         public override void ResetEffects()
         {
-            SpiderNeckless = false;
+            SpiderFangNeckless = false;
             base.ResetEffects();
         }
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
         {
-            if (SpiderNeckless)
+            if (SpiderFangNeckless)
             {
                 target.AddBuff(BuffID.Venom, 60);
             }
         }
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
         {
-            if (SpiderNeckless)
+            if (SpiderFangNeckless)
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Main.rand.NextVector2Unit(-MathHelper.PiOver4, MathHelper.PiOver4), ModContent.ProjectileType<SpiderFangProjectile>(), 30, 1f, Player.whoAmI);
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center,
+                        Main.rand.NextVector2Unit(-MathHelper.PiOver2 - MathHelper.PiOver4, MathHelper.PiOver4) * Main.rand.NextFloat(7f, 10f)
+                        , ModContent.ProjectileType<SpiderFangProjectile>(), 30, 1f, Player.whoAmI);
                 }
             }
         }

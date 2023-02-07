@@ -1,4 +1,4 @@
-﻿using Malignant.Common;
+﻿using Malignant.Common.Systems;
 using Malignant.Content.Dusts;
 using Malignant.Content.Projectiles.Prayer;
 using Microsoft.Xna.Framework;

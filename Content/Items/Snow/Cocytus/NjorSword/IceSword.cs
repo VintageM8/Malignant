@@ -4,7 +4,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Malignant.Common;
+using Malignant.Common.Players;
 
 namespace Malignant.Content.Items.Snow.Cocytus.NjorSword
 {

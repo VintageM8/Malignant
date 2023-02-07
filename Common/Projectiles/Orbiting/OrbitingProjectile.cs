@@ -1,3 +1,4 @@
+using Malignant.Common.Players;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;

@@ -6,7 +6,7 @@ using Terraria.ID;
 using Malignant.Content.Items.Crimson.Arterion.MoniterAccessory;
 
 //DONT CHANGE THIS NAMESPACE
-namespace Malignant.Common
+namespace Malignant.Common.Players
 {
     public class MalignantPlayer : ModPlayer
     {
@@ -96,7 +96,7 @@ namespace Malignant.Common
             for (int i = 0; i < OrbitingProjectileCount[0]; i++)
             {
                 //Radius 200.
-                OrbitingProjectilePositions[0, i] = Player.Center + new Vector2(200 * (float)Math.Cos(period * (RotationTimer + (300 / OrbitingProjectileCount[0] * i))), 200 * (float)Math.Sin(period * (RotationTimer + (300 / OrbitingProjectileCount[0] * i))));
+                OrbitingProjectilePositions[0, i] = Player.Center + new Vector2(200 * (float)Math.Cos(period * (RotationTimer + 300 / OrbitingProjectileCount[0] * i)), 200 * (float)Math.Sin(period * (RotationTimer + 300 / OrbitingProjectileCount[0] * i)));
             }
         }
 
@@ -136,7 +136,7 @@ namespace Malignant.Common
                 {
                     for (int i = 0; i < projectiles; i++)
                     {
-                        Projectile.NewProjectile(Player.GetSource_OnHurt(null), Player.Center, new Vector2(7).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<BloodRune>(), 19, 2, Player.whoAmI);
+                        Projectile.NewProjectile(Player.GetSource_OnHurt(null), Player.Center, new Vector2(7).RotatedBy(MathHelper.ToRadians(360 / projectiles * i + i)), ModContent.ProjectileType<BloodRune>(), 19, 2, Player.whoAmI);
                     }
                 }
             }
