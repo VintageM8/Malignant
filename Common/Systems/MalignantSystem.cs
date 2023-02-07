@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 using Malignant.Core;
 
-namespace Malignant.Common;
+namespace Malignant.Common.Systems;
 
 public class MalignantSystem : ModSystem
 {
@@ -19,44 +19,46 @@ public class MalignantSystem : ModSystem
     public void CreateChurch(GenerationProgress progress, GameConfiguration g)
     {
         progress.Message = "Creating Church(Maligant)";
-         Point Location = FindChurchLoc(out int Move);
+        Point Location = FindChurchLoc(out int Move);
         //WorldGen.PlaceTile(Location.X, Location.Y, TileID.AmberGemspark);
         //no chests
         StructureLoader.ReadStruct(Location, "Assets/Structures/Church");
-        for(int i = -3; i < 135; i++)
+        for (int i = -3; i < 135; i++)
         {
-            for(int j = 0; j < Math.Min(Move, 20); j++)
+            for (int j = 0; j < Math.Min(Move, 20); j++)
             {
                 WorldGen.PlaceTile(Location.X + i, Location.Y + j, TileID.Dirt, true, true);
             }
         }
     }
-   
+
     private bool VaildChurchLoc(Point p)
-    { 
+    {
         for (int i = 0; i < 100; i++)
         {
             for (int j = -5; j < 10; j++)
-            {   
+            {
                 Point n = new Point(i, -j) + p;
                 if (j < 0)
                 {
                     Tile t = Framing.GetTileSafely(n);
-                    if (!(t.WallType == WallID.DirtUnsafe || t.TileType == TileID.Dirt || t.TileType == TileID.Grass)) {
+                    if (!(t.WallType == WallID.DirtUnsafe || t.TileType == TileID.Dirt || t.TileType == TileID.Grass))
+                    {
                         return false;
                     }
                 }
                 else if (j < 5)
                 {
                     Tile t = Framing.GetTileSafely(n);
-                    if (!(t.WallType == WallID.DirtUnsafe || t.TileType == TileID.Dirt || t.TileType == TileID.Dirt || t.TileType == TileID.Stone) || !(t.HasTile))
+                    if (!(t.WallType == WallID.DirtUnsafe || t.TileType == TileID.Dirt || t.TileType == TileID.Dirt || t.TileType == TileID.Stone) || !t.HasTile)
                     {
                         return false;
                     }
                 }
                 else
                 {
-                    if ((!Framing.GetTileSafely(n).HasTile || Framing.GetTileSafely(n).TileType == TileID.Trees) && Framing.GetTileSafely(n).WallType != WallID.DirtUnsafe)                    {
+                    if ((!Framing.GetTileSafely(n).HasTile || Framing.GetTileSafely(n).TileType == TileID.Trees) && Framing.GetTileSafely(n).WallType != WallID.DirtUnsafe)
+                    {
                         return false;
                     }
                 }
@@ -84,8 +86,8 @@ public class MalignantSystem : ModSystem
                 Move = Movement;
                 return p;
             }
-            
-         }
+
+        }
         throw new Exception($"Failed to find a Church Location in {MaxAttempts} tries");
     }
 

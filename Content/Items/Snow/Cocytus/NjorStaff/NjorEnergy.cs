@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
-using Malignant.Common;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Malignant.Common.Players;
 
 namespace Malignant.Content.Items.Snow.Cocytus.NjorStaff
 {

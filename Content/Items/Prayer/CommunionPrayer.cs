@@ -1,4 +1,4 @@
-﻿using Malignant.Common;
+﻿using Malignant.Common.Systems;
 using Malignant.Content.Dusts;
 using System;
 using System.Collections.Generic;

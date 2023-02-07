@@ -47,7 +47,7 @@ namespace Malignant.Common.Helper
         public static void Move(this Projectile projectile, Vector2 vector, float speed, float turnResistance = 10f,
             bool toPlayer = false)
         {
-            Terraria.Player player = Main.player[projectile.owner];
+            Player player = Main.player[projectile.owner];
             Vector2 moveTo = toPlayer ? player.Center + vector : vector;
             Vector2 move = moveTo - projectile.Center;
             float magnitude = Magnitude(move);
@@ -130,6 +130,15 @@ namespace Malignant.Common.Helper
             }
 
             return values;
+        }
+
+        //LowQualityTrash Xinim Math relate stuff
+        public static float InExpo(float t) => (float)Math.Pow(2, 5 * (t - 1));
+        public static float OutExpo(float t) => 1 - InExpo(1 - t);
+        public static float InOutExpo(float t)
+        {
+            if (t < 0.5) return InExpo(t * 2) / 2;
+            return 1 - InExpo((1 - t) * 2) / 2;
         }
     }
 }

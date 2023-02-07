@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.ModLoader;
 
-namespace Malignant.Common
+namespace Malignant.Common.Systems
 {
     public class MalignantKeybingSystem : ModSystem
     {

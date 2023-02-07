@@ -74,7 +74,7 @@ namespace Malignant.Content.Items.Hell
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 5; i++)
-            {                
+            {
                 Dust.NewDustPerfect(Projectile.Center + new Vector2(0f, 28f), DustID.CrimsonTorch, (Projectile.velocity * 0.75f).RotatedByRandom(MathHelper.ToRadians(10f)), 0, new Color(255, 255, 60) * 0.8f, 1.15f);
 
                 Dust.NewDustPerfect(Projectile.Center, DustID.CrimsonTorch, (Projectile.velocity * Main.rand.NextFloat(0.5f, 0.6f)).RotatedByRandom(MathHelper.ToRadians(15f)), 0, new Color(150, 80, 40), Main.rand.NextFloat(0.25f, 0.5f));
@@ -125,6 +125,18 @@ namespace Malignant.Content.Items.Hell
                 }
             }
             Projectile.Kill();
+        }
+    }
+    class Explosion : ModProjectile
+    {
+        public override string Texture => "Malignant/Content/Items/Hell/DemonShotProj";
+        public override void SetDefaults()
+        {
+            Projectile.hide = true;
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 1;
+            Projectile.friendly = true;
+            Projectile.width = Projectile.height = 100;
         }
     }
 }

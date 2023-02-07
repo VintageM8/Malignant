@@ -95,8 +95,21 @@ namespace Malignant.Content.Items.Misc.WarbladeofLight
             }
             if (Projectile.owner == Main.myPlayer)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<Explosion>(), Projectile.damage, 0, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<Explosion2>(), Projectile.damage, 0, Main.myPlayer);
             }
+        }
+    }
+    public class Explosion2 : ModProjectile
+    {
+        public override string Texture => "Malignant/Content/Items/Misc/WarbladeofLight/WarbladeofLight";
+        public override void SetDefaults()
+        {
+            Projectile.width = Projectile.height = 50;
+            Projectile.hide = true;
+            Projectile.timeLeft = 1;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.friendly = true;
         }
     }
 }

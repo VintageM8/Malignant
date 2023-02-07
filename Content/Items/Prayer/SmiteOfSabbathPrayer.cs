@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.Audio;
 using Malignant.Content.Buffs;
+using Malignant.Common.Systems;
 
 namespace Malignant.Content.Items.Prayer
 {
