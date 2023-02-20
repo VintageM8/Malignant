@@ -6,7 +6,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Malignant.Content.Items.Crimson.Arterion.StaffofCarnem
+namespace Malignant.Content.Items.Crimson.StaffofCarnem
 {
     public class StaffofCarnem : ModItem
     {

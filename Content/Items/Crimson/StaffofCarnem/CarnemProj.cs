@@ -9,7 +9,7 @@ using Malignant.Common.Helper;
 using Malignant.Content.Items.Crimson.Arterion.BurstingArtery;
 using Malignant.Core;
 
-namespace Malignant.Content.Items.Crimson.Arterion.StaffofCarnem
+namespace Malignant.Content.Items.Crimson.StaffofCarnem
 {
     public class CarnemProj : ModProjectile
     {
@@ -46,11 +46,11 @@ namespace Malignant.Content.Items.Crimson.Arterion.StaffofCarnem
             }
             if (Projectile.ai[1] > 0f)
             {
-                //MethodHelper.SineWave(this.Projectile, 5f, 1f, 5, true, null, false);
+                MethodHelper.SineWave(this.Projectile, 5f, 1f, 5, true, null, false);
             }
             else
             {
-                //MethodHelper.SineWave(this.Projectile, -5f, 1f, 5, true, null, false);
+                MethodHelper.SineWave(this.Projectile, -5f, 1f, 5, true, null, false);
             }            Projectile.ai[0] += 1f;
             DelegateMethods.v3_1 = new Vector3(0.5f, 0.1f, 0.1f);
 
