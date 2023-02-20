@@ -181,6 +181,7 @@ namespace Malignant.Common
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 1;
             Projectile.hide = true;
+            Projectile.DamageType = DamageClass.Melee;
         }
     }
 }
