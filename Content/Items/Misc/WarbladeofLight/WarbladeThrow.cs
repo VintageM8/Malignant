@@ -12,6 +12,12 @@ namespace Malignant.Content.Items.Misc.WarbladeofLight
 
         private int framereset;
         private int timer;
+        
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 3;
+        }
 
         public override void SetDefaults()
         {
@@ -99,6 +105,22 @@ namespace Malignant.Content.Items.Misc.WarbladeofLight
             }
         }
     }
+    
+    public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+            for (int k = 0; k < Projectile.oldPos.Length; k++)
+            {
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(Color.Pink) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            }
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            return false;
+        }
+     
     public class Explosion2 : ModProjectile
     {
         public override string Texture => "Malignant/Content/Items/Misc/WarbladeofLight/WarbladeofLight";
