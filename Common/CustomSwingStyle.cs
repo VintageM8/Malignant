@@ -15,6 +15,7 @@ namespace Malignant.Common
         {
             public const int SwingVersionTwo = 16;
         }
+        const float PLAYERARMLENGTH = 11f;
         public override void UseItemHitbox(Item item, Player player, ref Rectangle hitbox, ref bool noHitbox)
         {
             //this remain untouch cause idk what in the hell should i change here
@@ -28,6 +29,7 @@ namespace Malignant.Common
                 Vector2 endPos = handPos;
 
                 //Use values obtained above to construct an approximation of the two most important points
+                handPos *= PLAYERARMLENGTH;
                 endPos *= length;
                 handPos += player.MountedCenter;
                 endPos += player.MountedCenter;
@@ -66,7 +68,7 @@ namespace Malignant.Common
                 //    CircleSwingAttack(player, modPlayer);
                 //    return;
                 //}
-                SwingVersionTwoAttack(player, modPlayer);
+                SwingVersionTwoAttack(player, Item, modPlayer);
             }
         }
         private static (int, int) Order(float v1, float v2) => v1 < v2 ? ((int)v1, (int)v2) : ((int)v2, (int)v1);
@@ -84,7 +86,7 @@ namespace Malignant.Common
             }
             base.ModifyHitNPC(Item, player, target, ref damage, ref knockBack, ref crit);
         }
-        private void SwingVersionTwoAttack(Player player, MeleeOverhaulPlayer modPlayer)
+        private void SwingVersionTwoAttack(Player player,Item item, MeleeOverhaulPlayer modPlayer)
         {
             int VerticleDirectionSwingVersionTwo = modPlayer.count == 0 ? -1 : 1;
             float percentDone = player.itemAnimation / (float)player.itemAnimationMax;
@@ -96,7 +98,7 @@ namespace Malignant.Common
             player.itemRotation = currentAngle;
             player.itemRotation += player.direction > 0 ? MathHelper.PiOver4 : MathHelper.PiOver4 * 3f;
             player.compositeFrontArm = new Player.CompositeArmData(true, Player.CompositeArmStretchAmount.Full, currentAngle - MathHelper.PiOver2);
-            player.itemLocation = player.MountedCenter + Vector2.UnitX.RotatedBy(currentAngle);
+            player.itemLocation = player.MountedCenter + Vector2.UnitX.RotatedBy(currentAngle) * PLAYERARMLENGTH;
         }
     }
     public class MeleeOverhaulPlayer : ModPlayer
