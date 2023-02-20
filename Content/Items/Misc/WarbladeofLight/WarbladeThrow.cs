@@ -1,5 +1,8 @@
-﻿using Malignant.Content.Projectiles;
+﻿using Terraria.GameContent;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+using Malignant.Content.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,6 +15,11 @@ namespace Malignant.Content.Items.Misc.WarbladeofLight
 
         private int framereset;
         private int timer;
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 3;
+        }
 
         public override void SetDefaults()
         {
@@ -95,21 +103,23 @@ namespace Malignant.Content.Items.Misc.WarbladeofLight
             }
             if (Projectile.owner == Main.myPlayer)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<Explosion2>(), Projectile.damage, 0, Main.myPlayer);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<Explosion>(), Projectile.damage, 0, Main.myPlayer);
             }
         }
-    }
-    public class Explosion2 : ModProjectile
-    {
-        public override string Texture => "Malignant/Content/Items/Misc/WarbladeofLight/WarbladeofLight";
-        public override void SetDefaults()
+
+        public override bool PreDraw(ref Color lightColor)
         {
-            Projectile.width = Projectile.height = 50;
-            Projectile.hide = true;
-            Projectile.timeLeft = 1;
-            Projectile.penetrate = -1;
-            Projectile.tileCollide = false;
-            Projectile.friendly = true;
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+            for (int k = 0; k < Projectile.oldPos.Length; k++)
+            {
+                Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(Color.Pink) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+                Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            }
+
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+            return false;
         }
     }
 }
