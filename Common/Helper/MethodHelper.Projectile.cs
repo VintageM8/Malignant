@@ -69,5 +69,37 @@ namespace Malignant.Common.Helper
 
             return whoAmI;
         }
+        public static void SineWave(this Projectile projectile, float timer, float amplitude, float waveStep, bool firstTick, Action<Projectile> changeDirection = null, bool reverseWave = false)
+        {
+            float num = timer * waveStep;
+            float num2 = (float)Math.Sin((double)num) * amplitude;
+            float num3;
+            float num4;
+            if (firstTick)
+            {
+                num3 = projectile.velocity.Length();
+                num4 = Terraria.Utils.ToRotation(projectile.velocity);
+            }
+            else
+            {
+                float num5 = num2 - (float)Math.Sin((double)(num - waveStep)) * amplitude;
+                num3 = (float)Math.Sqrt((double)(projectile.velocity.LengthSquared() - num5 * num5));
+                num4 = Terraria.Utils.ToRotation(Terraria.Utils.RotatedBy(projectile.velocity, (double)(-(double)Terraria.Utils.ToRotation(new Vector2(num3, num5))), default(Vector2)));
+            }
+            if (changeDirection != null)
+            {
+                projectile.velocity = Terraria.Utils.ToRotationVector2(num4) * num3;
+                changeDirection(projectile);
+                num4 = Terraria.Utils.ToRotation(projectile.velocity);
+                num3 = projectile.velocity.Length();
+            }
+            if (reverseWave)
+            {
+                amplitude *= -1f;
+                num2 *= -1f;
+            }
+            projectile.velocity = Terraria.Utils.RotatedBy(new Vector2(num3, (float)Math.Sin((double)(num + waveStep)) * amplitude - num2), (double)num4, default(Vector2));
+            projectile.rotation = Terraria.Utils.ToRotation(projectile.velocity) + 1.5707964f;
+        }
     }
 }
