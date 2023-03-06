@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.DataStructures;
-using Malignant.Common;
+using Malignant.Common.Projectiles;
 
 namespace Malignant.Content.Items.Misc.WarbladeofLight
 {
