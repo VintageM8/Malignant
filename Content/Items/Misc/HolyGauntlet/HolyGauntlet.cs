@@ -10,7 +10,7 @@ namespace Malignant.Content.Items.Misc.HolyGauntlet
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Holy Gauntlet");
-            Tooltip.SetDefault("Healing for any health releases a burst of homing energy");
+            Tooltip.SetDefault("Killing unholy enemies replenishes your lifeforce");
         }
 
         public override void SetDefaults()
