@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
-using Malignant.Common;
+using Malignant.Common.Players;
 
 namespace Malignant.Content.Items.Hell.MarsHell
 {
