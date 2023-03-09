@@ -40,6 +40,21 @@ namespace Malignant.Content.Items.Misc.AngelofLight
             Projectile.velocity.Y += 0.1f;
             Projectile.alpha = 0;
         }
+        
+        private Player owner => Main.player[Projectile.owner];
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            if (MalignantLists.unholyEnemies.Contains(target.type))
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Main.rand.NextVector2Circular(7, 7), ModContent.ProjectileType<ScourcherBible>(), Projectile.damage / 2, Projectile.knockBack, owner.whoAmI);
+                    proj.friendly = true;
+                    proj.hostile = false;
+                }
+
+            }
+        }
 
 
         public override bool PreDraw(ref Color lightColor)
