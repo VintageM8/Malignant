@@ -40,7 +40,8 @@ namespace Malignant.Content.Items.Dedicated.Blade
             for (int i = 0; i < Main.rand.Next(1, 2); i++)
             {
                 Vector2 perturbedSpeed = Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(360));
-                Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<Patty>(), 20, 5f, Projectile.owner); //OH OH RIELY AUTO PARTS 
+                //Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<Patty>(), 20, 5f, Projectile.owner); 
+                //OH OH RIELY AUTO PARTS 
                 Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<Cheese>(), 20, 5f, Projectile.owner);
                 Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<Bun>(), 20, 5f, Projectile.owner);
             }

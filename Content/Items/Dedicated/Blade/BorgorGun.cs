@@ -13,26 +13,27 @@ namespace Malignant.Content.Items.Dedicated.Blade
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Burger Gun");
-            Tooltip.SetDefault("[c/eeff00f:Dedicated Item:] Dedicated to [c/ffa242:BladeBurger]\n'Exo mechs was worth it tho lmao that boss is actually fun unlike DoG'.");
+            Tooltip.SetDefault("[c/eeff00f:Dedicated Item:] Dedicated to [c/ffa242:BladeBurger]\n'Exo mechs was worth it tho lmao that boss is actually fun unlike DoG'.\nHow did you get enough burgers to acuire this?");
         }
 
         public override void SetDefaults()
         {
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.useAnimation = 18;
-            Item.useTime = 18;
+            Item.useAnimation = 10;
+            Item.useTime = 10;
             Item.knockBack = 5f;
+            Item.crit = 10;
             Item.UseSound = SoundID.Item11;
             Item.width = 24;
             Item.height = 28;
-            Item.damage = 86;
+            Item.damage = 89;
             Item.rare = ItemRarityID.Orange;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.noMelee = true;
             Item.autoReuse = true;
             Item.DamageType = DamageClass.Ranged;
             Item.shoot = ModContent.ProjectileType<Borgor>();
-            Item.shootSpeed = 11;
+            Item.shootSpeed = 10;
         }
 
         public override Vector2? HoldoutOffset()
@@ -64,6 +65,15 @@ namespace Malignant.Content.Items.Dedicated.Blade
             }
             spriteBatch.Draw(texture, pos, null, Color.White, 0f, texture.Size() / 2, scale, SpriteEffects.None, 0f);
             return false;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe(1)
+                .AddTile(TileID.Anvils)
+                .AddIngredient(ItemID.HallowedBar, 35)
+                .AddIngredient(ItemID.Burger, 15)
+                .Register();
         }
     }
 }

@@ -2,6 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Malignant.Content.Dusts;
+using Malignant.Content.NPCs.Corruption.CursedOccultist;
 
 namespace Malignant.Content.NPCs.Crimson.MutilatedFlesh
 {
@@ -28,7 +29,7 @@ namespace Malignant.Content.NPCs.Crimson.MutilatedFlesh
             AIType = 360;
         }
 
-
+        public override float SpawnChance(NPCSpawnInfo spawnInfo) => spawnInfo.Player.ZoneCrimson ? 0.50f : 0f;
         public override void HitEffect(int hitDirection, double damage)
         {
             int num = NPC.life > 0 ? 1 : 5;

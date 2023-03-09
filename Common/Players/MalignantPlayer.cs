@@ -3,9 +3,10 @@ using Terraria;
 using Terraria.ModLoader;
 using System;
 using Terraria.ID;
-using Malignant.Content.Items.Accessories.Expert.Moniter;
+using Malignant.Content.Items.Crimson.Arterion.MoniterAccessory;
 
-namespace Malignant.Common
+//DONT CHANGE THIS NAMESPACE
+namespace Malignant.Common.Players
 {
     public class MalignantPlayer : ModPlayer
     {
@@ -26,6 +27,7 @@ namespace Malignant.Common
         //Accessories
         public bool Moniter;
         public bool Lich;
+        public bool HolyGauntlet;
 
         //Boss Stuff
         public int bossTextProgress, bossMaxProgress;
@@ -38,6 +40,7 @@ namespace Malignant.Common
         {
             Moniter = false;
             Lich = false;
+            HolyGauntlet = false;
 
             if (itemComboReset <= 0)
             {
@@ -95,7 +98,7 @@ namespace Malignant.Common
             for (int i = 0; i < OrbitingProjectileCount[0]; i++)
             {
                 //Radius 200.
-                OrbitingProjectilePositions[0, i] = Player.Center + new Vector2(200 * (float)Math.Cos(period * (RotationTimer + (300 / OrbitingProjectileCount[0] * i))), 200 * (float)Math.Sin(period * (RotationTimer + (300 / OrbitingProjectileCount[0] * i))));
+                OrbitingProjectilePositions[0, i] = Player.Center + new Vector2(200 * (float)Math.Cos(period * (RotationTimer + 300 / OrbitingProjectileCount[0] * i)), 200 * (float)Math.Sin(period * (RotationTimer + 300 / OrbitingProjectileCount[0] * i)));
             }
         }
 
@@ -135,7 +138,7 @@ namespace Malignant.Common
                 {
                     for (int i = 0; i < projectiles; i++)
                     {
-                        Projectile.NewProjectile(Player.GetSource_OnHurt(null), Player.Center, new Vector2(7).RotatedBy(MathHelper.ToRadians((360 / projectiles) * i + i)), ModContent.ProjectileType<BloodRune>(), 19, 2, Player.whoAmI);
+                        Projectile.NewProjectile(Player.GetSource_OnHurt(null), Player.Center, new Vector2(7).RotatedBy(MathHelper.ToRadians(360 / projectiles * i + i)), ModContent.ProjectileType<BloodRune>(), 19, 2, Player.whoAmI);
                     }
                 }
             }
@@ -151,6 +154,16 @@ namespace Malignant.Common
                     Player.statLife += healAmount;
                 }
             }
+            if(HolyGauntlet)
+            {
+                if (MalignantLists.unholyEnemies.Contains(target.type) && target.life <= 0) 
+                {
+                    int healAmount = (int)MathHelper.Min(Player.statLifeMax2 - Player.statLife, 10);
+                    Player.HealEffect(10);
+                    Player.statLife += healAmount;
+
+                }
+            }
 
         }
 
@@ -163,6 +176,16 @@ namespace Malignant.Common
                     int healAmount = (int)MathHelper.Min(Player.statLifeMax2 - Player.statLife, 10);
                     Player.HealEffect(10);
                     Player.statLife += healAmount;
+                }
+            }
+            if(HolyGauntlet)
+            {
+                if (MalignantLists.unholyEnemies.Contains(target.type) && target.life <= 0) 
+                {
+                    int healAmount = (int)MathHelper.Min(Player.statLifeMax2 - Player.statLife, 10);
+                    Player.HealEffect(10);
+                    Player.statLife += healAmount;
+
                 }
             }
         }

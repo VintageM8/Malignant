@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using System;
 using Terraria.ID;
+using Malignant.Common.Players;
 
 namespace Malignant.Common.Systems
 {

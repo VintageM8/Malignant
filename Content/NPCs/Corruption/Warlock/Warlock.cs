@@ -8,6 +8,12 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent.ItemDropRules;
+using static Terraria.ModLoader.ModContent;
+using Malignant.Content.Items.Corruption.Warlock.CorruptedCord;
+using Malignant.Content.Items.Corruption.Warlock.MonchBow;
+using Malignant.Content.Items.Corruption.Warlock.NightsisterBlade;
+using Malignant.Content.Items.Corruption.Warlock.StaffofFlame;
 
 namespace Malignant.Content.NPCs.Corruption.Warlock
 {
@@ -36,6 +42,21 @@ namespace Malignant.Content.NPCs.Corruption.Warlock
             NPC.aiStyle = -1;
             NPC.netAlways = true;
         }
+
+        #region Drops
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.OneFromOptions(1, new int[]
+            {
+                ItemType<CorruptedCord>(),
+                ItemType<Boeyr>(),
+                ItemType<NightsisterBlade>(),
+                ItemType<CursedFireballStaff>()
+            }
+            ));
+
+        }
+        #endregion
 
         public override void HitEffect(int hitDirection, double damage)
         {

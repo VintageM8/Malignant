@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Malignant.Content.NPCs.Crimson.HeartBoss.Projectiles;
+using Malignant.Content.Projectiles.Enemy.Warlock;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -52,6 +54,5 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
                 Main.dust[dustIndex].velocity *= 8f;
             }
         }
-       
     }
 }

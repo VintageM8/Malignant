@@ -7,6 +7,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Malignant.Common.Systems;
 using Malignant.Common.Helper;
+using Malignant.Content.Projectiles.Enemy.Warlock;
+using Malignant.Content.NPCs.Crimson.HeartBoss.Projectiles;
 
 namespace Malignant.Content.NPCs.Crimson.HeartBoss
 {
@@ -64,6 +66,15 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
             else
                 Projectile.rotation += Projectile.velocity.X / 40 * Projectile.direction;
         }
+
+        public override void Kill(int timeLeft)
+        {
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, 14f, 0f, ModContent.ProjectileType<FleshChunkies>(), Projectile.damage, 0f, Projectile.owner, 0f, 0f);
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, -14f, 0f, ModContent.ProjectileType<FleshChunkies>(), Projectile.damage, 0f, Projectile.owner, 0f, 0f);
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, 0f, 14f, ModContent.ProjectileType<FleshChunkies>(), Projectile.damage, 0f, Projectile.owner, 0f, 0f);
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, 0f, -14f, ModContent.ProjectileType<FleshChunkies>(), Projectile.damage, 0f, Projectile.owner, 0f, 0f);
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;

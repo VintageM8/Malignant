@@ -12,6 +12,11 @@ using Malignant.Common.Systems;
 using Malignant.Core;
 using Malignant.Content.NPCs.Corruption.Warlock;
 using Malignant.Content.Projectiles.Enemy.Warlock;
+using static Terraria.ModLoader.ModContent;
+using Terraria.GameContent.ItemDropRules;
+using Malignant.Content.Items.Crimson.Arterion.BurstingArtery;
+using Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger;
+using Malignant.Content.NPCs.Crimson.HeartBoss.Projectiles;
 
 namespace Malignant.Content.NPCs.Crimson.HeartBoss
 {
@@ -29,11 +34,7 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
         {
             NPC.width = 116;
             NPC.height = 114;
-            NPC.lifeMax = 2000;
-            if (Main.expertMode)
-                NPC.lifeMax = 3000;
-            if (Main.masterMode)
-                NPC.lifeMax = 4500;
+            NPC.lifeMax = 82000;
             NPC.defense = 5;
             NPC.aiStyle = 0;
             NPC.damage = 10;
@@ -44,6 +45,10 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
             NPC.boss = false;
             if (Main.getGoodWorld)
                 NPC.scale = 0.5f;
+            if (!Main.dedServ)
+            {
+                Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Arterion");
+            }
         }
 
         public override bool CheckDead()
@@ -64,6 +69,20 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
             }
             return true;
         }
+
+        #region Drops
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.OneFromOptions(1, new int[]
+            {
+                ItemType<BurstingArtery>(),
+                ItemType<HerzanfallDagger>(),
+            }
+            ));
+
+        }
+        #endregion
+
         /*public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (damage >= NPC.life && !ded)
@@ -141,7 +160,7 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
 
         bool yes;
         int nextAttack = Floaties;
-        Vector2[] random = new Vector2[8]; //up to 3 = first lightning attack, 4 to 8 = second lightning attack
+        Vector2[] random = new Vector2[8]; 
         Vector2 arena;
         int aa;
         bool angery;
@@ -215,7 +234,7 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
                     CameraSystem.ScreenShakeAmount = 20f;
                     //RegreUtils.SetBossTitle(160, "Voltage Vagrant", Color.White, "Bringer of Storms", BossTitleStyleID.Vagrant);
                     //RegreSystem.ChangeCameraPos(NPC.Center, 160);
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_LightningBugDeath);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_BetsySummon);
                 }
                 if (AITimer >= 160)
                 {
@@ -277,7 +296,7 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
             {
                 AITimer++;
                 if (AITimer == 1)
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_LightningBugDeath);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.ScaryScream);
                 if (AITimer > 50)
                 {
                     AITimer2++;
@@ -297,9 +316,9 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
                         AITimer2 = 0;
                         for (int i = 0; i < 3; i++)
                         {
-                            Projectile.NewProjectile(NPC.GetSource_FromAI(), random[i], Vector2.Zero, ModContent.ProjectileType<BloodBubble_Two>(), 15, 0);
+                            Projectile.NewProjectile(null, NPC.Center, new Vector2(-5, 1), ModContent.ProjectileType<SpikeSpawner>(), 0, 0);
                         }
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), random[3], Vector2.Zero, ModContent.ProjectileType<BloodBubble>(), 15, 0);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), random[3], Vector2.Zero, ModContent.ProjectileType<PlayerTele>(), 5, 0);
                     }
                 }
                 if (AITimer >= 230)
@@ -337,6 +356,13 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
                         float angle = 2f * (float)Math.PI / 4f * i;
                         Point pos = new Vector2(NPC.Center.X + (float)Math.Cos(angle) * 100, NPC.Center.Y + (float)Math.Sin(angle) * 100).ToPoint();
                         NPC.NewNPC(NPC.GetSource_FromAI(), pos.X, pos.Y, ModContent.NPCType<MiniHeart>(), 0, NPC.whoAmI, angle, i);
+
+                        Projectile.NewProjectile(null, NPC.Center, new Vector2(-5, 1), ModContent.ProjectileType<SpikeSpawner>(), 0, 0);
+                        Projectile.NewProjectile(null, NPC.Center, new Vector2(-5, 1), ModContent.ProjectileType<SpikeSpawner>(), 0, 0);
+                        Projectile.NewProjectile(null, NPC.Center, new Vector2(-2.5f, 1), ModContent.ProjectileType<SpikeSpawner>(), 0, 0);
+                        Projectile.NewProjectile(null, NPC.Center, new Vector2(-2.5f, 1), ModContent.ProjectileType<SpikeSpawner>(), 0, 0);
+                        Projectile.NewProjectile(null, NPC.Center, new Vector2(5, 1), ModContent.ProjectileType<SpikeSpawner>(), 0, 0);
+                        Projectile.NewProjectile(null, NPC.Center, new Vector2(5, 1), ModContent.ProjectileType<SpikeSpawner>(), 0, 0);
                     }
                     Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_LightningBugDeath);
                     AITimer++;
@@ -348,16 +374,7 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
                     AITimer2 = -40;
                 if (AITimer2 == 20)
                 {
-                    for (int i = 0; i < 2; i++)
-                    {
-                        Vector2 randomVel = new(Main.rand.NextFloat(-10f, 10f), -7.5f);
-                        Vector2 randomVel2 = new(Main.rand.NextFloat(-10f, 10f), -7.5f);
-                        Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, randomVel, ModContent.ProjectileType<BloodBubble>(), 10, 0, player.whoAmI);
-                        Projectile proj2 = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, randomVel2, ModContent.ProjectileType<BloodBubble>(), 15, 0, player.whoAmI);
-                        proj.aiStyle = proj2.aiStyle = 2;
-                    }
-                    Projectile proj3 = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, Vector2.UnitY * -7.5f, ModContent.ProjectileType<BloodBubble>(), 10, 0, player.whoAmI);
-                    proj3.aiStyle = 2;
+
                 }
                 if (AITimer > 10 && alpha > 0)
                     alpha -= 0.05f;
@@ -385,8 +402,6 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
                     if (AITimer % 5 == 0)
                     {
                         Vector2 place = NPC.Center + Utility.GetRandomVector(250, 250, 350, 350, -350, -350);
-                        //Projectile.NewProjectile(NPC.GetBossSpawnSource(player.whoAmI), place, Utility.DirectionTo(player.Center, place).RotatedByRandom(0.3f) * 10, ModContent.ProjectileType<BloodBubble>(), NPC.damage, 0.5f, Main.myPlayer);
-                        Projectile.NewProjectile(NPC.GetBossSpawnSource(player.whoAmI), place, Utility.DirectionTo(player.Center, place).RotatedByRandom(0.3f) * 10, ModContent.ProjectileType<BloodBubble_Two>(), NPC.damage, 0.5f, Main.myPlayer);
                         DrawLinearDash = true;
                     }
                 }
@@ -415,13 +430,13 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
                         switch (Main.rand.Next(3))
                         {
                             case 0:
-                                rain = ModContent.ProjectileType<BloodBubble>();
+                                rain = ModContent.ProjectileType<HomingChunk>();
                                 break;
                             case 1:
-                                rain = ModContent.ProjectileType<BloodBubble>();
+                                rain = ModContent.ProjectileType<HomingChunk>();
                                 break;
                             case 2:
-                                rain = ModContent.ProjectileType<BloodBubble>();
+                                rain = ModContent.ProjectileType<HomingChunk>();
                                 break;
                         }
                         Vector2 random = new Vector2(Main.screenPosition.X + Main.screenWidth * Main.rand.NextFloat(), Main.screenPosition.Y);
@@ -432,7 +447,7 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
                 if ((AITimer == 100 || AITimer == 200) && !stunned)
                 {
                     NPC.rotation = 0;
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.ForceRoar);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.ScaryScream);
                     NPC.damage = 15;
                     NPC.velocity.X *= 0.98f;
                     Vector2 vector9 = new Vector2(NPC.position.X + (NPC.width * 0.5f), NPC.position.Y + (NPC.height * 0.5f));
@@ -459,7 +474,7 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
                 if (AITimer < 30)
                     NPC.Center = Vector2.Lerp(NPC.Center, player.Center, 0.025f);
                 if (AITimer == 40)
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_LightningBugDeath);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_BetsysWrathImpact);
                 if (AITimer > 50)
                 {
                     AITimer2++;
@@ -501,7 +516,7 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
                     AITimer2 = 0;
                 }
             }
-            else if (AIState == BloodBubble2)
+            else if (AIState == BloodBubble2) //Heal Spikes
             {
                 AITimer++;
                 if (++AITimer2 >= 100)
@@ -510,9 +525,9 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
                     {
                         float angle = 2f * (float)Math.PI / 7f * i;
                         Vector2 pos = new Vector2(NPC.Center.X + (float)Math.Cos(angle) * 100, NPC.Center.Y + (float)Math.Sin(angle) * 100);
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, Vector2.Zero, ModContent.ProjectileType<BloodBubble>(), 15, 0, player.whoAmI, 0, angle);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, Vector2.Zero, ModContent.ProjectileType<HealSpikes>(), 15, 0, player.whoAmI, 0, angle);
                     }
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_LightningBugDeath);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_BetsysWrathImpact);
                     AITimer2 = 0;
                 }
 
@@ -535,7 +550,7 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
                 if (AITimer == 1)
                 {
                     AITimer2 = 1;
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_LightningBugDeath);
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_BetsysWrathImpact);
                 }
                 if (AITimer >= 50)
                 {

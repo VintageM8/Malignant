@@ -1,5 +1,6 @@
 using Malignant.Common;
 using Malignant.Common.Systems;
+using Malignant.Content.Items.Crimson.Arterion.MoniterAccessory;
 using Malignant.Content.Projectiles.Enemy.Warlock;
 using Malignant.Core;
 using Microsoft.Xna.Framework;
@@ -10,6 +11,8 @@ using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.ItemDropRules;
+
 
 namespace Malignant.Content.NPCs.Crimson.Heart
 {
@@ -32,18 +35,22 @@ namespace Malignant.Content.NPCs.Crimson.Heart
             NPC.DeathSound = SoundID.NPCDeath2;
             NPC.buffImmune[BuffID.Confused] = true;
             NPC.value = 1200f;
-            NPC.knockBackResist = 0.75f;
+            NPC.knockBackResist = 0f;
             NPC.noGravity = true;
             //NPC.netAlways = true;
             //NPC.chaseable = true;
             NPC.noTileCollide = true;
             NPC.lavaImmune = true;
-            NPC.boss = true; 
+            NPC.boss = true;
             Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Viscera");
 
         }
 
-        //public override float SpawnChance(NPCSpawnInfo spawnInfo) => spawnInfo.Player.ZoneCrimson && spawnInfo.Player.ZoneOverworldHeight ? .075f : 0f;
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<HeartMoniter>(), 1));
+
+        }
 
         private const int Intro = 0;
         private const int Dash = 0;

@@ -1,9 +1,10 @@
 using Malignant.Common;
+using Malignant.Common.Systems;
 using Terraria.ModLoader;
 
 namespace Malignant
 {
-	public class Malignant : Mod
+    public class Malignant : Mod
 	{
         public static Malignant Mod { get; set; }
 

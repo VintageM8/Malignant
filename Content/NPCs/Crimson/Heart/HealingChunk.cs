@@ -38,24 +38,7 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                 Projectile.alpha -= 20;
                 if (Projectile.alpha <= 0)
                     Projectile.localAI[0] = 1f;
-            }
-            for (int p = 0; p < Main.maxNPCs; p++)
-            {
-                NPC npc = Main.npc[p];
-                if (npc.active && !npc.immortal && !npc.dontTakeDamage && Projectile.alpha < 200 && Projectile.Hitbox.Intersects(npc.Hitbox))
-                {
-                    int healAmt = 1;
-                    if (npc.type == ModContent.NPCType<HeartMan>())
-                        healAmt = 1;
-                    if (npc.life <= npc.lifeMax - healAmt)
-                    {
-                        npc.life += healAmt;
-                        npc.HealEffect(healAmt);
-                        Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Water_Jungle);
-                        dust.velocity = -npc.DirectionTo(dust.position);
-                    }
-                }
-            }
+            }          
         }
         public override bool PreDraw(ref Color lightColor)
         {
