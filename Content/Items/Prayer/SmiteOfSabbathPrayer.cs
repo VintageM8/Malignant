@@ -21,7 +21,11 @@ namespace Malignant.Content.Items.Prayer
     public class SmiteOfSabbathPrayer : PrayerItem
     {
         public override string Texture => base.Texture.Replace(nameof(SmiteOfSabbathPrayer), "PrayerTest");
-        public override string AbilityType => PrayerContent.AbilityType<SmiteOfSabbathAbility>();
+        public override string AbilityType => PrayerContent.AbilityType<SmiteOfSabbathAbility>(); public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ItemNoGravity[Item.type] = true;
+            Item.consumable = true;
+        }
     }
 
     public class SmiteOfSabbathAbility : PrayerAbility
@@ -29,20 +33,22 @@ namespace Malignant.Content.Items.Prayer
         public override string TexturePath => base.TexturePath.Replace(nameof(SmiteOfSabbathAbility), "PrayerTest");
         public override string DisplayName => "Smite of the Sabbath";
         public override int Cooldown => 120;
-        public override SoundStyle SwapSound => SoundManager.Sounds["Biter"];
+        public override SoundStyle SwapSound => SoundManager.Sounds["prayer"];
 
         protected override void OnUseAbility(Player player, EntitySource_PrayerAbility source)
         {
-            int i = 0;
-            float spread = 10f * 0.0174f;
-            double startAngle = Math.Atan2(6, 6) - spread / 2;
-            double deltaAngle = spread / 8f;
-            double offsetAngle = startAngle + deltaAngle * (i + i * i) / 2f + 32f * i;
+            Projectile.NewProjectile(source, Main.MouseWorld, Main.MouseWorld.DirectionTo(player.Center) * 10, ModContent.ProjectileType<SabbathProj>(), 45, 0f, player.whoAmI);
 
-            Projectile.NewProjectile(source, player.Center.X, player.Center.Y, (float)(Math.Sin(offsetAngle) * 3f), (float)(Math.Cos(offsetAngle) * 3f), ModContent.ProjectileType<WindsofGod>(), 10, 0f, player.whoAmI);
+            for (int i = 0; i < 360; i += 90)
+            {
+                Vector2 SpawnPos = Main.MouseWorld + new Vector2(90).RotatedBy(MathHelper.ToRadians(i));
+                Vector2 Velociry = Main.MouseWorld - SpawnPos;
+                Velociry.Normalize();
+                Projectile.NewProjectile(source, SpawnPos, Velociry * 5, 10, 0, player.whoAmI);
+            }
         }
-        
-        
+
+
         public override IEnumerator OnUseAbilityRoutine(Player player, EntitySource_PrayerAbility source)
         {
             

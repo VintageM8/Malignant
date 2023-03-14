@@ -1,7 +1,9 @@
-﻿using Malignant.Common.Systems;
+﻿using Malignant.Common;
 using Malignant.Content.Dusts;
-using System;
-using System.Collections.Generic;
+using Malignant.Common.Helper;
+using Malignant.Common.Systems;
+using Terraria.Audio;
+using System.Collections;
 
 using Terraria;
 using Terraria.ID;
@@ -13,32 +15,39 @@ namespace Malignant.Content.Items.Prayer
     {
         public override string Texture => base.Texture.Replace(nameof(CommunionPrayer), "PrayerTest");
         public override string AbilityType => PrayerContent.AbilityType<CommunionAbility>();
+
+        public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("Gives Wellfed, Tipsy, and Dryad buff\nClears potion cooldown");
+            ItemID.Sets.ItemNoGravity[Item.type] = true;
+            Item.consumable = true;
+        }
     }
 
     public class CommunionAbility : PrayerAbility
     {
         public override string TexturePath => base.TexturePath.Replace(nameof(CommunionAbility), "PrayerTest");
         public override string DisplayName => "Communion";
+        public override int Cooldown => 1320;
+
+        public override SoundStyle SwapSound => SoundManager.Sounds["prayer"];
         protected override void OnUseAbility(Player player, EntitySource_PrayerAbility source)
         {
-            Dust.NewDust(player.position - Microsoft.Xna.Framework.Vector2.UnitX * player.width * 0.25f, (int)(player.width * 1.5f), player.height, DustID.GoldCoin, Scale: Main.rand.NextFloat(0.8f, 1.2f));
-            // TODO: Healing Projectile
-        }
-    }
 
-    /*
-    public class CommunionProjectile : ModProjectile
-    {
-        public override void SetDefaults()
+            MethodHelper.DrawCircle(player.Center, ModContent.DustType<PrayerUse>(), 3, 4, 4, 2, 3, nogravity: true);
+            player.AddBuff(BuffID.WellFed2, 660);
+            player.AddBuff(BuffID.Tipsy, 660);
+            player.AddBuff(BuffID.DryadsWard, 660);
+        }
+
+        public override IEnumerator OnUseAbilityRoutine(Player player, EntitySource_PrayerAbility source)
         {
-            Projectile.width = 35;
-            Projectile.height = 35;
-            Projectile.penetrate = 2;
-            Projectile.friendly = false;
-            Projectile.hostile = false;
-            Projectile.tileCollide = true;
-            Projectile.timeLeft = 60;
+            for (int i = 0; i < 1; i++)
+            {
+                Main.NewText("Prayer Cooldown Over");
+                yield return null;
+            }
+
         }
     }
-    */
 }

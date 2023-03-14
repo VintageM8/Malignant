@@ -12,7 +12,7 @@ namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Depraved Blast Beater");
-            Tooltip.SetDefault("Every 3rd shot a cross orbits you\nOnce served the wrectched...now it slaues them.");
+            Tooltip.SetDefault("Every 3rd shot a cross orbits you\nOnce served the wrectched...now it slays them.");
         }
         public override void SetDefaults()
         {

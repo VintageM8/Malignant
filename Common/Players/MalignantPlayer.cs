@@ -27,6 +27,7 @@ namespace Malignant.Common.Players
         //Accessories
         public bool Moniter;
         public bool Lich;
+        public bool HolyGauntlet;
 
         //Boss Stuff
         public int bossTextProgress, bossMaxProgress;
@@ -39,6 +40,7 @@ namespace Malignant.Common.Players
         {
             Moniter = false;
             Lich = false;
+            HolyGauntlet = false;
 
             if (itemComboReset <= 0)
             {
@@ -152,6 +154,16 @@ namespace Malignant.Common.Players
                     Player.statLife += healAmount;
                 }
             }
+            if(HolyGauntlet)
+            {
+                if (MalignantLists.unholyEnemies.Contains(target.type) && target.life <= 0) 
+                {
+                    int healAmount = (int)MathHelper.Min(Player.statLifeMax2 - Player.statLife, 10);
+                    Player.HealEffect(10);
+                    Player.statLife += healAmount;
+
+                }
+            }
 
         }
 
@@ -164,6 +176,16 @@ namespace Malignant.Common.Players
                     int healAmount = (int)MathHelper.Min(Player.statLifeMax2 - Player.statLife, 10);
                     Player.HealEffect(10);
                     Player.statLife += healAmount;
+                }
+            }
+            if(HolyGauntlet)
+            {
+                if (MalignantLists.unholyEnemies.Contains(target.type) && target.life <= 0) 
+                {
+                    int healAmount = (int)MathHelper.Min(Player.statLifeMax2 - Player.statLife, 10);
+                    Player.HealEffect(10);
+                    Player.statLife += healAmount;
+
                 }
             }
         }

@@ -127,16 +127,4 @@ namespace Malignant.Content.Items.Hell
             Projectile.Kill();
         }
     }
-    class Explosion : ModProjectile
-    {
-        public override string Texture => "Malignant/Content/Items/Hell/DemonShotProj";
-        public override void SetDefaults()
-        {
-            Projectile.hide = true;
-            Projectile.tileCollide = false;
-            Projectile.timeLeft = 1;
-            Projectile.friendly = true;
-            Projectile.width = Projectile.height = 100;
-        }
-    }
 }
