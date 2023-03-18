@@ -91,13 +91,11 @@ namespace Malignant.Common.Helper
                 return Array.Empty<Vector2>();
 
             Vector2[] postitions = new Vector2[amount];
-
-            float angle = MathHelper.Pi * 2f / amount;
-            angle += rotation;
+            float angle = MathHelper.TwoPi / amount;
 
             for (int i = 0; i < amount; i++)
             {
-                Vector2 position = (angle * i).ToRotationVector2();
+                Vector2 position = (angle * i + rotation).ToRotationVector2();
                 position *= radius;
                 position += center;
 

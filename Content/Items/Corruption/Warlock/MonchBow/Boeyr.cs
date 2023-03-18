@@ -45,7 +45,7 @@ namespace Malignant.Content.Items.Corruption.Warlock.MonchBow
 
         public override bool CanUseItem(Player player)
         {
-            return player.ownedProjectileCounts[ModContent.ProjectileType<BoeyrProjectile>()] <= 0;
+            return player.ownedProjectileCounts[Item.shoot] <= 0;
         }
     }
 }

@@ -101,5 +101,16 @@ namespace Malignant.Common.Helper
             projectile.velocity = Terraria.Utils.RotatedBy(new Vector2(num3, (float)Math.Sin((double)(num + waveStep)) * amplitude - num2), (double)num4, default(Vector2));
             projectile.rotation = Terraria.Utils.ToRotation(projectile.velocity) + 1.5707964f;
         }
+
+        public static void SetHeldProjectileInHand(this Projectile projectile, Player player, float? verticalOffset = null)
+        {
+            projectile.Center = player.ShoulderPosition();
+            Vector2 direction = projectile.Center.DirectionTo(Main.MouseWorld);
+
+            if (verticalOffset.HasValue)
+            {
+                projectile.Center += direction.RotatedBy(-MathHelper.PiOver2 * player.direction) * verticalOffset.Value;
+            }
+        }
     }
 }

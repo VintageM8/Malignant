@@ -33,7 +33,7 @@ namespace Malignant.Content.Items.Crimson.Abowmanation
             Item.value = Item.sellPrice(0, 0, 20, 0);
             Item.rare = ItemRarityID.Green;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<AbowProj>();
+            Item.shoot = ModContent.ProjectileType<AbowmanationHeldProjectile>();
             Item.shootSpeed = 8f;
             Item.useAmmo = AmmoID.Arrow;
             Item.noUseGraphic = true;
@@ -46,7 +46,7 @@ namespace Malignant.Content.Items.Crimson.Abowmanation
 
         public override bool CanUseItem(Player player)
         {
-            return player.ownedProjectileCounts[ModContent.ProjectileType<AbowProj>()] <= 0;
+            return player.ownedProjectileCounts[Item.shoot] <= 0;
         }
     }
 }
