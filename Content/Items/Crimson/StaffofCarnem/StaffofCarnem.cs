@@ -36,6 +36,47 @@ namespace Malignant.Content.Items.Crimson.StaffofCarnem
             Item.shootSpeed = 10f;
             Item.mana = 28;
         }
-
-     }
+        //This is a small charging system that i made
+        int count = 0;
+        public override void HoldItem(Player player)
+        {
+            if (Main.mouseRight)
+            {
+                ++count;
+                if (count >= 4 && player.GetModPlayer<PlayerCharge>().ChargePower <= 20)
+                {
+                    player.GetModPlayer<PlayerCharge>().ChargePower++;
+                    count = 0;
+                }
+            }
+            if (Main.mouseRightRelease)
+            {
+                player.GetModPlayer<PlayerCharge>().ChargePower = 0;
+                count = 0;
+            }
+        }
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            damage += (int)player.GetModPlayer<PlayerCharge>().ChargePower;
+        }
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            if(player.GetModPlayer<PlayerCharge>().ChargePower <= 20)
+            {
+                return base.Shoot(player, source, position, velocity, type, damage, knockback);
+            }
+            player.GetModPlayer<PlayerCharge>().ChargePower = 0;
+            float rotation = MathHelper.ToRadians(30);
+            for (int i = 0; i < 5; i++)
+            {
+                Vector2 Rotate = velocity.RotatedBy(MathHelper.Lerp(rotation, -rotation, i * .2f));
+                Projectile.NewProjectile(source, position, Rotate, type, damage, knockback, player.whoAmI);
+            }
+            return base.Shoot(player, source, position, velocity, type, damage, knockback);
+        }
+    }
+    class PlayerCharge : ModPlayer
+    {
+        public float ChargePower = 0;
+    }
 }

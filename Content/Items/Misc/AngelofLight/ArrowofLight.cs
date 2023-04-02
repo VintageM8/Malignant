@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Malignant.Content.Dusts;
 using System;
+using Malignant.Content.Items.Crimson.FleshBlazer;
 
 namespace Malignant.Content.Items.Misc.AngelofLight
 {
