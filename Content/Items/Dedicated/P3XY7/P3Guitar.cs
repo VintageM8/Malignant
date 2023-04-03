@@ -27,7 +27,7 @@ namespace Malignant.Content.Items.Dedicated.P3XY7
             Item.height = 46;
             Item.useTime = 2;
             Item.useAnimation = 2;
-            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useStyle = ItemUseStyleID.Guitar;
             Item.noMelee = true;
             Item.knockBack = 4;
             Item.value = Item.sellPrice(0, 25, 0, 0);
