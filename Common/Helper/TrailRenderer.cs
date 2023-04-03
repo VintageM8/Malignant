@@ -217,7 +217,7 @@ namespace Malignant.Common.Helper
         {
             if (!Main.dedServ)
             {
-                shader = ModContent.Request<Effect>("Divergency/Content/Effects/Trailshader");
+                shader = ModContent.Request<Effect>("Malignant/Effects/Trailshader");
             }
         }
 

@@ -57,14 +57,14 @@ namespace Malignant.Common.Helper
             var arr = new Asset<Texture2D>[arrLength];
             for (int i = 0; i < arrLength; i++)
             {
-                arr[i] = ModContent.Request<Texture2D>("Divergency/Assets/Textures/Trails/Default");
+                arr[i] = ModContent.Request<Texture2D>("Malignant/Assets/Textures/Trails/Default");
             }
             p.SetMethod.Invoke(null, new object[] { arr });
         }
         private void InnerLoadProperty(PropertyInfo p)
         {
             string folderSpace = InnerGetPath(p);
-            p.SetMethod.Invoke(null, new object[] { ModContent.Request<Texture2D>("Divergency/Assets/Textures/Trails/Default") });
+            p.SetMethod.Invoke(null, new object[] { ModContent.Request<Texture2D>("Malignant/Assets/Textures/Trails/Default") });
         }
         private string InnerGetPath(PropertyInfo p)
         {
