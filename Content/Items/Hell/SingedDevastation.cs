@@ -5,11 +5,19 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using Malignant.Content.Items.Misc;
+using System.IO;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
+
+using static Terraria.ModLoader.ModContent;
+using Malignant.Common.Projectiles;
 
 namespace Malignant.Content.Items.Hell
 {
-    public class SingedDevastation : ModItem
+    public class SingedDevastation : HeldGunModItem
     {
+        public override (float centerYOffset, float muzzleOffset, Vector2 drawOrigin, Vector2 recoil) HeldProjectileData => (5, 40, new Vector2(4, 5), new Vector2(5, 0.4f));
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Singed Devastation");
@@ -29,11 +37,12 @@ namespace Malignant.Content.Items.Hell
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.UseSound = SoundID.Item36;
             Item.rare = ItemRarityID.Lime;
+            Item.noUseGraphic = true;
             Item.shootSpeed = 10f;
             Item.shoot = ProjectileID.Bullet;
         }
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override void ShootGun(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             const int NumProjectiles = 4;
 
@@ -46,7 +55,8 @@ namespace Malignant.Content.Items.Hell
             }
 
             Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<DemonShotProj>(), damage, knockback, player.whoAmI);
-            return false;
+
+            // TODO: Some FX
         }
 
         public override void AddRecipes()
@@ -56,8 +66,6 @@ namespace Malignant.Content.Items.Hell
                 .AddIngredient(ItemID.HellstoneBar, 25)
                 .AddIngredient(ModContent.ItemType<BrokenDemonHorn>(), 8)
                 .Register();
-
-
         }
     }
 }

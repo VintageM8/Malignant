@@ -5,11 +5,14 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
 using Malignant.Common.Players;
+using Malignant.Common.Projectiles;
 
 namespace Malignant.Content.Items.Hell.MarsHell
 {
-    public class MarsHell : ModItem
+    public class MarsHell : HeldGunModItem
     {
+        public override (float centerYOffset, float muzzleOffset, Vector2 drawOrigin, Vector2 recoil) HeldProjectileData => (5, 35, new Vector2(11, 11), new Vector2(8, 0.7f));
+
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
@@ -33,6 +36,7 @@ namespace Malignant.Content.Items.Hell.MarsHell
             Item.UseSound = SoundID.Item36;
             Item.rare = ItemRarityID.Yellow;
             Item.shootSpeed = 10f;
+            Item.noUseGraphic = true;
             Item.shoot = ProjectileID.Bullet;
             Item.channel = true;
         }
