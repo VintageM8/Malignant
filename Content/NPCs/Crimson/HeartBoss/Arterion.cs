@@ -22,8 +22,8 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
 
         public override void SetDefaults()
         {
-            NPC.width = 400;
-            NPC.height = 400;
+            NPC.width = 800;
+            NPC.height = 1000;
             NPC.damage = Main.rand.Next(15, 25);
             NPC.defense = 12;
             NPC.lifeMax = 4300;
