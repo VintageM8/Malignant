@@ -140,5 +140,29 @@ namespace Malignant.Common.Helper
             if (t < 0.5) return InExpo(t * 2) / 2;
             return 1 - InExpo((1 - t) * 2) / 2;
         }
+        public static string GetTheSameTextureAsEntity<T>() where T : class
+        {
+            var type = typeof(T);
+            string NameSpace = type.Namespace;
+            if (NameSpace == null)
+            {
+                return "Malignant/Common/GhostHitBox";
+            }
+            return NameSpace.Replace(".", "/") + "/" + type.Name;
+        }
+        public static string GetTheSameTextureAs<T>(string altName = "") where T : class
+        {
+            var type = typeof(T);
+            if (string.IsNullOrEmpty(altName))
+            {
+                altName = type.Name;
+            }
+            string NameSpace = type.Namespace;
+            if (NameSpace == null)
+            {
+                return "Malignant/Common/GhostHitBox";
+            }
+            return NameSpace.Replace(".", "/") + "/" + altName;
+        }
     }
 }

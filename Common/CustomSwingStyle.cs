@@ -40,9 +40,6 @@ namespace Malignant.Common
 
                 //Create the new bounds of the hitbox
                 hitbox = new Rectangle(XVals.X1 - 2, YVals.Y1 - 2, XVals.X2 - XVals.X1 + 2, YVals.Y2 - YVals.Y1 + 2);
-                player.GetModPlayer<MeleeOverhaulPlayer>().SwordHitBox = hitbox;
-                int proj = Projectile.NewProjectile(item.GetSource_ItemUse(item), player.itemLocation, player.GetModPlayer<MeleeOverhaulPlayer>().data, ModContent.ProjectileType<GhostHitBox>(), player.GetWeaponDamage(item), player.HeldItem.knockBack, player.whoAmI);
-                Main.projectile[proj].Hitbox = hitbox;
             }
         }
         public override bool CanUseItem(Item item, Player player)
@@ -72,20 +69,6 @@ namespace Malignant.Common
             }
         }
         private static (int, int) Order(float v1, float v2) => v1 < v2 ? ((int)v1, (int)v2) : ((int)v2, (int)v1);
-        public override void ModifyHitNPC(Item Item, Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
-        {
-            if (Item.useStyle == CustomUsestyleID.SwingVersionTwo)
-            {
-                MeleeOverhaulPlayer modPlayer = player.GetModPlayer<MeleeOverhaulPlayer>();
-                float percentDone = player.itemAnimation / (float)player.itemAnimationMax;
-                float mult = MathHelper.Lerp(.85f, 1.2f, percentDone);
-                damage = (int)(damage * mult);
-                knockBack *= mult;
-                int proj = Projectile.NewProjectile(Item.GetSource_ItemUse(Item), player.itemLocation, Vector2.Zero, ModContent.ProjectileType<GhostHitBox>(), damage, knockBack, player.whoAmI);
-                Main.projectile[proj].Hitbox = modPlayer.SwordHitBox;
-            }
-            base.ModifyHitNPC(Item, player, target, ref damage, ref knockBack, ref crit);
-        }
         private void SwingVersionTwoAttack(Player player,Item item, MeleeOverhaulPlayer modPlayer)
         {
             int VerticleDirectionSwingVersionTwo = modPlayer.count == 0 ? -1 : 1;
@@ -105,7 +88,6 @@ namespace Malignant.Common
     {
         public Vector2 data;
         public int count = -1;
-        public Rectangle SwordHitBox;
         int iframeCounter = 0;
         public int delaytimer = 10;
         public int oldHeldItem;
@@ -169,19 +151,7 @@ namespace Malignant.Common
                 //SpinAttackExtraHit();
             }
             oldHeldItem = Player.HeldItem.type;
-        }
-    }
-    public class GhostHitBox : ModProjectile
-    {
-        public override void SetDefaults()
-        {
-            Projectile.friendly = true;
-            Projectile.penetrate = -1;
-            Projectile.tileCollide = true;
-            Projectile.ignoreWater = true;
-            Projectile.timeLeft = 1;
-            Projectile.hide = true;
-            Projectile.DamageType = DamageClass.Melee;
+            Player.attackCD = 0;
         }
     }
 }
