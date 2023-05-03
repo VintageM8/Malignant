@@ -13,4 +13,9 @@
   <ItemGroup>
     <Folder Include="Content\Projectiles\Prayer\" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ParticleLibrary">
+      <HintPath>Core\ParticleLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

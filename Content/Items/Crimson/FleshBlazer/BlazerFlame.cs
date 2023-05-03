@@ -10,50 +10,51 @@ namespace Malignant.Content.Items.Crimson.FleshBlazer
 {
     public class BlazerFlame : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;
-            ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-        }
+        public override Color? GetAlpha(Color lightColor) => new(251, 139, 95, 100);
 
         public override void SetDefaults()
         {
-            Projectile.aiStyle = -1;
-            Projectile.width = 10;
-            Projectile.height = 10;
-            Projectile.penetrate = 1;
+            Projectile.penetrate = -1;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.friendly = true;
-            Projectile.tileCollide = true;
-            Projectile.timeLeft = 90;
-            Projectile.extraUpdates = 2;
-            Projectile.scale = Main.rand.NextFloat(0.3f, 0.7f);
+            Projectile.hostile = false;
+            Projectile.width = Projectile.height = 60;
+            Projectile.scale = 1f;
+            Projectile.penetrate = 3;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = false;
             Projectile.alpha = 255;
+            Projectile.aiStyle = 0;
+            Projectile.timeLeft = 30;
+            Projectile.hide = true;
+            Projectile.CritChance = 0;
+
         }
 
-
-        public override bool OnTileCollide(Vector2 oldVelocity)
-        {
-            return false;
-        }
         public override void AI()
         {
-            float progress = 1 - (Projectile.timeLeft / 20f);
-            for (int i = 0; i < 3; i++)
+            Player player = Main.player[Projectile.owner];
+
+            if (Projectile.active && player.Hitbox.Intersects(Projectile.Hitbox))
             {
-                Dust sparks = Dust.NewDustPerfect(Projectile.Center + (Projectile.rotation.ToRotationVector2()) * 17, DustID.Torch, (Projectile.rotation + Main.rand.NextFloat(-0.6f, 0.6f)).ToRotationVector2() * Main.rand.NextFloat(0.4f, 1.2f));
-                sparks.fadeIn = progress * 45;
+                player.AddBuff(BuffID.DryadsWard, 180, true, false);
 
             }
+            Vector3 RGB = new Vector3(2.51f, 1.39f, 0.95f);
+            float multiplier = 1f;
+            float max = 2f;
+            float min = 1f;
+            RGB *= multiplier;
+            if (RGB.X > max)
+            {
+                multiplier = 0.5f;
+            }
+            if (RGB.X < min)
+            {
+                multiplier = 0.6f;
+            }
+            Lighting.AddLight(Projectile.position, RGB.X, RGB.Y, RGB.Z);
 
-            Lighting.AddLight(Projectile.Center, new Vector3(0.755f, 0.140f, 0f));
-            if (Projectile.timeLeft <= 20)
-            {
-                Projectile.scale -= 0.02f;
-            }
-            if (Projectile.scale <= 0)
-            {
-                Projectile.Kill();
-            }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

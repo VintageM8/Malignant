@@ -15,15 +15,8 @@ using Terraria.Utilities;
 
 namespace Malignant.Common.Projectiles
 {
-    public interface IChargedBow
+    public abstract class ChargedBowProjectile : ModProjectile
     {
-        (Vector2, Vector2) StringTexturePositions { get; }
-    }
-
-    public abstract class ChargedBowProjectile : ModProjectile, IChargedBow
-    {
-        public override string Texture => base.Texture.Replace("Projectile", string.Empty);
-
         public abstract (Vector2, Vector2) StringTexturePositions { get; }
 
         public virtual SoundStyle ShootSound => SoundID.Item102;

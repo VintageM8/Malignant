@@ -80,7 +80,6 @@ namespace Malignant.Content.Items
         {
             if(item.type != ModContent.ItemType<BlackAvenger>())
             {
-                return base.CanUseItem(item);
             }
             return !IsInReloadState && ReloadCoolDown <= 0;
         }

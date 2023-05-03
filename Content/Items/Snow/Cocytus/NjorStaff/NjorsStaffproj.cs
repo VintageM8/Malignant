@@ -37,6 +37,43 @@ namespace Malignant.Content.Items.Snow.Cocytus.NjorStaff
             }
         }
 
+        public Trail trail;
+        public Trail trail2;
+        private bool initialized;
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+
+            Texture2D trailTexture = ModContent.Request<Texture2D>("Malignant/Assets/Textures/Trails/Stretched").Value;
+
+            if (trail == null)
+            {
+                trail = new Trail(trailTexture, Trail.DefaultPass, (p) => new Vector2(40f), (p) => Projectile.GetAlpha(new Color(115, 115, 208, 100)));
+                trail.drawOffset = Projectile.Size / 2f;
+            }
+            if (trail2 == null)
+            {
+                trail2 = new Trail(trailTexture, Trail.DefaultPass, (p) => new Vector2(15f), (p) => Projectile.GetAlpha(new Color(0, 0, 128, 100)));
+                trail2.drawOffset = Projectile.Size / 2f;
+            }
+
+            trail.Draw(Projectile.oldPos);
+            trail2.Draw(Projectile.oldPos);
+            Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
+
+            int frameHeight = texture.Height / Main.projFrames[Projectile.type];
+            int frameY = frameHeight * Projectile.frame;
+
+            Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
+            Vector2 origin = sourceRectangle.Size() / 2f;
+            Vector2 position = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
+            Color color = Projectile.GetAlpha(lightColor);
+
+            Main.EntitySpriteDraw(texture, position, sourceRectangle, color, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
+            return false;
+
+        }
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             if (Main.rand.Next(6) == 0)

@@ -2,10 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
-
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Malignant.Content.Dusts;
@@ -29,19 +26,19 @@ namespace Malignant.Content.Items.Misc.AngelofLight
             Projectile.friendly = true;
             Projectile.tileCollide = true;
             Projectile.DamageType = DamageClass.Ranged;
-            Projectile.penetrate = 1;
+            Projectile.penetrate = -1;
             Projectile.timeLeft = 600;
             Projectile.alpha = 255;
         }
         public override void AI()
         {
-            int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Blood, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
+            int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<PrayerUse>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
             Main.dust[d].noGravity = true;
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             Projectile.velocity.Y += 0.1f;
             Projectile.alpha = 0;
         }
-        
+
         private Player owner => Main.player[Projectile.owner];
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
@@ -56,8 +53,6 @@ namespace Malignant.Content.Items.Misc.AngelofLight
 
             }
         }
-
-
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
@@ -76,12 +71,12 @@ namespace Malignant.Content.Items.Misc.AngelofLight
             return false;
         }
 
-        public override void Kill(int timeLeft)
+        /*public override void Kill(int timeLeft)
         {
             for (float num614 = 0f; num614 < 1f; num614 += 0.125f)
             {
                 Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<HolyDust>(), Vector2.UnitY.RotatedBy(num614 * ((float)Math.PI * 2f) + Main.rand.NextFloat() * 0.5f) * (4f + Main.rand.NextFloat() * 4f), 150, Color.White, Main.rand.NextFloat(1, 1.75f)).noGravity = true;
             }
-        }
+        }*/
     }
 }

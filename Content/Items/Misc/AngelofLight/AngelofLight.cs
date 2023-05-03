@@ -15,6 +15,7 @@ namespace Malignant.Content.Items.Misc.AngelofLight
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Angel of Light");
+            Tooltip.SetDefault("Smites unholy enemies");
         }
 
         public override void SetDefaults()
