@@ -5,11 +5,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Utilities;
 using Malignant.Core;
+using Malignant.Common.Projectiles;
 
 namespace Malignant.Content.Items.Dedicated.Blade
 {
-    public class BorgorGun : ModItem
+    public class BorgorGun : HeldGunModItem
     {
+        public override (float centerYOffset, float muzzleOffset, Vector2 drawOrigin, Vector2 recoil) HeldProjectileData => (12, 40, new Vector2(-8, 22), new Vector2(5, 0f));
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Burger Gun");
@@ -33,6 +36,7 @@ namespace Malignant.Content.Items.Dedicated.Blade
             Item.autoReuse = true;
             Item.DamageType = DamageClass.Ranged;
             Item.shoot = ModContent.ProjectileType<Borgor>();
+            Item.noUseGraphic = true;
             Item.shootSpeed = 10;
         }
 

@@ -4,11 +4,13 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
+using Malignant.Common.Projectiles;
 
 namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
 {
-    public class DepravedBlastBeat : ModItem
+    public class DepravedBlastBeat : HeldGunModItem
     {
+        public override (float centerYOffset, float muzzleOffset, Vector2 drawOrigin, Vector2 recoil) HeldProjectileData => (6, 30, new Vector2(10, 12), new Vector2(5, 0.4f));
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Depraved Blast Beater");
@@ -32,6 +34,7 @@ namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
             Item.shoot = ModContent.ProjectileType<DepravedBlast_Proj>();
             Item.shootSpeed = 12f;
             //Item.useAmmo = AmmoID.Bullet;
+            Item.noUseGraphic = true;
             Item.channel = true;
         }
 
@@ -41,15 +44,16 @@ namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
         }
 
         private int CastCount;
+
+
         public override void HoldItem(Player player)
         {
             if (!player.channel)
                 CastCount = 0;
         }
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        public override void ShootGun(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-
             float numberProjectiles = 3;
             float rotation = MathHelper.ToRadians(20);
             for (int i = 0; i < numberProjectiles; i++)
@@ -65,7 +69,6 @@ namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
                 Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Cross>(), damage, knockback, player.whoAmI);
                 CastCount = 0;
             }
-            return false;
         }
 
         public override void AddRecipes()

@@ -3,6 +3,9 @@ using Terraria.DataStructures;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Audio;
+using ParticleLibrary;
+using Malignant.Content.Buffs;
 
 
 namespace Malignant.Content.Items.Crimson.FleshBlazer
@@ -12,7 +15,7 @@ namespace Malignant.Content.Items.Crimson.FleshBlazer
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hell's Scourcher");
-            Tooltip.SetDefault("Scorch your way through The Wretched\nUses gel as ammo\nAfter 8 shots you shoot out a bible to damn The Wretched");
+            Tooltip.SetDefault("Scorch your way through The Wretched\nUses gel as ammo\nRight click to smite The Wretched with a cross");
         }
 
         public override void SetDefaults()
@@ -36,8 +39,45 @@ namespace Malignant.Content.Items.Crimson.FleshBlazer
             Item.channel = true;
         }
 
+        public override bool CanUseItem(Player Player)
+        {
+            if (Player.altFunctionUse == 2)
+            {
+                Item.useStyle = ItemUseStyleID.Shoot;
+                Item.useTime = 45;
+                Item.useAnimation = 45;
+                Item.shootSpeed = 12f;
+            }
+            else
+            {
+                Item.useTime = 20;
+                Item.useAnimation = 20;
+                Item.useStyle = ItemUseStyleID.Shoot;
+                Item.shootSpeed = 5f;
+            }
+
+            return base.CanUseItem(Player);
+        }
+
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-15, 0);
+        }
+
+        public override bool AltFunctionUse(Player Player)
+        {
+            return true;
+        }
+
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
+            if (player.altFunctionUse == 2)
+            {
+                Vector2 dir = Vector2.Normalize(velocity) * 9;
+                velocity = dir;
+                type = ModContent.ProjectileType<ScourcherBible>();
+            }
+
             Vector2 muzzleOffset = Vector2.Normalize(velocity) * 25f;
             if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
             {
@@ -45,43 +85,25 @@ namespace Malignant.Content.Items.Crimson.FleshBlazer
             }
         }
 
-        private int FlameCount;
-        public override void HoldItem(Player player)
-        {
-            if (!player.channel)
-                FlameCount = 0;
-        }
-
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            float numberProjectiles = 2;
-            float rotation = MathHelper.ToRadians(5);
-            for (int i = 0; i < numberProjectiles; i++)
+            if (player.altFunctionUse == 2)  
             {
-                Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1)));
-                Projectile.NewProjectile(source, position, perturbedSpeed, type, damage, knockback, player.whoAmI);
+               
             }
-            float rot = velocity.ToRotation();
-            float spread = 0.4f;
-
-            Vector2 offset = new Vector2(1, -0.05f * player.direction).RotatedBy(rot);
-
-
-            Terraria.Audio.SoundEngine.PlaySound(SoundID.Item34 with { Volume = 1f, Pitch = Main.rand.NextFloat(0.5f, 2f), MaxInstances = 400 });
-
-            for (int i = 0; i < 5; i++)
+            else
             {
-                Dust.NewDustPerfect(player.Center + offset * 70, DustID.Torch, Vector2.UnitY * -2 + offset.RotatedByRandom(spread) * 5, 0, new Color(60, 55, 50) * 0.5f, Main.rand.NextFloat(0.5f, 1));
+                SoundEngine.PlaySound(SoundID.Item34 with { Volume = 1f, Pitch = Main.rand.NextFloat(0.5f, 2f), MaxInstances = 400 });
+
+                for (int i = 0; i < 5; i++)
+                {
+                    ParticleManager.NewParticle(position, velocity, ParticleManager.NewInstance<StarParticle>(), Color.OrangeRed, 0.95f);
+                }
             }
-            FlameCount++;
-            if (FlameCount >= 4)
-            {
-                for (int i = -2; i < 3; i++)
-                    Projectile.NewProjectile(source, new Vector2(Main.MouseWorld.X + i * 25, Main.screenPosition.Y - 100), Vector2.UnitY * 1.5f, ModContent.ProjectileType<ScourcherBible>(), damage, knockback, player.whoAmI);
-                FlameCount = 0;
-            }
-            return false;
+
+            return true;
         }
+
         public override void AddRecipes()
         {
             CreateRecipe(1)
@@ -90,11 +112,6 @@ namespace Malignant.Content.Items.Crimson.FleshBlazer
                 .AddIngredient(ItemID.HellstoneBar, 8)
                 .AddTile(TileID.Anvils)
                 .Register();
-        }
-
-        public override Vector2? HoldoutOffset()
-        {
-            return new Vector2(-15, 0);
         }
     }
 }

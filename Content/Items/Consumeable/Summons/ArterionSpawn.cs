@@ -3,7 +3,6 @@ using Terraria.Audio;
 using Malignant.Common;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Malignant.Content.NPCs.Crimson.HeartBoss;
 using Malignant.Content.Items.Misc;
 
 namespace Malignant.Content.Items.Consumeable.Summons
@@ -27,7 +26,7 @@ namespace Malignant.Content.Items.Consumeable.Summons
             Item.UseSound = SoundID.Item44;
             Item.consumable = false;
         }
-        public override bool CanUseItem(Player player)
+        /*public override bool CanUseItem(Player player)
         {
             return !NPC.AnyNPCs(ModContent.NPCType<Arterion>()) && Main.dayTime;
         }
@@ -45,7 +44,7 @@ namespace Malignant.Content.Items.Consumeable.Summons
                     NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
             }
             return true;
-        }
+        }*/
 
         public override void AddRecipes()
         {
