@@ -75,7 +75,7 @@ namespace Malignant.Content.Items.Spider.FangedDeciver
                         source,
                         player.Center,
                         fangDirection * Item.shootSpeed,
-                        ProjectileType<DepravedBlast_Proj>(),
+                        ProjectileType<SpiderFangProjectile>(),
                         damage * 2,
                         0f,
                         player.whoAmI
