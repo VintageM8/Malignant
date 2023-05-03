@@ -43,6 +43,12 @@ namespace Malignant.Content.Items.Crimson.StaffofCarnem
             if (Main.mouseRight)
             {
                 ++count;
+                Vector2 Position = Main.rand.NextVector2CircularEdge(10, 10) + player.Center;
+                Vector2 velocityUnNormalize = player.Center - Position;
+                int dust = Dust.NewDust(Position, 0, 0, DustID.AmberBolt, 0, 0, 0, default, Main.rand.NextFloat(.9f, 1.2f));
+                Main.dust[dust].fadeIn = 1f;
+                Main.dust[dust].noGravity = true;
+                Main.dust[dust].velocity = velocityUnNormalize.SafeNormalize(Vector2.Zero) * velocityUnNormalize.Length();
                 if (count >= 4 && player.GetModPlayer<PlayerCharge>().ChargePower <= 20)
                 {
                     player.GetModPlayer<PlayerCharge>().ChargePower++;
@@ -61,9 +67,15 @@ namespace Malignant.Content.Items.Crimson.StaffofCarnem
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if(player.GetModPlayer<PlayerCharge>().ChargePower <= 20)
+            if (player.GetModPlayer<PlayerCharge>().ChargePower <= 20)
             {
                 return base.Shoot(player, source, position, velocity, type, damage, knockback);
+            }
+            for (int i = 0; i < 30; i++)//PlaceHolder dust
+            {
+                int dust = Dust.NewDust(player.Center, 0, 0, DustID.AmberBolt, 0, 0, 0, default, Main.rand.NextFloat(.9f, 1.2f));
+                Main.dust[dust].noGravity = true;
+                Main.dust[dust].velocity = Main.rand.NextVector2CircularEdge(10, 10);
             }
             player.GetModPlayer<PlayerCharge>().ChargePower = 0;
             float rotation = MathHelper.ToRadians(30);
