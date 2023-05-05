@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
 using Malignant.Common.Players;
 using Malignant.Common.Projectiles;
+using Malignant.Content.Items.Crimson.FleshBlazer;
 
 namespace Malignant.Content.Items.Hell.MarsHell
 {
@@ -17,8 +18,7 @@ namespace Malignant.Content.Items.Hell.MarsHell
         {
             base.SetStaticDefaults();
             DisplayName.SetDefault("Mars Hell");
-            Tooltip.SetDefault("Shoots out a gernade\n" +
-                "Gernade gets stronger overtime" +
+            Tooltip.SetDefault("Shoots out a bomb every 4 shots\n" +
                 "\n<right> to launch a volly of smitful crosses, 1 minute cooldown");
 
         }
@@ -27,42 +27,53 @@ namespace Malignant.Content.Items.Hell.MarsHell
         {
             Item.width = Item.height = 38;
             Item.crit = 0;
-            Item.damage = 23;
-            Item.useAnimation = 50;
-            Item.useTime = 50;
+            Item.damage = 20;
+            Item.useAnimation = 28;
+            Item.useTime = 28;
             Item.noMelee = true;
-            Item.autoReuse = true;
+            Item.autoReuse = false;
             //Item.useAmmo = AmmoID.Bullet;
             Item.DamageType = DamageClass.Ranged;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.UseSound = SoundID.Item36;
             Item.rare = ItemRarityID.Yellow;
-            Item.shootSpeed = 10f;
+            Item.shootSpeed = 15f;
             Item.noUseGraphic = true;
             Item.shoot = ProjectileID.Bullet;
             Item.channel = true;
         }
 
+        private int shotCount;
+        public override void ShootGun(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                Vector2 newVelocity = velocity.RotatedByRandom(MathHelper.ToRadians(15f));
+                newVelocity *= 1f + Main.rand.NextFloat(0.3f);
+
+                Projectile.NewProjectileDirect(
+                    source,
+                    position,
+                    newVelocity,
+                    type,
+                    damage,
+                    knockback,
+                    player.whoAmI
+                ).netUpdate = true;
+            }
+
+            if (++shotCount > 4)
+            {
+                {
+                    Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Gernade1>(), damage, knockback, player.whoAmI);
+                }
+
+                shotCount = 0;
+            }
+        }
+
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            if (player.GetModPlayer<MalignantPlayer>().itemCombo >= 0)
-            {
-                type = ModContent.ProjectileType<Gernade1>();
-                damage = 23;
-                Item.useTime = 50;
-            }
-            if (player.GetModPlayer<MalignantPlayer>().itemCombo >= 10)
-            {
-                type = ModContent.ProjectileType<Gernade2>();
-                damage = 36;
-                Item.useTime = 38;
-            }
-            if (player.GetModPlayer<MalignantPlayer>().itemCombo >= 10)
-            {
-                type = ModContent.ProjectileType<Gernade3>();
-                damage = 48;
-                Item.crit = 4;
-            }
 
             if (player.altFunctionUse == 2)
             {

@@ -10,7 +10,7 @@ namespace Malignant.Content.Items.Spider.TomeofWebs
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tome of Webs");
-            Tooltip.SetDefault("Summons cobwebs around your cursor");
+            Tooltip.SetDefault("");
         }
 
         public override void SetDefaults()
@@ -29,8 +29,9 @@ namespace Malignant.Content.Items.Spider.TomeofWebs
             Item.rare = ItemRarityID.Red;
             Item.UseSound = SoundID.Item20;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<WebTomeCenter>();
+            Item.shoot = ModContent.ProjectileType<CobwebProj>();
             Item.shootSpeed = 22f;
+            Item.channel = true;
         }
     }
 }

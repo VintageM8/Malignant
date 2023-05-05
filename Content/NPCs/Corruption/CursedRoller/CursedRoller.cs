@@ -35,9 +35,40 @@ namespace Malignant.Content.NPCs.Corruption.CursedRoller
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo) => spawnInfo.Player.ZoneCorrupt && spawnInfo.Player.ZoneOverworldHeight ? .075f : 0f;
 
+
+        public bool firedSide1 = false;
+        public int SideTime = 0;
         public override void AI()
         {
             NPC.rotation += NPC.velocity.X * 0.05f;
+
+             SideTime += 1;
+
+            for (int i = 0; i < 20; i++)
+            {
+                Vector2 speed = Main.rand.NextVector2Circular(10f, 2f);
+                Dust d = Dust.NewDustPerfect(new Vector2(NPC.Center.X, NPC.Center.Y + 10), DustID.Corruption, speed);
+                d.noGravity = true;
+            }
+
+            if (SideTime > 30)
+            {
+                if (firedSide1 == false)
+                {
+                    Projectile.NewProjectile(null, new Vector2(NPC.Center.X, NPC.Center.Y), new Vector2(8, 1.5f), ProjectileID.CursedFlameHostile, Main.rand.Next(10, 20), 5);
+                    Projectile.NewProjectile(null, new Vector2(NPC.Center.X, NPC.Center.Y), new Vector2(-8, 1.5f), ProjectileID.CursedFlameHostile, Main.rand.Next(10, 20), 5);
+                    firedSide1 = true;
+                }
+
+                if (SideTime >= 150)
+                {
+                    Projectile.NewProjectile(null, new Vector2(NPC.Center.X, NPC.Center.Y), new Vector2(8, -2f), ProjectileID.CursedFlameHostile, Main.rand.Next(10, 20), 5);
+                    Projectile.NewProjectile(null, new Vector2(NPC.Center.X, NPC.Center.Y), new Vector2(-8, -2f), ProjectileID.CursedFlameHostile, Main.rand.Next(10, 20), 5);
+
+                    SideTime = 0;
+                    firedSide1 = false;
+                }
+            }
         }
 
         public override void HitEffect(int hitDirection, double damage)
