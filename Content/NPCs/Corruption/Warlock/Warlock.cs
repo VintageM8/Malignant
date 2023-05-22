@@ -58,7 +58,7 @@ namespace Malignant.Content.NPCs.Corruption.Warlock
         }
         #endregion
 
-        public override void HitEffect(int hitDirection, double damage)
+       public override void HitEffect(NPC.HitInfo hit)
         {
             /*
             for (int num331 = 0; num331 < 20; num331++)s
@@ -75,10 +75,10 @@ namespace Malignant.Content.NPCs.Corruption.Warlock
                     dustAction: dust => dust.scale = Main.rand.NextFloat(0.85f, 1.7f)
                     );
         }
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.damage = (int)(NPC.damage * 0.5f);
-            NPC.lifeMax = (int)(NPC.lifeMax * 0.5f * bossLifeScale);
+            NPC.lifeMax = (int)(NPC.lifeMax * 0.5f * balance);
             NPC.defense += 3 * numPlayers;
         }
         int amountoftimes = 0;
