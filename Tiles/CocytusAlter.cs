@@ -26,9 +26,6 @@ namespace Malignant.Tiles
             TileObjectData.addTile(Type);
 
             TileID.Sets.DisableSmartCursor[Type] = true;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Cocytus's Alter");
-            AddMapEntry(new Color(234, 0, 0), name);
         }
 
         public override bool CanKillTile(int i, int j, ref bool blockDamaged) => MalignantSystem.downedIceBoss;
