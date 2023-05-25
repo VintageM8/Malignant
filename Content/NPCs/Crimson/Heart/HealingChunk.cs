@@ -9,10 +9,6 @@ namespace Malignant.Content.NPCs.Crimson.Heart
 {
     public class HealingChunk : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Viscera's Healing Chunk");
-        }
         public override void SetDefaults()
         {
             Projectile.width = 400;

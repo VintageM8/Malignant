@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Malignant.Content.NPCs.Crimson.HeartBoss.Projectiles;
+using Microsoft.Xna.Framework;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,14 +37,13 @@ namespace Malignant.Content.NPCs.Corruption.CursedRoller
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo) => spawnInfo.Player.ZoneCorrupt && spawnInfo.Player.ZoneOverworldHeight ? .075f : 0f;
 
-
         public bool firedSide1 = false;
         public int SideTime = 0;
         public override void AI()
         {
             NPC.rotation += NPC.velocity.X * 0.05f;
 
-             SideTime += 1;
+            SideTime += 1;
 
             for (int i = 0; i < 20; i++)
             {
@@ -71,7 +72,8 @@ namespace Malignant.Content.NPCs.Corruption.CursedRoller
             }
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+
+        public override void HitEffect(NPC.HitInfo hit)
         {
             //Add Stuff here
         }

@@ -9,10 +9,6 @@ namespace Malignant.Content.Projectiles.Enemy.Njor
 {
 	public class GenericSpike : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Ice Spike");
-		}
 
 		public override void SetDefaults()
 		{

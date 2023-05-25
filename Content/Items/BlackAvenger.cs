@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+/*﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -130,4 +130,4 @@ namespace Malignant.Content.Items
             Projectile.DamageType = DamageClass.Ranged;
         }
     }
-}
+}*/

@@ -12,12 +12,6 @@ namespace Malignant.Content.NPCs.Corruption.Warlock
         private int moveSpeed;
         public bool kill = false;
 
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Lost Souls");
-            //Main.npcFrameCount[NPC.type] = 0;
-        }
-
         public override void SetDefaults()
         {
             NPC.width = 30;

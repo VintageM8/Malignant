@@ -11,7 +11,6 @@ namespace Malignant.Content.Projectiles.Enemy.Warlock
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cursed Blast");
             Main.projFrames[Projectile.type] = 4;
         }
 

@@ -11,10 +11,10 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crucifix Constructer");
-            Tooltip.SetDefault("[c/eeff00f:Combo Weapon:] Hammer slams down then gets thrown at the nearest foe " +
-                "\nHas chance to stick crucifixs in your foe" +
-                "\nEach time the thrown hammer hits a crucifix, the crucifix deals damage.");
+            //DisplayName.SetDefault("Crucifix Constructer");
+            //Tooltip.SetDefault("[c/eeff00f:Combo Weapon:] Hammer slams down then gets thrown at the nearest foe " +
+                //"\nHas chance to stick crucifixs in your foe" +
+                //"\nEach time the thrown hammer hits a crucifix, the crucifix deals damage.");
         }
 
         public int AttackCounter = 1;
@@ -51,7 +51,7 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
             if (player.GetModPlayer<MalignantPlayer>().itemCombo <= 2 || player.GetModPlayer<MalignantPlayer>().itemCombo == 9)
             {
                 Item.UseSound = SoundID.Item1;
-                Projectile.NewProjectile(null, position, velocity * 10, ModContent.ProjectileType<HammerSlam>(), damage, knockback, player.whoAmI, 1, dir);
+                Projectile.NewProjectile(null, position, velocity * 12, ModContent.ProjectileType<HammerSlam>(), damage, knockback, player.whoAmI, 1, dir);
 
 
             }

@@ -38,7 +38,7 @@ namespace Malignant.Content.Projectiles.Enemy.Warlock
             }
             Lighting.AddLight(Projectile.Center, 0.5f, 0.5f, 0);
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             NPC host = Main.npc[(int)Projectile.ai[0]];
             if (host.life < host.lifeMax - 20)

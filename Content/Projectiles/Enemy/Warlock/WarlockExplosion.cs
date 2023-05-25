@@ -8,10 +8,6 @@ namespace Malignant.Content.Projectiles.Enemy.Warlock
 {
     class WarlockExplosion : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Explosion");
-        }
 
         public override void SetDefaults()
         {
@@ -117,7 +113,7 @@ namespace Malignant.Content.Projectiles.Enemy.Warlock
             Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             Projectile.Kill();
            // Projectile.NewProjectile(Projectile.GetSource_OnHit(target), Projectile.Center.X, Projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<HostileWrath>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 0f, 0f);

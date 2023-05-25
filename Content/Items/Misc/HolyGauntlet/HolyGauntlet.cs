@@ -9,8 +9,8 @@ namespace Malignant.Content.Items.Misc.HolyGauntlet
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Holy Gauntlet");
-            Tooltip.SetDefault("Killing unholy enemies replenishes your lifeforce");
+            //DisplayName.SetDefault("Holy Gauntlet");
+            //Tooltip.SetDefault("Killing unholy enemies replenishes your lifeforce");
         }
 
         public override void SetDefaults()

@@ -3,6 +3,7 @@ using Malignant.Content.Items.Snow.Cocytus.NjorStaff;
 using Malignant.Content.Items.Snow.Cocytus.NjorSword;
 using Malignant.Content.NPCs.Norse.Njor;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -13,8 +14,8 @@ namespace Malignant.Content.Items.Misc.Bags
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Treasure Bag (Cocytus)");
-            Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+            //DisplayName.SetDefault("Treasure Bag (Cocytus)");
+            //Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
         }
 
         public override void SetDefaults()
@@ -32,23 +33,15 @@ namespace Malignant.Content.Items.Misc.Bags
             return true;
         }
 
-        public override void OpenBossBag(Player Player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            int weapon = Main.rand.Next(3);
 
             for (int k = 0; k < (Main.masterMode ? 3 : 2); k++)
             {
-                switch (weapon % 3)
-                {
-                    case 0: Player.QuickSpawnItem(Player.GetSource_OpenItem(Item.type), ItemType<IcyTundra>()); break;
-                    case 1: Player.QuickSpawnItem(Player.GetSource_OpenItem(Item.type), ItemType<NjorsStaff>()); break;
-                    case 2: Player.QuickSpawnItem(Player.GetSource_OpenItem(Item.type), ItemType<IceSword>()); break;
-                }
-
-                weapon++;
+                 itemLoot.Add(ItemDropRule.Common(ItemType<IcyTundra>(), 1));
+                 itemLoot.Add(ItemDropRule.Common(ItemType<NjorsStaff>(), 1));
+                 itemLoot.Add(ItemDropRule.Common(ItemType<IceSword>(), 1));
             }
         }
-
-        public override int BossBagNPC => ModContent.NPCType<Njor>();
     }
 }

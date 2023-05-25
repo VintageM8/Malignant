@@ -8,8 +8,8 @@ namespace Malignant.Content.Items.Misc
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Broken Demon Horn");
-            Tooltip.SetDefault("Be wary of the weapons crafted from this, for they can corrupt any user");
+            //DisplayName.SetDefault("Broken Demon Horn");
+            //Tooltip.SetDefault("Be wary of the weapons crafted from this, for they can corrupt any user");
         }
 
         public override void SetDefaults()

@@ -8,10 +8,6 @@ namespace Malignant.Content.Projectiles.Enemy.Njor
 {
 	public class HomeSpike : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Homing Spike");
-		}
 
 		public override void SetDefaults()
 		{

@@ -8,7 +8,7 @@ namespace Malignant.Content.Items.Snow.Cocytus.NjorStaff
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Scepter of Cocytus");
+            //DisplayName.SetDefault("Scepter of Cocytus");
             Item.staff[Item.type] = true;
         }
 

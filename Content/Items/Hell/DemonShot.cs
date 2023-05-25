@@ -9,8 +9,8 @@ namespace Malignant.Content.Items.Hell
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Demon Shot");
-            Tooltip.SetDefault("Shatters on cursor point and releases a forbidden power");
+            //DisplayName.SetDefault("Demon Shot");
+            //Tooltip.SetDefault("Shatters on cursor point and releases a forbidden power");
         }
 
         public override void SetDefaults()

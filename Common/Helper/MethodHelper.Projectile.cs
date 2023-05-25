@@ -10,6 +10,11 @@ namespace Malignant.Common.Helper
 {
     public static partial class MethodHelper
     {
+
+        public static float CircleDividedEqually(float i, float max)
+        {
+            return 2f * (float)Math.PI / max * i;
+        }
         public static void EasyDraw(this Projectile projectile, Color color, Vector2? position = null, Vector2? origin = null, SpriteEffects? spriteEffects = null)
         {
             Texture2D tex = TextureAssets.Projectile[projectile.type].Value;

@@ -1,6 +1,9 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Malignant.Content.Items.Spider.StaffSpiderEye
 {
@@ -8,8 +11,8 @@ namespace Malignant.Content.Items.Spider.StaffSpiderEye
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Staff of the Spider Eye");
-            Tooltip.SetDefault("Shoots orbiting spider eyes that double any friendly projectile");
+            //DisplayName.SetDefault("Staff of the Spider Eye");
+            //Tooltip.SetDefault("Shoots out fangs");
             Item.staff[Item.type] = true;
         }
 
@@ -28,7 +31,6 @@ namespace Malignant.Content.Items.Spider.StaffSpiderEye
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<SpiderEyeProj>();
-            Item.channel = true;
         }
 
         public override void AddRecipes()

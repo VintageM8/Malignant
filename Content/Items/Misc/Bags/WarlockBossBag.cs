@@ -11,6 +11,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Terraria.GameContent;
+using Malignant.Content.Items.Snow.Cocytus.NjorStaff;
+using Malignant.Content.Items.Snow.Cocytus.NjorSword;
+using Malignant.Content.Items.Snow.Cocytus;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Malignant.Content.Items.Misc.Bags
 {
@@ -18,8 +22,8 @@ namespace Malignant.Content.Items.Misc.Bags
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Treasure Bag (Warlock)");
-            Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+            //DisplayName.SetDefault("Treasure Bag (Warlock)");
+            //Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
         }
 
         public override void SetDefaults()
@@ -37,26 +41,17 @@ namespace Malignant.Content.Items.Misc.Bags
             return true;
         }
 
-        public override void OpenBossBag(Player Player)
+        public override void ModifyItemLoot(ItemLoot itemLoot)
         {
-            int weapon = Main.rand.Next(4);
-
             for (int k = 0; k < (Main.masterMode ? 3 : 2); k++)
             {
-                switch (weapon % 4)
-                {
-                    case 0: Player.QuickSpawnItem(Player.GetSource_OpenItem(Item.type), ItemType<Boeyr>()); break;
-                    case 1: Player.QuickSpawnItem(Player.GetSource_OpenItem(Item.type), ItemType<CursedFireballStaff>()); break;
-                    case 2: Player.QuickSpawnItem(Player.GetSource_OpenItem(Item.type), ItemType<NightsisterBlade>()); break;
-                    case 3: Player.QuickSpawnItem(Player.GetSource_OpenItem(Item.type), ItemType<CorruptedCord>()); break;
-                }
-
-                weapon++;
+                itemLoot.Add(ItemDropRule.Common(ItemType<IcyTundra>(), 1));
+                itemLoot.Add(ItemDropRule.Common(ItemType<NjorsStaff>(), 1));
+                itemLoot.Add(ItemDropRule.Common(ItemType<IceSword>(), 1));
             }
-            Player.QuickSpawnItem(Player.GetSource_OpenItem(Item.type), ItemType<HorridAccessory>());
+            itemLoot.Add(ItemDropRule.FewFromOptions(ItemType<HorridAccessory>(), 1));
         }
 
-        public override int BossBagNPC => NPCType<Warlock>();
         //This method is stolen from examplemod and I trust it to emulate vanilla accurately
         public override void PostUpdate()
         {

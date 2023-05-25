@@ -13,10 +13,11 @@ namespace Malignant.Content.NPCs.Crimson.FlyingHeart
     public class FlyingHeart : ModNPC
     {
         int frame = 0;
+        private float hitDirection;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flying Heart");
+            //DisplayName.AutoStaticDefaults("Flying Heart");
             Main.npcFrameCount[NPC.type] = 6;
         }
 
@@ -191,8 +192,9 @@ namespace Malignant.Content.NPCs.Crimson.FlyingHeart
                 NPC.velocity.Y = NPC.velocity.Y - acceleration;
             NPC.spriteDirection = -NPC.direction;
         }
+        
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             for (int k = 0; k < 23; k++)
                 Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, hitDirection * 1.5f, -1f, 0, default, .91f);

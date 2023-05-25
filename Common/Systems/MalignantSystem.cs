@@ -110,7 +110,7 @@ public class MalignantSystem : ModSystem
         IceAttempts++;
         Point p = new Point();
         p.X = Main.rand.Next(0, Main.maxTilesX);
-        p.Y = Main.rand.Next((int)WorldGen.rockLayerLow, (int)WorldGen.rockLayerHigh);
+        p.Y = Main.rand.Next((int)GenVars.rockLayerLow, (int)GenVars.rockLayerHigh);
         bool VaildLoc = false;
         Tile t = Framing.GetTileSafely(p);
         if (t.TileType == TileID.IceBlock || t.TileType == TileID.SnowBlock)
@@ -132,7 +132,7 @@ public class MalignantSystem : ModSystem
         }
     }
 
-    public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
+    public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
     {
         int CleanupIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
         tasks.Insert(CleanupIndex, new PassLegacy("IceCastle", CreateIceCastle));

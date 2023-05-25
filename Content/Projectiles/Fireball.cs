@@ -13,7 +13,6 @@ namespace Malignant.Content.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fireball");
             Main.projFrames[Projectile.type] = 4;
         }
 
@@ -71,11 +70,6 @@ namespace Malignant.Content.Projectiles
 
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
             MethodHelper.NewDustCircular(Projectile.Center, Projectile.width * 0.1f, i => Main.rand.NextFromList(DustID.Torch, DustID.InfernoFork), 85, minMaxSpeedFromCenter: (8, 10), dustAction: d => d.noGravity = true);
-            MethodHelper.ForeachNPCInRange(Projectile.Center, Projectile.width * 3, npc =>
-            {
-                if (!npc.friendly && npc.immune[Projectile.owner] <= 0)
-                    npc.StrikeNPC((int)(Projectile.damage * 0.5f), 0, 0);
-            });
         }
 
     }

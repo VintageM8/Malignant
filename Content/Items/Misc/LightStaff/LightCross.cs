@@ -8,8 +8,6 @@ using Terraria.GameContent;
 using Malignant.Core;
 using Terraria.Audio;
 using Malignant.Common.Helper;
-using IL.Terraria.GameContent;
-using On.Terraria.GameContent;
 using Malignant.Common;
 using Malignant.Content.Items.Crimson.Arterion.BurstingArtery;
 using Malignant.Content.Projectiles;

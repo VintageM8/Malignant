@@ -1,6 +1,9 @@
 ﻿using Malignant.Common.Helper;
+using Malignant.Content.Items.Hell.MarsHell;
 using Microsoft.Xna.Framework;
+using ParticleLibrary;
 using System;
+using System.Security.Cryptography.X509Certificates;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -11,9 +14,10 @@ namespace Malignant.Content.Projectiles.Prayer
 {
     public class WindsofGod : ModProjectile
     {
+        public override string Texture => "Malignant/Content/Projectiles/Fireball";
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Winds of God");
             Main.projFrames[Projectile.type] = 4;
         }
 
@@ -33,8 +37,16 @@ namespace Malignant.Content.Projectiles.Prayer
 
         bool spawnStuff = true;
         Vector2 initialCenter;
+        
         public override void AI()
         {
+
+            for (int i = 0; i < 3; i++)
+            {
+                Vector2 dir = Main.rand.NextVector2Unit() * 0.1f;
+                ParticleManager.NewParticle(Projectile.Center, dir * Main.rand.NextFloat(10, 25), ParticleManager.NewInstance<FireParticle>(), new Color(255f, 69f, 0f, 0), 0.3f, Projectile.whoAmI);
+            }
+
             if (spawnStuff)
             {
                 initialCenter = Projectile.Center;
@@ -68,47 +80,10 @@ namespace Malignant.Content.Projectiles.Prayer
 
         public override void Kill(int timeLeft)
         {
-            /*
-            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X, Projectile.Center.Y, 14f, 0f, ModContent.ProjectileType<HolyWind>(), Projectile.damage, 0f, Projectile.owner, 0f, 0f);
-            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X, Projectile.Center.Y, -14f, 0f, ModContent.ProjectileType<HolyWind>(), Projectile.damage, 0f, Projectile.owner, 0f, 0f);
-            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X, Projectile.Center.Y, 0f, 14f, ModContent.ProjectileType<HolyWind>(), Projectile.damage, 0f, Projectile.owner, 0f, 0f);
-            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X, Projectile.Center.Y, 0f, -14f, ModContent.ProjectileType<HolyWind>(), Projectile.damage, 0f, Projectile.owner, 0f, 0f);
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<MarsHellBoom>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-            Projectile.position.X = Projectile.position.X + (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y + (float)(Projectile.height / 2);
-            Projectile.width = 50;
-            Projectile.height = 50;
-            Projectile.position.X = Projectile.position.X - (float)(Projectile.width / 2);
-            Projectile.position.Y = Projectile.position.Y - (float)(Projectile.height / 2);
-
-            for (int num621 = 0; num621 < 20; num621++)
-            {
-                int num622 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.CursedTorch, 0f, 0f, 100, default, 2f);
-                Main.dust[num622].velocity *= 3f;
-                if (Main.rand.NextBool(2))
-                {
-                    Main.dust[num622].scale = 0.5f;
-                    Main.dust[num622].fadeIn = 1f + (float)Main.rand.Next(10) * 0.1f;
-                }
-            }
-            for (int num623 = 0; num623 < 35; num623++)
-            {
-                int num624 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.CursedTorch, 0f, 0f, 100, default, 3f);
-                Main.dust[num624].noGravity = true;
-                Main.dust[num624].velocity *= 5f;
-                num624 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.CursedTorch, 0f, 0f, 100, default, 2f);
-                Main.dust[num624].velocity *= 2f;
-            }
-            */
-
-            SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-            MethodHelper.NewDustCircular(Projectile.Center, Projectile.width * 0.1f, i => Main.rand.NextFromList(DustID.CursedTorch, DustID.InfernoFork), 85, minMaxSpeedFromCenter: (8, 10), dustAction: d => d.noGravity = true);
-            MethodHelper.ForeachNPCInRange(Projectile.Center, Projectile.width * 3, npc =>
-            {
-                if (!npc.friendly && npc.immune[Projectile.owner] <= 0)
-                    npc.StrikeNPC((int)(Projectile.damage * 0.5f), 0, 0);
-            });
+            MethodHelper.NewDustCircular(Projectile.Center, Projectile.width * 0.1f, i => Main.rand.NextFromList(DustID.InfernoFork, DustID.InfernoFork), 85, minMaxSpeedFromCenter: (8, 10), dustAction: d => d.noGravity = true);
         }
 
     }

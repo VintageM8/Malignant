@@ -1,56 +1,107 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Malignant.Common.Projectiles;
-using Terraria.Audio;
+using Microsoft.Xna.Framework;
 
 namespace Malignant.Content.Items.Spider.StaffSpiderEye
-{ 
+{
     public class SpiderEyeProj : ModProjectile
     {
+        public override string Texture => "Malignant/Content/Items/Spider/SpiderNeckless/SpiderFangProjectile";
         public override void SetDefaults()
         {
-            Projectile.ignoreWater = false;
-            Projectile.width = 30;
-            Projectile.penetrate = 1;
-            Projectile.height = 30;
-            Projectile.friendly = false;
-            Projectile.light = 1f;
-            Projectile.tileCollide = false;
-            Projectile.aiStyle = -1;
-            Projectile.timeLeft = 440;
+            Projectile.width = 6;
+            Projectile.height = 12;
+
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.friendly = true;
+            Projectile.timeLeft = 200;
+
+            Projectile.penetrate = -1;
         }
 
-        int timer = 16;
-        public override void AI()
+        public override bool PreAI()
         {
-            Projectile projectile = Main.projectile[Main.myPlayer];
-            Player player = Main.player[Projectile.owner];
-            Projectile.Center = player.Center + new Vector2(300 * (float)Math.Cos((2 * Math.PI) / 360 * Projectile.ai[0]), 300 * (float)Math.Sin((2 * Math.PI) / 360 * Projectile.ai[0]));
-            Projectile.ai[0]++;
-
-            timer--;
-            if (timer == 0)
+            if (Projectile.ai[0] == 0)
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+            else
             {
-                SoundEngine.PlaySound(SoundID.Item8, Projectile.Center);
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X + Main.rand.Next(-3, 5), Projectile.velocity.Y + Main.rand.Next(-3, 5), ModContent.ProjectileType<SpiderEyeProj_2>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 0f, 0f);
-                timer = 21;
+                Projectile.ignoreWater = true;
+                Projectile.tileCollide = false;
+                int num996 = 15;
+                bool flag52 = false;
+                bool flag53 = false;
+                Projectile.localAI[0] += 1f;
+                if (Projectile.localAI[0] % 30f == 0f)
+                    flag53 = true;
+
+                int num997 = (int)Projectile.ai[1];
+                if (Projectile.localAI[0] >= (float)(60 * num996))
+                    flag52 = true;
+                else if (num997 < 0 || num997 >= 200)
+                    flag52 = true;
+                else if (Main.npc[num997].active && !Main.npc[num997].dontTakeDamage)
+                {
+                    Projectile.Center = Main.npc[num997].Center - Projectile.velocity * 2f;
+                    Projectile.gfxOffY = Main.npc[num997].gfxOffY;
+                    if (flag53)
+                    {
+                        Main.npc[num997].HitEffect(0, 1.0);
+                    }
+                }
+                else
+                    flag52 = true;
+
+                if (flag52)
+                    Projectile.Kill();
+            }
+            return false;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            Projectile.ai[0] = 1f;
+            Projectile.ai[1] = (float)target.whoAmI;
+            target.AddBuff(BuffID.Venom, Projectile.timeLeft);
+            Projectile.velocity = (target.Center - Projectile.Center) * 0.75f;
+            Projectile.netUpdate = true;
+            Projectile.damage = 0;
+
+            int num31 = 3;
+            Point[] array2 = new Point[num31];
+            int num32 = 0;
+
+            for (int n = 0; n < 1000; n++)
+            {
+                if (n != Projectile.whoAmI && Main.projectile[n].active && Main.projectile[n].owner == Main.myPlayer && Main.projectile[n].type == Projectile.type && Main.projectile[n].ai[0] == 1f && Main.projectile[n].ai[1] == target.whoAmI)
+                {
+                    array2[num32++] = new Point(n, Main.projectile[n].timeLeft);
+                    if (num32 >= array2.Length)
+                        break;
+                }
             }
 
-            /*Projectile.ai[1] += 1f;
-            if (Projectile.ai[1] >= 7200f)
+            if (num32 >= array2.Length)
             {
-                Projectile.alpha += 5;
-                if (Projectile.alpha > 255)
+                int num33 = 0;
+                for (int num34 = 1; num34 < array2.Length; num34++)
                 {
-                    Projectile.alpha = 255;
-                    Projectile.Kill();
+                    if (array2[num34].Y < array2[num33].Y)
+                        num33 = num34;
                 }
-
-            }*/
+                Main.projectile[array2[num33].X].Kill();
+            }
         }
+        public override void Kill(int timeLeft)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.JungleGrass);
+                Main.dust[d].scale *= 0.8f;
+            }
+            Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+        }
+
     }
 }

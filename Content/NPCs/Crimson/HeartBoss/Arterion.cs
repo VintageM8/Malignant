@@ -16,7 +16,6 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Arterion, Touched of Infection");
             //Main.npcFrameCount[NPC.type] = 1;
         }
 

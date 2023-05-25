@@ -8,10 +8,6 @@ namespace  Malignant.Content.NPCs.Crimson.Heart
 {
     public class BloodBlister : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Blood Blister");
-        }
         public override void SetDefaults()
         {
             Projectile.width = 26;

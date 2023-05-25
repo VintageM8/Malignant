@@ -9,8 +9,8 @@ namespace Malignant.Content.Items.Misc.HolyGreatsword
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Holy Greatsword");
-            Tooltip.SetDefault("This sword swords"); //10/10 tooltip
+            //DisplayName.SetDefault("Holy Greatsword");
+            //Tooltip.SetDefault("This sword swords"); //10/10 tooltip
         }
 
         public override void SetDefaults()
