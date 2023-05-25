@@ -10,7 +10,6 @@ namespace Malignant.Content.NPCs.Crimson.MutilatedFlesh
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mutilated Flesh");
             Main.npcFrameCount[NPC.type] = 4;
         }
 
@@ -30,7 +29,7 @@ namespace Malignant.Content.NPCs.Crimson.MutilatedFlesh
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo) => spawnInfo.Player.ZoneCrimson ? 0.50f : 0f;
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             int num = NPC.life > 0 ? 1 : 5;
             for (int k = 0; k < num; k++)

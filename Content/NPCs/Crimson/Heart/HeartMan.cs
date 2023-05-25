@@ -20,7 +20,7 @@ namespace Malignant.Content.NPCs.Crimson.Heart
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Viscera");
+            //DisplayName.SetDefault("Viscera");
             //Main.npcFrameCount[NPC.type] = 6;
         }
 
@@ -275,8 +275,9 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                 NPC.frame.Y = 0;
             }
         }*/
+        private float hitDirection;
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             for (int k = 0; k < 30; k++)
             {

@@ -11,7 +11,7 @@ namespace Malignant.Content.Items.Spider.SpiderNeckless
     {
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Inflict Venom");
+            //Tooltip.SetDefault("Inflict Venom");
         }
         public override void SetDefaults()
         {
@@ -54,7 +54,7 @@ namespace Malignant.Content.Items.Spider.SpiderNeckless
             count++;
             Projectile.alpha += 2;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(BuffID.Venom, 60);
         }
@@ -67,14 +67,14 @@ namespace Malignant.Content.Items.Spider.SpiderNeckless
             SpiderFangNeckless = false;
             base.ResetEffects();
         }
-        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (SpiderFangNeckless)
             {
                 target.AddBuff(BuffID.Venom, 60);
             }
         }
-        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        public override void OnHurt(Player.HurtInfo info)
         {
             if (SpiderFangNeckless)
             {

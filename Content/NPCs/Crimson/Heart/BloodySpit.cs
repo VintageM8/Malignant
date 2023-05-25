@@ -9,10 +9,6 @@ namespace Malignant.Content.NPCs.Crimson.Heart
 {
     public class BloodySpit : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Bloody Spit");
-        }
         public override void SetDefaults()
         {
             Projectile.width = 400;

@@ -13,8 +13,8 @@ namespace Malignant.Content.Items.Snow.Cocytus
 		private int charges;
 		public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Winds of Hell");
-			Tooltip.SetDefault("Hold down mouse to build up your attack");
+            //DisplayName.SetDefault("Winds of Hell");
+			//Tooltip.SetDefault("Hold down mouse to build up your attack");
         }
 
         public override void SetDefaults()

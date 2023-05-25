@@ -74,7 +74,7 @@ namespace Malignant.Common.Players
             return true;
         }
 
-        public override void OnEnterWorld(Player player)
+        public override void OnEnterWorld()
         {
             //Important for Orbiting projectiles.
             for (int i = 0; i < OrbitingProjectileCount.Length; i++)
@@ -129,7 +129,7 @@ namespace Malignant.Common.Players
             else RotationTimer = 0;
         }
 
-        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter)
+        public override void OnHurt(Player.HurtInfo info)
         {
             if (Moniter)
             {
@@ -143,7 +143,7 @@ namespace Malignant.Common.Players
                 }
             }
         }
-        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Lich)
             {
@@ -167,7 +167,7 @@ namespace Malignant.Common.Players
 
         }
 
-        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Lich)
             {

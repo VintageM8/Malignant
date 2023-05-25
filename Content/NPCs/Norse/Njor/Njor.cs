@@ -16,7 +16,6 @@ namespace Malignant.Content.NPCs.Norse.Njor
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Njor");
 			//Main.npcFrameCount[NPC.type] = 1;
 		}
 
@@ -43,9 +42,9 @@ namespace Malignant.Content.NPCs.Norse.Njor
             }
 
         }
-		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
-		{
-			NPC.lifeMax = (int)(NPC.lifeMax * 0.625f * bossLifeScale);
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+			NPC.lifeMax = (int)(NPC.lifeMax * 0.625f * balance);
 			NPC.damage = (int)(NPC.damage * 1.6f);
 		}
 

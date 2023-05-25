@@ -91,7 +91,7 @@ namespace Malignant.Content.Items.Misc.WarbladeofLight
             Projectile.netUpdate = true;
 
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             for (int i = 0; i < 360; i += 8)
             {

@@ -11,8 +11,8 @@ namespace Malignant.Content.Items.Misc.LightStaff
         float Counter = 0;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Stave of Light");
-            Tooltip.SetDefault("Summons crosses that shoots a homing fireball");
+            //DisplayName.SetDefault("Stave of Light");
+            //Tooltip.SetDefault("Summons crosses that shoots a homing fireball");
         }
         public override void SetDefaults()
         {

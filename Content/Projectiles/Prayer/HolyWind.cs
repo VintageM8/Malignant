@@ -52,7 +52,7 @@ namespace Malignant.Content.Projectiles.Prayer
                 Main.dust[dust].noGravity = false;
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Vector2 origin = Projectile.Center;
             float radius = 15;

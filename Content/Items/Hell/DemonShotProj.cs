@@ -23,7 +23,7 @@ namespace Malignant.Content.Items.Hell
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("DemonShotProj");
+            //DisplayName.SetDefault("DemonShotProj");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

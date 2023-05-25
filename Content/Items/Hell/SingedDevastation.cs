@@ -20,8 +20,8 @@ namespace Malignant.Content.Items.Hell
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Singed Devastation");
-            Tooltip.SetDefault("Changes Musket Balls to Demon Shot");
+            //DisplayName.SetDefault("Singed Devastation");
+           // Tooltip.SetDefault("Changes Musket Balls to Demon Shot");
         }
         public override void SetDefaults()
         {

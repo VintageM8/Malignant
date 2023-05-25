@@ -11,7 +11,7 @@ namespace Malignant.Content.NPCs.Corruption.Shreiker
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shreiker");
+            //DisplayName.SetDefault("Shreiker");
             Main.npcFrameCount[NPC.type] = 5;
         }
         public override void SetDefaults()

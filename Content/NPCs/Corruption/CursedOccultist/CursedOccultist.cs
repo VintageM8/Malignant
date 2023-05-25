@@ -21,7 +21,7 @@ namespace Malignant.Content.NPCs.Corruption.CursedOccultist
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cursed Occultist");
+            //DisplayName("Cursed Occultist");
             Main.npcFrameCount[NPC.type] = 4;
         }
 
@@ -202,13 +202,13 @@ namespace Malignant.Content.NPCs.Corruption.CursedOccultist
         }
         #endregion
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             for (int k = 0; k < 7; k++)
             {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * hitDirection, -2.5f, 0, default, 1.2f);
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * hitDirection, -2.5f, 0, default, 0.5f);
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * hitDirection, -2.5f, 0, default, 0.7f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f, -2.5f, 0, default, 1.2f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f, -2.5f, 0, default, 0.5f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f, -2.5f, 0, default, 0.7f);
             }
         }
     }

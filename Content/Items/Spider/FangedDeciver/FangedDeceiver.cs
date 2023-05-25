@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using System.IO;
 using Malignant.Common.Projectiles;
+using Malignant.Content.Items.Spider.SpiderNeckless;
 
 namespace Malignant.Content.Items.Spider.FangedDeciver
 {
@@ -23,8 +24,8 @@ namespace Malignant.Content.Items.Spider.FangedDeciver
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fanged Deciver");
-            Tooltip.SetDefault("Shoots out a venomus bullet\nEvery 5th shot fangs shoot out around you\nGains power as you progress");
+            //DisplayName.SetDefault("Fanged Deciver");
+            //Tooltip.SetDefault("Shoots out a venomus bullet\nEvery 5th shot fangs shoot out around you\nGains power as you progress");
         }
         public override void SetDefaults()
         {

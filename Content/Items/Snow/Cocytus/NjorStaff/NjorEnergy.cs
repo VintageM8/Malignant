@@ -11,11 +11,6 @@ namespace Malignant.Content.Items.Snow.Cocytus.NjorStaff
     {
         public override string Texture => "Terraria/Images/Item_" + ProjectileID.LostSoulFriendly;
         public override bool? CanDamage() => false;
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Snowrgy");
-        }
-
         public override void SetDefaults()
         {
             Projectile.width = 10;

@@ -11,8 +11,8 @@ namespace Malignant.Content.Items.Misc.WarbladeofLight
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tranquility, Warblade of Light");
-            Tooltip.SetDefault("Gains power as you progress\n[c/eeff00f:Chosen Item]");
+            //DisplayName.SetDefault("Tranquility, Warblade of Light");
+            //Tooltip.SetDefault("");
         }
 
         public int AttackCounter = 1;

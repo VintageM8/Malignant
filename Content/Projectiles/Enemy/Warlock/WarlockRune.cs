@@ -11,10 +11,6 @@ namespace Malignant.Content.Projectiles.Enemy.Warlock
     public class WarlockRune : ModProjectile
     {
         Vector2 initPos = Vector2.Zero;
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Rune");
-        }
 
         public override void SetDefaults()
         {

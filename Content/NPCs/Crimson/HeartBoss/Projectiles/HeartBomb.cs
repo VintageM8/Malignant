@@ -14,7 +14,6 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Heart Bomb");
             Main.projFrames[Projectile.type] = 2;
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -86,10 +85,6 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss.Projectiles
     public class HeartBomb_JesusBeam : ModProjectile
     {
         public override string Texture => "Malignant/Assets/Textures/Pixel";
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("");
-        }
         public override void SetDefaults()
         {
             Projectile.width = 40;

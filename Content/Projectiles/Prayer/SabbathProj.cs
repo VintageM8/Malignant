@@ -63,7 +63,7 @@ namespace Malignant.Content.Projectiles.Prayer
         {
 
         }*/
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X, Projectile.Center.Y, 14f, 0f, ModContent.ProjectileType<Fireball>(), Projectile.damage, 0f, Projectile.owner, 0f, 0f);
             Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center.X, Projectile.Center.Y, -14f, 0f, ModContent.ProjectileType<Fireball>(), Projectile.damage, 0f, Projectile.owner, 0f, 0f);

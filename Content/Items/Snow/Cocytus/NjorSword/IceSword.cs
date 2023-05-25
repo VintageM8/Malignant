@@ -15,8 +15,8 @@ namespace Malignant.Content.Items.Snow.Cocytus.NjorSword
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cerberus"); 
-            Tooltip.SetDefault("'Hitting enemies channels ancient nordic energy, increasing damage and attack speed'");
+           // DisplayName.SetDefault("Cerberus"); 
+            //Tooltip.SetDefault("'Hitting enemies channels ancient nordic energy, increasing damage and attack speed'");
         }
 
         public override void SetDefaults()

@@ -12,8 +12,8 @@ namespace Malignant.Content.Items.Misc
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Head");
-            Tooltip.SetDefault("Eat and gain a small power boost. \nIf you eat it you have problems");
+            //DisplayName.SetDefault("Head");
+            //Tooltip.SetDefault("Eat and gain a small power boost. \nIf you eat it you have problems");
         }
 
         public override void SetDefaults()

@@ -17,9 +17,9 @@ namespace Malignant.Content.Items.Hell.MarsHell
         public override void SetStaticDefaults()
         {
             base.SetStaticDefaults();
-            DisplayName.SetDefault("Mars Hell");
-            Tooltip.SetDefault("Shoots out a bomb every 4 shots\n" +
-                "\n<right> to launch a volly of smitful crosses, 1 minute cooldown");
+            //DisplayName.SetDefault("Mars Hell");
+            //Tooltip.SetDefault("Shoots out a bomb every 4 shots\n" +
+               // "\n<right> to launch a volly of smitful crosses, 1 minute cooldown");
 
         }
 
@@ -115,6 +115,21 @@ namespace Malignant.Content.Items.Hell.MarsHell
         public override bool AltFunctionUse(Player Player)
         {
             return true;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe(1)
+                .AddTile(TileID.Anvils)
+                .AddIngredient(ItemID.HellstoneBar, 22)
+                .AddIngredient(ItemID.GoldBar, 15)
+                .Register();
+
+            CreateRecipe(1)
+                .AddTile(TileID.Anvils)
+                .AddIngredient(ItemID.HellstoneBar, 22)
+                .AddIngredient(ItemID.PlatinumBar, 15)
+                .Register();
         }
     }
 }
