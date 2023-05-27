@@ -8,10 +8,6 @@ namespace Malignant.Content.Projectiles.Prayer
 {
     public class HolyWind : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Holy Wind");
-        }
 
         public override void SetDefaults()
         {
