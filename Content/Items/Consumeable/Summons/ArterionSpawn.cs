@@ -11,7 +11,7 @@ namespace Malignant.Content.Items.Consumeable.Summons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pierced Heart");
+            //DisplayName.SetDefault("Pierced Heart");
         }
 
         public override void SetDefaults()
