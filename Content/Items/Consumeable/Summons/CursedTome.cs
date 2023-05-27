@@ -11,7 +11,7 @@ namespace Malignant.Content.Items.Consumeable.Summons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cursed Skull");
+            //DisplayName.SetDefault("Cursed Skull");
         }
 
         public override void SetDefaults()
@@ -42,7 +42,7 @@ namespace Malignant.Content.Items.Consumeable.Summons
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     NPC.SpawnOnPlayer(player.whoAmI, type);
                 else
-                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
             }
             return true;
         }
