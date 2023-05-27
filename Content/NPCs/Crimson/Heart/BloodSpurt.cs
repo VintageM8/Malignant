@@ -6,10 +6,6 @@ namespace Malignant.Content.NPCs.Crimson.Heart
 {
     public class BloodSpurt : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Blood Spurt");
-        }
 
         public override void SetDefaults()
         {
