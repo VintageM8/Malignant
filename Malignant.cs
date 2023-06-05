@@ -15,12 +15,14 @@ namespace Malignant
 
         public override void Load()
         {
+            MalignantLists.LoadLists();
             PrayerContent.Load(Mod);
             SoundManager.Load(Mod);
         }
 
         public override void Unload()
         {
+            MalignantLists.UnloadLists();
             Mod = null;
         }
     }
