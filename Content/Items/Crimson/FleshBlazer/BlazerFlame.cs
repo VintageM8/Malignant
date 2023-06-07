@@ -57,7 +57,7 @@ namespace Malignant.Content.Items.Crimson.FleshBlazer
 
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 
             target.AddBuff(BuffID.OnFire, 120);

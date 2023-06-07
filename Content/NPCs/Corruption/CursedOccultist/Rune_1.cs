@@ -13,7 +13,7 @@ namespace Malignant.Content.NPCs.Corruption.CursedOccultist
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rune");
+           
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 30;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -29,7 +29,7 @@ namespace Malignant.Content.NPCs.Corruption.CursedOccultist
             Projectile.alpha = 100;
             Projectile.scale = 0.8f;
         }
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (Main.npc[(int)Projectile.ai[1]].life < Main.npc[(int)Projectile.ai[1]].lifeMax - 10)
             {

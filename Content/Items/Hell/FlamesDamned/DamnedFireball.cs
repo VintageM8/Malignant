@@ -9,12 +9,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Malignant.Common.Systems;
 using Malignant.Common.Players;
+using Malignant.Content.Dusts;
+using Malignant.Common.Helper;
 
-namespace Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger
+namespace Malignant.Content.Items.Hell.FlamesDamned
 {
-    public class KnifeProjectile : ModProjectile
+    public class DamnedFireball_2 : ModProjectile
     {
-
+        bool spawnStuff = true;
+        Vector2 initialCenter;
         public float timer
         {
             get => Projectile.ai[0];
@@ -35,9 +38,18 @@ namespace Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger
             Projectile.hide = true;
             Projectile.alpha = 255;
         }
-        public override string Texture => "Malignant/Content/Items/Crimson/Arterion/HerzanfallDagger/KnifeProj_Two";
+        public override string Texture => "Malignant/Content/Items/Hell/FlamesDamned/Fireball";
         public override void AI()
         {
+            if (spawnStuff)
+            {
+                initialCenter = Projectile.Center;
+                spawnStuff = false;
+            }
+
+            if (Main.rand.NextBool(10))
+                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<Smoke>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
+
             Player player = Main.player[Projectile.owner];
             Vector2 distanceVector = Main.MouseWorld - player.Center;
             if (distanceVector != Vector2.Zero)
@@ -57,7 +69,7 @@ namespace Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger
                 MalignantPlayer modplayer = player.GetModPlayer<MalignantPlayer>();
                 if (timer % 30 == 10 && modplayer.OrbitingProjectileCount[2] <= 5)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.Zero, ModContent.ProjectileType<KnifeProj_Two>(), 30, 1, player.whoAmI, 0, 0);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), player.Center, Vector2.Zero, ModContent.ProjectileType<DamnedFireball>(), 30, 1, player.whoAmI, 0, 0);
                 }
                 timer++;
             }
@@ -80,7 +92,7 @@ namespace Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger
         }
     }
 
-    public class KnifeProj_Two : OrbitingProjectile
+    public class DamnedFireball : OrbitingProjectile
     {
         //private float CircleArr = 1;
         //private int PosCheck = 0;
@@ -90,11 +102,11 @@ namespace Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger
         //private int NumProj = 0;
 
         //private bool charge = false;
-
+        public override string Texture => "Malignant/Content/Items/Hell/FlamesDamned/Fireball";
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
-            ProjectileID.Sets.TrailingMode[Projectile.type] = 3;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
 
         public override void SetDefaults()
@@ -108,7 +120,7 @@ namespace Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger
             Projectile.penetrate = -1;
             Projectile.timeLeft = 300;
             ProjectileSlot = 2;
-            OrbitingRadius = 150;
+            OrbitingRadius = 80;
             Period = 180;
             PeriodFast = 35;
             ProjectileSpeed = 14;
@@ -134,21 +146,6 @@ namespace Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger
         {
             MalignantPlayer modplayer = player.GetModPlayer<MalignantPlayer>();
 
-            int itemType = -1;
-            switch (Main.rand.Next(3))
-            {
-                case 0:
-                    itemType = ModContent.ItemType<Head>();
-                    break;
-                case 1:
-                    itemType = ModContent.ItemType<Head>();
-                    break;
-                default:
-                    itemType = ModContent.ItemType<Head>();
-                    break;
-            }
-            Item.NewItem(player.GetSource_OnHit(target), target.Center, itemType);
-
             Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
             for (int i = 0; i < 10; i++)
             {
@@ -158,8 +155,18 @@ namespace Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger
             }
 
         }
+        bool spawnStuff;
         public override void AI()
         {
+            if (spawnStuff)
+            {
+                spawnStuff = false;
+            }
+
+            if (Main.rand.NextBool(10))
+                Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<Smoke>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
+
+
             player = Main.player[Projectile.owner];
             OrbitCenter = player.Center;
             RelativeVelocity = player.velocity;
@@ -184,10 +191,14 @@ namespace Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger
                 float distance = Vector2.Distance(Projectile.Center, Main.player[i].Center);
                 if (distance <= 1050)
                 {
-                    CameraSystem.ScreenShakeAmount = 1;
+                    CameraSystem.ScreenShakeAmount = 3;
                 }
             }
         }
+
+        public Trail trail;
+        public Trail trail2;
+        private bool initialized;
 
         public override bool PreDraw(ref Color lightColor)
         {

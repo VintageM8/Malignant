@@ -12,8 +12,8 @@ namespace Malignant.Content.Items.Crimson.StaffofCarnem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Staff of Carnem");
-            Tooltip.SetDefault("Pending Re-work");
+            //DisplayName.SetDefault("Staff of Carnem");
+            //Tooltip.SetDefault("Pending Re-work");
             Item.staff[Item.type] = true;
         }
 

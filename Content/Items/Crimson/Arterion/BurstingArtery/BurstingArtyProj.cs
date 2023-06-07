@@ -23,7 +23,6 @@ namespace Malignant.Content.Items.Crimson.Arterion.BurstingArtery
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("BurstingArtyProj");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }

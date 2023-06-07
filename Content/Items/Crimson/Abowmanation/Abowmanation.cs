@@ -14,8 +14,8 @@ namespace Malignant.Content.Items.Crimson.Abowmanation
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Abowmanation");
-            Tooltip.SetDefault("Does stuff on crit");
+            //DisplayName.SetDefault("Abowmanation");
+            //Tooltip.SetDefault("Does stuff on crit");
         }
 
         public override void SetDefaults()

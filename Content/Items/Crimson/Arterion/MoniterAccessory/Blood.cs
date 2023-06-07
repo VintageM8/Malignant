@@ -10,10 +10,6 @@ namespace Malignant.Content.Items.Crimson.Arterion.MoniterAccessory
 {
     public class Blood : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Blood");
-        }
 
         public override void SetDefaults()
         {

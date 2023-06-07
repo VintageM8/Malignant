@@ -9,8 +9,8 @@ namespace Malignant.Content.Items.Crimson.Arterion.MoniterAccessory
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Heart Moniter");
-            Tooltip.SetDefault("Increases max health by 75\nReleases a rune that shoots homing blood clots");
+            //DisplayName.SetDefault("Heart Moniter");
+            //Tooltip.SetDefault("Increases max health by 75\nReleases a rune that shoots homing blood clots");
         }
 
         public override void SetDefaults()

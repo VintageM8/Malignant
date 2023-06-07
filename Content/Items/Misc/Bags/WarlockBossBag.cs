@@ -41,17 +41,6 @@ namespace Malignant.Content.Items.Misc.Bags
             return true;
         }
 
-        public override void ModifyItemLoot(ItemLoot itemLoot)
-        {
-            for (int k = 0; k < (Main.masterMode ? 3 : 2); k++)
-            {
-                itemLoot.Add(ItemDropRule.Common(ItemType<IcyTundra>(), 1));
-                itemLoot.Add(ItemDropRule.Common(ItemType<NjorsStaff>(), 1));
-                itemLoot.Add(ItemDropRule.Common(ItemType<IceSword>(), 1));
-            }
-            itemLoot.Add(ItemDropRule.FewFromOptions(ItemType<HorridAccessory>(), 1));
-        }
-
         //This method is stolen from examplemod and I trust it to emulate vanilla accurately
         public override void PostUpdate()
         {

@@ -9,7 +9,7 @@ namespace Malignant.Content.Items.Misc.BloodChalice
         public override void SetStaticDefaults()
         {
             //DisplayName.SetDefault("Bloody Chalice");
-            T//ooltip.SetDefault("Heals for 200 life but applies a random debuff each use\n Has unlimited uses\n[c/660000:Cursed Items:]");
+            //ooltip.SetDefault("Heals for 200 life but applies a random debuff each use\n Has unlimited uses\n[c/660000:Cursed Items:]");
         }
 
         public override void SetDefaults()

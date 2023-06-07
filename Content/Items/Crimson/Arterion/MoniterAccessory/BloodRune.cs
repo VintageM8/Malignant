@@ -12,11 +12,6 @@ namespace Malignant.Content.Items.Crimson.Arterion.MoniterAccessory
     {
         Vector2 initPos = Vector2.Zero;
 
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Blood Rune");
-        }
-
         public override void SetDefaults()
         {
             Projectile.DamageType = DamageClass.Magic;

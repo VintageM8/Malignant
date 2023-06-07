@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Malignant.Content.Items.Crimson.FleshBlazer;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ParticleLibrary;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -11,7 +14,6 @@ namespace Malignant.Content.Items.Corruption.Warlock.StaffofFlame
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cursed Blast");
             Main.projFrames[Projectile.type] = 4;
         }
 
@@ -116,6 +118,7 @@ namespace Malignant.Content.Items.Corruption.Warlock.StaffofFlame
 
         public override void Kill(int timeLeft)
         {
+            Vector2 dir = Main.rand.NextVector2Unit() * 0.1f;
             Player player = Main.player[Projectile.owner];
 
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
@@ -129,25 +132,81 @@ namespace Malignant.Content.Items.Corruption.Warlock.StaffofFlame
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, Vector2.Zero, ModContent.ProjectileType<CFStaffProj>(), Projectile.damage + player.ownedProjectileCounts[Projectile.type] * 2,
                Projectile.knockBack * player.ownedProjectileCounts[Projectile.type], Projectile.owner);
 
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<CursedFBExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+            ParticleManager.NewParticle(Projectile.Center, dir * Main.rand.NextFloat(10, 25), ParticleManager.NewInstance<StarParticle>(), new Color(0.50f, 2f, 0.5f, 0), 0.3f, Projectile.whoAmI, Layer: Particle.Layer.BeforeNPCs);
 
-            for (int num621 = 0; num621 < 20; num621++)
+
+            if (player.altFunctionUse == 2)
             {
-                int num622 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.CursedTorch, 0f, 0f, 100, default, 2f);
-                Main.dust[num622].velocity *= 3f;
-                if (Main.rand.NextBool(2))
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, Vector2.Zero, ProjectileID.CursedFlameFriendly, Projectile.damage + player.ownedProjectileCounts[Projectile.type] * 2,
+               Projectile.knockBack * player.ownedProjectileCounts[Projectile.type], Projectile.owner);
+            }
+        }
+
+        public class CursedFBExplosion : ModProjectile
+        {
+            bool initilize = true;
+
+            Vector2 spawnPosition;
+
+            public override string Texture => "Malignant/Assets/Textures/Cshmircle_2"; //Shmircle
+
+            public override bool ShouldUpdatePosition() => false;
+
+            public override void SetDefaults()
+            {
+                Projectile.penetrate = -1;
+                Projectile.DamageType = DamageClass.Ranged;
+                Projectile.friendly = true;
+                Projectile.hostile = false;
+
+                Projectile.Size = new Vector2(10f);
+                Projectile.scale = 0.01f;
+
+                Projectile.tileCollide = false;
+                Projectile.ignoreWater = true;
+
+                Projectile.aiStyle = -1;
+                Projectile.timeLeft = 100;
+            }
+
+            public override void AI()
+            {
+                if (initilize)
                 {
-                    Main.dust[num622].scale = 0.5f;
-                    Main.dust[num622].fadeIn = 1f + (float)Main.rand.Next(10) * 0.1f;
+                    spawnPosition = Projectile.Center;
+
+                    initilize = false;
+                }
+
+                Projectile.Center = spawnPosition;
+
+                Projectile.scale += 0.02f;
+                Projectile.Size += new Vector2(10f);
+                Projectile.alpha += 10;
+
+                if (Projectile.alpha >= 255)
+                {
+                    Projectile.Kill();
                 }
             }
-            for (int num623 = 0; num623 < 35; num623++)
+
+            public override bool PreDraw(ref Color lightColor)
             {
-                int num624 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.CursedTorch, 0f, 0f, 100, default, 3f);
-                Main.dust[num624].noGravity = true;
-                Main.dust[num624].velocity *= 5f;
-                num624 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.CursedTorch, 0f, 0f, 100, default, 2f);
-                Main.dust[num624].velocity *= 2f;
-            }
+                Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
+
+                int frameHeight = texture.Height / Main.projFrames[Projectile.type];
+                int frameY = frameHeight * Projectile.frame;
+
+                Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
+                Vector2 origin = sourceRectangle.Size() / 2f;
+                Vector2 position = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(new Color(50, 205, 50, 0));
+
+                Main.EntitySpriteDraw(texture, position, sourceRectangle, color, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
+
+                return false;
+            }          
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Malignant.Content.Items.Crimson.Arterion.ArterionSoul
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Arterion's Soul");
+            //DisplayName.SetDefault("Arterion's Soul");
         }
 
         public override void SetDefaults()
