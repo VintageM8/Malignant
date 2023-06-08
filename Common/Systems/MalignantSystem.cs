@@ -8,6 +8,8 @@ using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 using Malignant.Core;
+using Mono.Cecil;
+using System.Linq;
 
 namespace Malignant.Common.Systems;
 
@@ -16,25 +18,98 @@ public class MalignantSystem : ModSystem
     //bosses
     public static bool downedViking;
     public static bool downedIceBoss;
-    public void CreateChurch(GenerationProgress progress, GameConfiguration g)
+    static int[] replaceTiles =
     {
-        progress.Message = "Creating Church(Maligant)";
-        Point Location = FindChurchLoc(out int Move);
-        //WorldGen.PlaceTile(Location.X, Location.Y, TileID.AmberGemspark);
+        TileID.Trees, TileID.Grass
+    };
+    
+    public static void CreateChurch(GenerationProgress progress, GameConfiguration g)
+    {
+        if(progress != null)
+        {
+            progress.Message = "Creating Church(Maligant)";
+        }
+        Point Location = FindChurchLoc(progress, out int groundType);
         //no chests
-        StructureLoader.ReadStruct(Location, "Assets/Structures/Church");
-        for (int i = -3; i < 135; i++)
+        Chest c = Main.chest[StructureLoader.ReadStruct(Location, "Assets/Structures/Church" , progress)[0]];
+        c.AddItem(ItemID.Wood, 14);
+        c.AddItem(ItemID.Torch, 10);
+        for (int i = -5; i < CHURCH_X_LENGTH + 5; i++) {
+            for(int j = 0; j < MAX_H_DIF; j++)
+            {
+                Tile t =Framing.GetTileSafely(Location.X + i, Location.Y + j);
+                if(!t.HasTile || replaceTiles.Contains(t.TileType) || !Main.tileSolid[t.TileType])
+                {
+                    t.ClearTile();
+                    WorldGen.PlaceTile(Location.X + i, Location.Y + j, groundType, true, true);
+                }
+                t.Slope = SlopeType.Solid;
+            }
+        }
+        /*for (int i = -3; i < 135; i++)    
         {
             for (int j = 0; j < Math.Min(Move, 20); j++)
             {
                 WorldGen.PlaceTile(Location.X + i, Location.Y + j, TileID.Dirt, true, true);
+                Framing.GetTileSafely(Location.X + i, Location.Y + j).Slope = 0;
+            }
+        }*/
+    }
+    const int MAX_H_DIF = 15;
+    const int CHURCH_X_LENGTH = 65;//there should be a better way of doing this, but it would need changing how the loader works
+    
+    public static bool VaildChurchLoc(GenerationProgress progress, Point p, out int gtype)
+    {
+        progress.Value = 0;
+
+        Dictionary<int, int> mostCommon = new Dictionary<int, int>();
+        
+        gtype = 0;
+        for(int i = -5; i < CHURCH_X_LENGTH + 5; i++)
+        {
+            progress.Value = ((float)i / (CHURCH_X_LENGTH + 5));
+            var surfacearea = goToSurface(p.X + i);
+            if (surfacearea == null)
+            {
+                return false;
+            }
+            var surfacepoint = surfacearea.Value;
+            if(Math.Abs(surfacepoint.Y - p.Y) > MAX_H_DIF)
+            {
+                return false;
+            }
+            //up to 10 down to check for evil blocks
+            for(int j = 0; j < 10; j++)
+            {
+                Tile check = Framing.GetTileSafely(surfacepoint.X, surfacepoint.Y + j);
+                if (check.HasTile)
+                {
+                    if (mostCommon.ContainsKey(check.TileType))
+                    {
+                        mostCommon[check.TileType] += 1;
+                    }
+                    else
+                    {
+                        mostCommon.Add(check.TileType, 1);
+                    }
+                    if (EvilBlock(check))
+                    {
+                        return false;
+                    }
+                }
             }
         }
-    }
-
-    private bool VaildChurchLoc(Point p)
-    {
-        for (int i = 0; i < 100; i++)
+        int max = 0;
+        foreach(KeyValuePair<int, int> pair in mostCommon)
+        {
+            if(pair.Value > max)
+            {
+                max = pair.Value;
+                gtype = pair.Key;
+            }
+        }
+        return true;
+       /* for (int i = 0; i < 100; i++)
         {
             for (int j = -5; j < 10; j++)
             {
@@ -66,24 +141,80 @@ public class MalignantSystem : ModSystem
         }
         return true;
         //idk what I was doing here but it should work
+        //it does not*/
     }
-    public Point FindChurchLoc(out int Move)
+    static int[] evilBlocks =
     {
+        TileID.BlueDungeonBrick, TileID.GreenDungeonBrick, TileID.PinkDungeonBrick, TileID.Crimsand, TileID.CrimsonGrass, TileID.CrimsonJungleGrass, TileID.Crimstone, TileID.Ebonsand, TileID.Ebonstone, TileID.CorruptGrass, TileID.CorruptIce, TileID.FleshIce
+    };
+    private static bool EvilBlock(Tile check)
+    {
+        foreach(int id in evilBlocks)
+        {
+            if(check.TileType  == id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// returns if a tile is on the top surface of the wo0rld
+    /// Current only works for forest, for use in goToSurface
+    /// </summary>
+    /// <param name="t"></param>
+    /// <returns></returns>
+    public static bool onSurface(Tile t, Tile below)
+    {
+        return ((t.WallType == WallID.None && !t.HasTile) || (t.TileType == TileID.Trees )) && (below.WallType == WallID.DirtUnsafe || below.HasTile);
+    }
+    /// <summary>
+    /// Returns a point on the surface with the given x value
+    /// A point on the surface is one above the top dirt layer connected to where the player spawns
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    public static Point? goToSurface(int x)
+    {
+        var y = Main.worldSurface;
+        Tile t = Framing.GetTileSafely(x, (int)y);
+        Tile below = Framing.GetTileSafely(x, (int)y + 1);
+        while (!onSurface(t, below))
+        {
+            below = Framing.GetTileSafely(x, (int)y);
+            y--;
+            t = Framing.GetTileSafely(x, (int)y);
+            if(y == 0)
+            {
+                return null;
+            }
+        }
+        return new Point(x, (int)y);
+    }
+
+    public static Point FindChurchLoc(GenerationProgress progress, out int groundType)
+    {
+        int wsize = Main.maxTilesX / 2;//dist to edge from center
+        //we want to be the 1/3 between either edge
+        int minscale, maxscale;
+        minscale = wsize / 3;
+        maxscale = wsize * 2 / 3;
         int attemptNum = 0;
         while (attemptNum < MaxAttempts)
         {
             attemptNum++;
-            int side = 1;//Main.rand.Next(0, 2) == 0 ? 1 : -1;
-            Point p = new Point(Main.spawnTileX, (int)Main.worldSurface) + new Point(Main.rand.Next(50, 600) * side, Main.rand.Next(-60, -25));
-            if (VaildChurchLoc(p))
+            int side = Main.rand.Next(0, 2) == 0 ? 0:wsize ;
+            int x = Main.rand.Next(minscale, maxscale) + side;
+            Point? pn = goToSurface(x);
+            if (pn == null)
             {
-                int Movement = 0; ;
-                while (Framing.GetTileSafely(p).HasTile)
-                {
-                    Movement++;
-                    p.Y -= 1;
-                }
-                Move = Movement;
+                continue;
+            }
+            Point p = pn.Value;
+            if (VaildChurchLoc(progress, p,  out int gtype))
+            {
+                groundType = gtype;
                 return p;
             }
 
@@ -157,4 +288,5 @@ public class MalignantSystem : ModSystem
             ActiveAndSolid(x, y + 1) &&
             ActiveAndSolid(x + 1, y + 1);
     }
+    
 }
