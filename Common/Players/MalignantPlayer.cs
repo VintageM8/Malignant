@@ -29,6 +29,7 @@ namespace Malignant.Common.Players
         public bool Lich;
         public bool HolyGauntlet;
         public bool EvilEye;
+        public bool WoodenCross;
 
         //Boss Stuff
         public int bossTextProgress, bossMaxProgress;
@@ -173,6 +174,13 @@ namespace Malignant.Common.Players
                 }
 
             }
+            if (WoodenCross)
+            {
+                if (MalignantLists.unholyEnemies.Contains(target.type))
+                {
+                    target.AddBuff(BuffID.OnFire, 380);
+                }
+            }
 
         }
 
@@ -204,6 +212,13 @@ namespace Malignant.Common.Players
                     damageDone = (int)(damageDone * 1.8f);
                 }
 
+            }
+            if (WoodenCross)
+            {
+                if (MalignantLists.unholyEnemies.Contains(target.type))
+                {
+                    target.AddBuff(BuffID.OnFire, 380);
+                }
             }
         }
     }
