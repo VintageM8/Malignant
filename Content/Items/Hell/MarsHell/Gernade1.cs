@@ -10,6 +10,8 @@ using Malignant.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Malignant.Content.Buffs;
 using Terraria.Audio;
+using Malignant.Core;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 
 namespace Malignant.Content.Items.Hell.MarsHell
 {
@@ -44,7 +46,7 @@ namespace Malignant.Content.Items.Hell.MarsHell
         {
             CameraSystem.ScreenShakeAmount = 2.5f;
 
-            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<MarsHellBoom>(), Projectile.damage, Projectile.knockBack, Projectile.owner); ;
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<MarsHellBoom>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
             for (int i = 0; i < 10; i++)
             {
@@ -66,7 +68,7 @@ namespace Malignant.Content.Items.Hell.MarsHell
             }
 
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Player player = Main.player[Projectile.owner];
 
@@ -83,11 +85,6 @@ namespace Malignant.Content.Items.Hell.MarsHell
         public override string Texture => "Malignant/Assets/Textures/Cirmcle"; //Shmircle
 
         public override bool ShouldUpdatePosition() => false;
-
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("burp");
-        }
 
         public override void SetDefaults()
         {
@@ -126,7 +123,7 @@ namespace Malignant.Content.Items.Hell.MarsHell
                 Projectile.Kill();
             }
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode);
 

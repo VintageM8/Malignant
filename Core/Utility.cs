@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
 
@@ -8,7 +9,13 @@ namespace Malignant.Core
 {
     public static class Utility
     {
-
+    public static int AddItem(this Chest c, int itemID, int amount = 1)
+    {
+            Item i = new Item();
+            i.SetDefaults(itemID);
+            i.stack = amount;
+            return c.AddItemToShop(i);
+    }
      public static Rectangle AnimationFrame(this Texture2D texture, ref int frame, ref int frameTick, int frameTime, int frameCount, bool frameTickIncrease, int overrideHeight = 0)
         {
             if (frameTick >= frameTime)

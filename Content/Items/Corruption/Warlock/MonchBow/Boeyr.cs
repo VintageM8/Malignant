@@ -12,10 +12,6 @@ namespace Malignant.Content.Items.Corruption.Warlock.MonchBow
 {
     public class Boeyr : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Death's Bite");
-        }
 
         public override void SetDefaults()
         {

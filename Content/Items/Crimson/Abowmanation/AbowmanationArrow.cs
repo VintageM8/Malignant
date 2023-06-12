@@ -39,7 +39,9 @@ namespace Malignant.Content.Items.Crimson.Abowmanation
             Projectile.alpha = 0;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public bool crit;
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+
         {
             if (crit)
                 DustHelper.DrawCircle(Projectile.Center, DustID.GoldCoin, 2, 3, 3, 1, 2, nogravity: true);

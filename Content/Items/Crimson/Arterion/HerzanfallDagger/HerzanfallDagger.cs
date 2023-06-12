@@ -13,7 +13,7 @@ namespace Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Heart's Skean");
+            //DisplayName.SetDefault("Heart's Skean");
         }
 
         public override void SetDefaults()

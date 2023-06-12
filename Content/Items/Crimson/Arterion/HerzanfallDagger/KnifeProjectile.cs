@@ -20,10 +20,6 @@ namespace Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger
             get => Projectile.ai[0];
             set => Projectile.ai[0] = value;
         }
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Boulder");
-        }
 
         public override void SetDefaults()
         {
@@ -97,7 +93,6 @@ namespace Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Boulder");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 3;
         }
@@ -135,7 +130,7 @@ namespace Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger
             GeneratePositionsAfterKill();
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             MalignantPlayer modplayer = player.GetModPlayer<MalignantPlayer>();
 

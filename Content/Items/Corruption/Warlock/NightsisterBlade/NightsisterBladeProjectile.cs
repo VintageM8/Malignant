@@ -14,10 +14,6 @@ namespace Malignant.Content.Items.Corruption.Warlock.NightsisterBlade
 {
     public class NightsisterBladeProjectile : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Flying Blade");
-        }
 
         public override void SetDefaults()
         {
@@ -115,9 +111,9 @@ namespace Malignant.Content.Items.Corruption.Warlock.NightsisterBlade
         }
 
         const int TIME_LEFT_ONHIT = 30;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (target.life - damage > 0 && Projectile.timeLeft > TIME_LEFT_ONHIT) Projectile.timeLeft = TIME_LEFT_ONHIT;
+            if (target.life - Projectile.damage > 0 && Projectile.timeLeft > TIME_LEFT_ONHIT) Projectile.timeLeft = TIME_LEFT_ONHIT;
         }
 
         public override bool ShouldUpdatePosition() => !circling;

@@ -1,4 +1,7 @@
+using Malignant.Common.Helper;
+using Malignant.Content.Dusts;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,7 +12,8 @@ namespace Malignant.Content.Items.Snow.Cocytus.NjorStaff
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Njors Staff");
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
 
         public override void SetDefaults()
@@ -21,6 +25,12 @@ namespace Malignant.Content.Items.Snow.Cocytus.NjorStaff
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Magic;
             //AIType = ProjectileID.IceBolt;
+        }
+
+        public override void AI()
+        {
+            int d = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<PrayerUse>(), Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f);
+            Main.dust[d].noGravity = true;
         }
 
         public override void Kill(int timeLeft)
@@ -74,7 +84,7 @@ namespace Malignant.Content.Items.Snow.Cocytus.NjorStaff
 
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.Next(6) == 0)
             {

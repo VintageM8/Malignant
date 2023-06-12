@@ -11,8 +11,8 @@ namespace Malignant.Content.Items.Crimson.Arterion.BurstingArtery
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Bursting Artery");
-            Tooltip.SetDefault("Shoots a projectile that shatters on cursor");
+            //DisplayName.SetDefault("Bursting Artery");
+            //Tooltip.SetDefault("Shoots a projectile that shatters on cursor");
         }
 
         public override void SetDefaults()

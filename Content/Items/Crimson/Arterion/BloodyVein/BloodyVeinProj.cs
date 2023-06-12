@@ -56,11 +56,11 @@ namespace Malignant.Content.Items.Crimson.Arterion.BloodyVein
             }
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             //target.AddBuff(ModContent.BuffType<ExampleWhipDebuff>(), 240);
             Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
-            Projectile.damage = (int)(damage * 0.7f); // Multihit penalty. Decrease the damage the more enemies the whip hits.
+            Projectile.damage = (int)(Projectile.damage * 0.7f); // Multihit penalty. Decrease the damage the more enemies the whip hits.
             DustHelper.DrawCircle(Projectile.Center, DustID.Blood, 2, 3, 3, 1, 2, nogravity: true);
 
             Player player = Main.player[Main.myPlayer];

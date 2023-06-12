@@ -129,7 +129,7 @@ namespace Malignant.Content.Items.Corruption.Warlock.MonchBow
         Vector2 offsetFromCenterTarget;
         NPC target;
         bool shouldStickToTarget => target is not null && target.life > 0 && target.active;
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.frame = 0;
             SoundEngine.PlaySound(biteSound, Projectile.Center);

@@ -6,6 +6,9 @@ using Malignant.Content.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Malignant.Content.Items.Crimson.Arterion.BurstingArtery;
+using Malignant.Common.Systems;
+using Malignant.Content.Items.Crimson.FleshBlazer;
 
 namespace Malignant.Content.Items.Misc.CrucifixConstructer
 {
@@ -91,9 +94,19 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
             Projectile.netUpdate = true;
 
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            //Cruxifix Spawn shi soon^tm
+            CameraSystem.ScreenShakeAmount = 5f;
+            //SoundEngine.PlaySound(SoundID.DD2_BetsyFireballImpact);
+            //Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<MalignantFissionExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+            for (int i = 0; i < 3; i++)
+            {
+                if (Main.myPlayer == Projectile.owner)
+                {
+                    Vector2 velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-10f, 10f))) * Main.rand.NextFloat(0.8f, 1.1f);
+                    Projectile.NewProjectileDirect(Projectile.GetSource_FromAI(), Projectile.Center, velocity / 4, ModContent.ProjectileType<Crucifix>(), (int)(Projectile.damage * 0.66f), 1f, Projectile.owner);
+                }
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)

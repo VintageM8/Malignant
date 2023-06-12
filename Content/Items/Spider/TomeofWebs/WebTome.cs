@@ -9,8 +9,8 @@ namespace Malignant.Content.Items.Spider.TomeofWebs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Tome of Webs");
-            Tooltip.SetDefault("");
+            //DisplayName.SetDefault("Tome of Webs");
+            //Tooltip.SetDefault("");
         }
 
         public override void SetDefaults()

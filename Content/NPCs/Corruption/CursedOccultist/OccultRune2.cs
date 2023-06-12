@@ -10,10 +10,6 @@ namespace Malignant.Content.NPCs.Corruption.CursedOccultist
     public class OccultRune2 : ModProjectile
     {
         Vector2 initPos = Vector2.Zero;
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Rune");
-        }
 
         public override void SetDefaults()
         {

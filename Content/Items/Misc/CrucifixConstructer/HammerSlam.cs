@@ -1,13 +1,11 @@
-﻿using Terraria.GameContent;
-using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using Malignant.Content.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Malignant.Common.Systems;
+using TextureAssets = Terraria.GameContent.TextureAssets;
 
 namespace Malignant.Content.Items.Misc.CrucifixConstructer
 {
@@ -15,10 +13,10 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
     {
         public override string Texture => "Malignant/Content/Items/Misc/CrucifixConstructer/CrucfixConstructer";
 
-        public float[] oldrot = new float[4];
+        private static readonly float[] floats = new float[4];
+        public float[] oldrot = floats;
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Hammer of Proving");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
@@ -45,7 +43,7 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            if (player.noItems || player.CCed || player.dead || !player.active)
+            if (player.noItems || player.CCed || player.dead)
                 Projectile.Kill();
 
             SwingSpeed = SetSwingSpeed(1);
@@ -55,7 +53,7 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
             {
                 if (Projectile.ai[0] == 0)
                 {
-                    swordRotation = MathHelper.ToRadians(-45f * player.direction - 90f);
+                    swordRotation = MathHelper.ToRadians(-65f * player.direction - 105f);
 
                     Projectile.ai[0] = 1;
                     oldRotation = swordRotation;
@@ -77,11 +75,11 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
                     if (Projectile.ai[1] == 0)
                     {
                         if (Projectile.ai[0] < 129 * SwingSpeed)
-                            swordRotation = oldRotation.AngleLerp(MathHelper.ToRadians(120f * player.direction - 90f), timer / 140f / SwingSpeed);
+                            swordRotation = oldRotation.AngleLerp(MathHelper.ToRadians(120f * player.direction - 65f), timer / 40f / SwingSpeed);
 
                         if (Projectile.ai[0] >= 126 * SwingSpeed)
                         {
-                            player.velocity.Y += 2;
+                            player.velocity.Y += 4;
                             Point tileBelow = new Vector2(Projectile.Center.X, Projectile.Bottom.Y).ToTileCoordinates();
                             Point tileBelow2 = new Vector2(player.Center.X, player.Bottom.Y).ToTileCoordinates();
                             Tile tile = Framing.GetTileSafely(tileBelow.X, tileBelow.Y);
@@ -113,10 +111,9 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
             Projectile.velocity = swordRotation.ToRotationVector2();
 
             Projectile.spriteDirection = player.direction;
-            if (Projectile.spriteDirection == 1)
-                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver4;
-            else
-                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
+            Projectile.rotation = Projectile.spriteDirection == 1
+                ? Projectile.velocity.ToRotation() + MathHelper.PiOver4
+                : Projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
 
             Projectile.Center = playerCenter + Projectile.velocity * 60f;
 
@@ -130,15 +127,35 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
                 player.bodyFrame.Y = 5 * player.bodyFrame.Height;
             }
             else
+            {
                 player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, (player.Center - Projectile.Center).ToRotation() + MathHelper.PiOver2);
+            }
+
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
+            {
                 oldrot[k] = oldrot[k - 1];
+            }
+
             oldrot[0] = Projectile.rotation;
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Player player = Main.player[Projectile.owner];
+            float volume = MathHelper.Lerp(0.1f, 1f, player.velocity.Y / 40);
+            if (!Main.dedServ)
+                for (int i = 0; i < 10; i++)
+                    Dust.NewDust(new Vector2(Projectile.position.X, Projectile.Bottom.Y), Projectile.width, 2, DustID.Stone,
+                        -player.velocity.X * 0.6f, -player.velocity.Y * 0.6f, Scale: 2);
+
+            CameraSystem.ScreenShakeAmount = 2f * player.velocity.Y;
+
+            return false;
         }
 
         public float SetSwingSpeed(float speed)
         {
-            Terraria.Player player = Main.player[Projectile.owner];
+            Player player = Main.player[Projectile.owner];
             return speed / player.GetAttackSpeed(DamageClass.Melee);
         }
         public override bool PreDraw(ref Color lightColor)
@@ -151,3 +168,4 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
         }
     }
 }
+

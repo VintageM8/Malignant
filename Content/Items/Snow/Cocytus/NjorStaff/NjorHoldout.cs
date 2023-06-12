@@ -14,7 +14,6 @@ namespace Malignant.Content.Items.Snow.Cocytus.NjorStaff
         public override bool? CanDamage() => false;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Njor Staff Holdout");
             ProjectileID.Sets.NeedsUUID[Projectile.type] = true;
         }
 

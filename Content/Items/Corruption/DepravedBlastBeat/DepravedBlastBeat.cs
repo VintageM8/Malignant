@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Malignant.Common.Projectiles;
+using Malignant.Common.Players;
 
 namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
 {
@@ -13,8 +14,8 @@ namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
         public override (float centerYOffset, float muzzleOffset, Vector2 drawOrigin, Vector2 recoil) HeldProjectileData => (6, 30, new Vector2(10, 12), new Vector2(5, 0.4f));
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Depraved Blast Beater");
-            Tooltip.SetDefault("Every 3rd shot a cross orbits you\nOnce served the wrectched...now it slays them.");
+            //DisplayName.SetDefault("Depraved Blast Beater");
+            //Tooltip.SetDefault("Every 3rd shot a cross orbits you\nOnce served the wrectched...now it slays them.");
         }
         public override void SetDefaults()
         {
@@ -32,10 +33,11 @@ namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
             Item.UseSound = SoundID.Item11;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<DepravedBlast_Proj>();
-            Item.shootSpeed = 12f;
+            Item.shootSpeed = 20f;
             //Item.useAmmo = AmmoID.Bullet;
             Item.noUseGraphic = true;
             Item.channel = true;
+            
         }
 
         public override Vector2? HoldoutOffset()
@@ -43,32 +45,21 @@ namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
             return new Vector2(-15, 0);
         }
 
-        private int CastCount;
-
-
-        public override void HoldItem(Player player)
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            if (!player.channel)
-                CastCount = 0;
-        }
-
-        public override void ShootGun(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            float numberProjectiles = 3;
-            float rotation = MathHelper.ToRadians(20);
-            for (int i = 0; i < numberProjectiles; i++)
+            if (player.GetModPlayer<MalignantPlayer>().itemCombo >= 0)
             {
-                Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1)));
-                Projectile.NewProjectile(source, position, perturbedSpeed, type, damage, knockback, player.whoAmI);
+                type = ModContent.ProjectileType<DepravedBlast_Proj>();
+                damage = 16;
+            }
+            if (player.GetModPlayer<MalignantPlayer>().itemCombo >= 3)
+            {
+                type = ModContent.ProjectileType<DepravedBlast_Proj2>();
+                damage = 24;
+                Item.shootSpeed = 25f;
+                Item.crit = 4;
             }
 
-            CastCount++;
-            if (CastCount >= 4)
-            {
-                SoundEngine.PlaySound(SoundID.Splash, player.position);
-                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Cross>(), damage, knockback, player.whoAmI);
-                CastCount = 0;
-            }
         }
 
         public override void AddRecipes()

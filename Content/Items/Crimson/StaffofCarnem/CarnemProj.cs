@@ -135,7 +135,7 @@ namespace Malignant.Content.Items.Crimson.StaffofCarnem
             }
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             for (int i = 0; i < 4; i++)
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Utility.PolarVector(1, MathHelper.PiOver2 * i),

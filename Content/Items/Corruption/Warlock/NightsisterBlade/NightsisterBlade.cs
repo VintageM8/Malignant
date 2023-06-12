@@ -9,8 +9,8 @@ namespace Malignant.Content.Items.Corruption.Warlock.NightsisterBlade
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Nightsister's Blade");
-            Tooltip.SetDefault("Summons blades that orbit around you and inflict venom\nForged from the fury of the night.");
+            //DisplayName.SetDefault("Nightsister's Blade");
+            //Tooltip.SetDefault("Summons blades that orbit around you and inflict venom\nForged from the fury of the night.");
             Item.staff[Item.type] = true;
         }
 

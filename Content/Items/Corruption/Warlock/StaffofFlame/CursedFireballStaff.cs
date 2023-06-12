@@ -10,8 +10,8 @@ namespace Malignant.Content.Items.Corruption.Warlock.StaffofFlame
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Stave of Cursed Flame");
-            Tooltip.SetDefault("Shoots out explodiong cursed fire balls\nRight click to denotate them early");
+            //DisplayName.SetDefault("Stave of Cursed Flame");
+            //Tooltip.SetDefault("Shoots out explodiong cursed fire balls\nRight click to denotate them early");
             Item.staff[Item.type] = true;
         }
 

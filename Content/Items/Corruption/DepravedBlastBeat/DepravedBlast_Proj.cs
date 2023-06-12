@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
+using Malignant.Common.Players;
 
 namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
 {
@@ -11,7 +12,6 @@ namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Seashell");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[Projectile.type] = 4;
         }
@@ -45,6 +45,15 @@ namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
             return true;
         }
 
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+
+            Player player = Main.player[Projectile.owner];
+
+            player.GetModPlayer<MalignantPlayer>().itemCombo++;
+            player.GetModPlayer<MalignantPlayer>().itemComboReset = 480;
+        }
+
         public override void AI()
         {
             Lighting.AddLight(Projectile.Center, Color.Blue.ToVector3() * 0.7f);
@@ -61,11 +70,6 @@ namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
                 Projectile.Kill();
             }
             return false;
-        }
-
-        public override void Kill(int timeLeft)
-        {
-            SoundEngine.PlaySound(SoundID.Shatter, Projectile.position);
         }
     }
 }
