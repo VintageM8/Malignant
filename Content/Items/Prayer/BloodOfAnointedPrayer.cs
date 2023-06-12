@@ -1,5 +1,4 @@
-﻿using IL.Terraria.GameContent;
-using Malignant.Common;
+﻿using Malignant.Common;
 using Malignant.Common.Systems;
 using Malignant.Content.Dusts;
 using System;
@@ -8,6 +7,7 @@ using System.Collections.Generic;
 using Terraria.Audio;
 
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -20,7 +20,7 @@ namespace Malignant.Content.Items.Prayer
 
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Tempararly increases life regen and max life by 50");
+            // Tooltip.SetDefault("Tempararly increases life regen and max life by 50");
             ItemID.Sets.ItemNoGravity[Item.type] = true;
             Item.consumable = true;
         }

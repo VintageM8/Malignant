@@ -1,0 +1,396 @@
+Mods: {
+	Malignant: {
+		Items: {
+			LoyalLens: {
+				DisplayName: Loyal Lens
+				Tooltip: ""
+			}
+
+			HolyGreatsword: {
+				Tooltip: ""
+				DisplayName: Holy Greatsword
+			}
+
+			HolyGauntlet: {
+				Tooltip: ""
+				DisplayName: Holy Gauntlet
+			}
+
+			Head: {
+				Tooltip: ""
+				DisplayName: Head
+			}
+
+			EvilEye: {
+				Tooltip: ""
+				DisplayName: Evil Eye
+			}
+
+			CrucfixConstructer: {
+				Tooltip: ""
+				DisplayName: Crucfix Constructer
+			}
+
+			BrokenDemonHorn: {
+				Tooltip: ""
+				DisplayName: Broken Demon Horn
+			}
+
+			BloodyChalice: {
+				Tooltip: ""
+				DisplayName: Bloody Chalice
+			}
+
+			WarlockBossBag: {
+				Tooltip: ""
+				DisplayName: Warlock Boss Bag
+			}
+
+			IceBossBag: {
+				Tooltip: ""
+				DisplayName: Ice Boss Bag
+			}
+
+			MarsHell: {
+				Tooltip: ""
+				DisplayName: Mars Hell
+			}
+
+			FlamesoftheDamned: {
+				Tooltip: ""
+				DisplayName: Flamesofthe Damned
+			}
+
+			DemonShot: {
+				Tooltip: ""
+				DisplayName: Demon Shot
+			}
+
+			P3Guitar: {
+				Tooltip: ""
+				DisplayName: P3 Guitar
+			}
+
+			BorgorGun: {
+				Tooltip: ""
+				DisplayName: Borgor Gun
+			}
+
+			StaffofCarnem: {
+				Tooltip: ""
+				DisplayName: Staffof Carnem
+			}
+
+			FleshBlazer: {
+				Tooltip: ""
+				DisplayName: Flesh Blazer
+			}
+
+			HeartMoniter: {
+				Tooltip: ""
+				DisplayName: Heart Moniter
+			}
+
+			HerzanfallDagger: {
+				Tooltip: ""
+				DisplayName: Herzanfall Dagger
+			}
+
+			BurstingArtery: {
+				Tooltip: ""
+				DisplayName: Bursting Artery
+			}
+
+			BloodyVein: {
+				Tooltip: ""
+				DisplayName: Bloody Vein
+			}
+
+			ArterionSoul: {
+				Tooltip: ""
+				DisplayName: Arterion Soul
+			}
+
+			Abowmanation: {
+				Tooltip: ""
+				DisplayName: Abowmanation
+			}
+
+			CursedFireballStaff: {
+				Tooltip: ""
+				DisplayName: Cursed Fireball Staff
+			}
+
+			NightsisterBlade: {
+				Tooltip: ""
+				DisplayName: Nightsister Blade
+			}
+
+			Boeyr: {
+				Tooltip: ""
+				DisplayName: Boeyr
+			}
+
+			HorridAccessory: {
+				Tooltip: ""
+				DisplayName: Horrid Accessory
+			}
+
+			CorruptedCord: {
+				Tooltip: ""
+				DisplayName: Corrupted Cord
+			}
+
+			DepravedBlastBeat: {
+				Tooltip: ""
+				DisplayName: Depraved Blast Beat
+			}
+
+			CursedTome: {
+				Tooltip: ""
+				DisplayName: Cursed Tome
+			}
+
+			ArterionSpawn: {
+				Tooltip: ""
+				DisplayName: Arterion Spawn
+			}
+
+			BloodoftheLamb: {
+				Tooltip: ""
+				DisplayName: Bloodofthe Lamb
+			}
+
+			AlterTest: {
+				Tooltip: ""
+				DisplayName: Alter Test
+			}
+
+			Titania: {
+				DisplayName: Titania
+				Tooltip: ""
+			}
+
+			WarbladeofLight: {
+				DisplayName: Warbladeof Light
+				Tooltip: ""
+			}
+
+			WoodenCrucifix: {
+				DisplayName: Wooden Crucifix
+				Tooltip: ""
+			}
+
+			BloodOfAnointedPrayer: {
+				DisplayName: Blood Of Anointed Prayer
+				Tooltip: ""
+			}
+
+			CommunionPrayer: {
+				DisplayName: Communion Prayer
+				Tooltip: ""
+			}
+
+			FireballPrayer: {
+				DisplayName: Fireball Prayer
+				Tooltip: ""
+			}
+
+			HolySpeedPrayer: {
+				DisplayName: Holy Speed Prayer
+				Tooltip: ""
+			}
+
+			SmiteOfSabbathPrayer: {
+				DisplayName: Smite Of Sabbath Prayer
+				Tooltip: ""
+			}
+
+			PrayerTest: {
+				DisplayName: Prayer Test
+				Tooltip: ""
+			}
+
+			IcyTundra: {
+				DisplayName: Icy Tundra
+				Tooltip: ""
+			}
+
+			NjorsStaff: {
+				DisplayName: Njors Staff
+				Tooltip: ""
+			}
+
+			IceSword: {
+				DisplayName: Ice Sword
+				Tooltip: ""
+			}
+
+			FangedDeceiver: {
+				DisplayName: Fanged Deceiver
+				Tooltip: ""
+			}
+
+			SpiderNeckless: {
+				DisplayName: Spider Neckless
+				Tooltip: ""
+			}
+
+			StaffofSpiderEye: {
+				DisplayName: Staffof Spider Eye
+				Tooltip: ""
+			}
+
+			WebTome: {
+				DisplayName: Web Tome
+				Tooltip: ""
+			}
+
+			PlaceItem: {
+				DisplayName: Place Item
+				Tooltip: ""
+			}
+
+			SaveItem: {
+				DisplayName: Save Item
+				Tooltip: ""
+			}
+		}
+
+		Buffs: {
+			LoyalLensBuff: {
+				Description: Mods.Malignant.Buffs.LoyalLensBuff.Description
+				DisplayName: Loyal Lens Buff
+			}
+
+			SmokeDebuff: {
+				Description: Mods.Malignant.Buffs.SmokeDebuff.Description
+				DisplayName: Smoke Debuff
+			}
+
+			SicklyPower: {
+				Description: Mods.Malignant.Buffs.SicklyPower.Description
+				DisplayName: Sickly Power
+			}
+
+			NoMove: {
+				Description: Mods.Malignant.Buffs.NoMove.Description
+				DisplayName: No Move
+			}
+
+			Cooldown: {
+				Description: Mods.Malignant.Buffs.Cooldown.Description
+				DisplayName: Cooldown
+			}
+		}
+
+		Keybinds: {
+			"Change Prayer Ability.DisplayName": Change  Prayer  Ability
+			"Use Prayer Abilty.DisplayName": Use  Prayer  Abilty
+		}
+
+		NPCs: {
+			CursedOccultist.DisplayName: Cursed Occultist
+			CursedRoller.DisplayName: Cursed Roller
+			SacraficedSoul.DisplayName: Sacraficed Soul
+			Shreiker.DisplayName: Shreiker
+			Warlock.DisplayName: Warlock
+			WarlockMinion.DisplayName: Warlock Minion
+			FlyingHeart.DisplayName: Flying Heart
+			HeartMan.DisplayName: Heart Man
+			Arterion.DisplayName: Arterion
+			IchorSlammer.DisplayName: Ichor Slammer
+			MutilatedFlesh.DisplayName: Mutilated Flesh
+			Njor.DisplayName: Njor
+		}
+
+		Projectiles: {
+			HeldProjectileGun.DisplayName: Held Projectile Gun
+			CorruptVortex.DisplayName: Corrupt Vortex
+			DepravedBlast_Proj.DisplayName: Depraved Blast_ Proj
+			DepravedBlast_Proj2.DisplayName: Depraved Blast_ Proj2
+			CorruptedCordProj.DisplayName: Corrupted Cord Proj
+			BoeyrProjectile.DisplayName: Boeyr Projectile
+			BoeyrSkullProjectile.DisplayName: Boeyr Skull Projectile
+			NightsisterBladeProjectile.DisplayName: Nightsister Blade Projectile
+			CFStaffProj.DisplayName: C F Staff Proj
+			CursedFB.DisplayName: Cursed F B
+			CursedFBExplosion.DisplayName: Cursed F B Explosion
+			AbowmanationArrow.DisplayName: Abowmanation Arrow
+			AbowmanationHeldProjectile.DisplayName: Abowmanation Held Projectile
+			ArtSoulProj.DisplayName: Art Soul Proj
+			BloodyVeinProj.DisplayName: Bloody Vein Proj
+			Blood.DisplayName: Blood
+			BurstingArt_Held.DisplayName: Bursting Art_ Held
+			BurstingArtyProj.DisplayName: Bursting Arty Proj
+			BurstingArtyProj_Two.DisplayName: Bursting Arty Proj_ Two
+			KnifeProj_Two.DisplayName: Knife Proj_ Two
+			KnifeProjectile.DisplayName: Knife Projectile
+			BloodRune.DisplayName: Blood Rune
+			BlazerFlame.DisplayName: Blazer Flame
+			MalignantFissionExplosion.DisplayName: Malignant Fission Explosion
+			ScourcherBible.DisplayName: Scourcher Bible
+			CarnemProj.DisplayName: Carnem Proj
+			Borgor.DisplayName: Borgor
+			Bun.DisplayName: Bun
+			Cheese.DisplayName: Cheese
+			MusicNote1.DisplayName: Music Note1
+			MusicNote2.DisplayName: Music Note2
+			MusicNote3.DisplayName: Music Note3
+			DemonShotProj.DisplayName: Demon Shot Proj
+			DamnedFireball.DisplayName: Damned Fireball
+			DamnedFireball_2.DisplayName: Damned Fireball_2
+			Gernade1.DisplayName: Gernade1
+			MarsHellBoom.DisplayName: Mars Hell Boom
+			Crucifix.DisplayName: Crucifix
+			HammerSlam.DisplayName: Hammer Slam
+			HammerThrow.DisplayName: Hammer Throw
+			LoyalLensSummon.DisplayName: Loyal Lens Summon
+			HolyRune.DisplayName: Holy Rune
+			WarbladeSwing.DisplayName: Warblade Swing
+			WarbladeThrow.DisplayName: Warblade Throw
+			NjorEnergy.DisplayName: Njor Energy
+			NjorHoldout.DisplayName: Njor Holdout
+			NjorsStaffproj.DisplayName: Njors Staffproj
+			NjorSwordProj.DisplayName: Njor Sword Proj
+			NjorSwordProj2.DisplayName: Njor Sword Proj2
+			NjorSwordProj3.DisplayName: Njor Sword Proj3
+			NjorSwordProj4.DisplayName: Njor Sword Proj4
+			SpiderFangProjectile.DisplayName: Spider Fang Projectile
+			SpiderEyeProj.DisplayName: Spider Eye Proj
+			CobwebProj.DisplayName: Cobweb Proj
+			OccultRune1.DisplayName: Occult Rune1
+			OccultRune2.DisplayName: Occult Rune2
+			Rune_1.DisplayName: Rune_1
+			Rune_2.DisplayName: Rune_2
+			BloodBlister.DisplayName: Blood Blister
+			BloodSpurt.DisplayName: Blood Spurt
+			BloodySpit.DisplayName: Bloody Spit
+			HealingChunk.DisplayName: Healing Chunk
+			BloodSaw.DisplayName: Blood Saw
+			HeartBomb.DisplayName: Heart Bomb
+			HeartBomb_JesusBeam.DisplayName: Heart Bomb_ Jesus Beam
+			Spike.DisplayName: Spike
+			SpikeSpawner.DisplayName: Spike Spawner
+			SpikeSpawner_2.DisplayName: Spike Spawner_2
+			GenericSpike.DisplayName: Generic Spike
+			HomeSpike.DisplayName: Home Spike
+			IceBomb.DisplayName: Ice Bomb
+			SideSwingLeft.DisplayName: Side Swing Left
+			SideSwingRight.DisplayName: Side Swing Right
+			SimpleShot.DisplayName: Simple Shot
+			CursedWave.DisplayName: Cursed Wave
+			LeechingBlast.DisplayName: Leeching Blast
+			LifeDrainer.DisplayName: Life Drainer
+			WarlockExplosion.DisplayName: Warlock Explosion
+			WarlockRune.DisplayName: Warlock Rune
+			Explosion.DisplayName: Explosion
+			Fireball.DisplayName: Fireball
+			GenericShrapnel.DisplayName: Generic Shrapnel
+			HomingFireball.DisplayName: Homing Fireball
+			HolyWind.DisplayName: Holy Wind
+			SabbathProj.DisplayName: Sabbath Proj
+			WindsofGod.DisplayName: Windsof God
+		}
+	}
+}

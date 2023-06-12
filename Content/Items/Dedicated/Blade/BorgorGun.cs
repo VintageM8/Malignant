@@ -15,8 +15,8 @@ namespace Malignant.Content.Items.Dedicated.Blade
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Burger Gun");
-            Tooltip.SetDefault("[c/eeff00f:Dedicated Item:] Dedicated to [c/ffa242:BladeBurger]\n'Exo mechs was worth it tho lmao that boss is actually fun unlike DoG'.\nHow did you get enough burgers to acuire this?");
+            // DisplayName.SetDefault("Burger Gun");
+            // Tooltip.SetDefault("[c/eeff00f:Dedicated Item:] Dedicated to [c/ffa242:BladeBurger]\n'Exo mechs was worth it tho lmao that boss is actually fun unlike DoG'.\nHow did you get enough burgers to acuire this?");
         }
 
         public override void SetDefaults()

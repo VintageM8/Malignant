@@ -18,7 +18,7 @@ namespace Malignant.Content.Items.Prayer
 
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Gives Wellfed, Tipsy, and Dryad buff\nClears potion cooldown");
+            // Tooltip.SetDefault("Gives Wellfed, Tipsy, and Dryad buff\nClears potion cooldown");
             ItemID.Sets.ItemNoGravity[Item.type] = true;
             Item.consumable = true;
         }

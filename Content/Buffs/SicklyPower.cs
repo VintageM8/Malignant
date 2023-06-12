@@ -7,8 +7,8 @@ namespace Malignant.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sickly Power");
-            Description.SetDefault("God does not approve of how you gained this");
+            // DisplayName.SetDefault("Sickly Power");
+            // Description.SetDefault("God does not approve of how you gained this");
             Main.buffNoSave[Type] = true;
         }
 

@@ -12,7 +12,7 @@ namespace Malignant.Content.Items.Dedicated.Blade
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Borgor");
+            // DisplayName.SetDefault("Borgor");
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4; //Make when projjfjf im tired help depression sucks 
             ProjectileID.Sets.TrailingMode[Projectile.type] = 2; //like actually plz 
         }
@@ -26,7 +26,7 @@ namespace Malignant.Content.Items.Dedicated.Blade
             Projectile.DamageType = DamageClass.Ranged;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 
             SoundEngine.PlaySound(SoundID.SplashWeak, Projectile.position);

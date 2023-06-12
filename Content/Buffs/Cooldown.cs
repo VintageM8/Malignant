@@ -7,8 +7,8 @@ namespace Malignant.Content.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cooldown");
-            Description.SetDefault("wait to use your abilty!");
+            // DisplayName.SetDefault("Cooldown");
+            // Description.SetDefault("wait to use your abilty!");
             Main.buffNoTimeDisplay[Type] = false;
             Main.debuff[Type] = true; //Add this so the nurse doesn't remove the buff when healing
         }
