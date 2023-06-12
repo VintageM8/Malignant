@@ -28,6 +28,7 @@ namespace Malignant.Common.Players
         public bool Moniter;
         public bool Lich;
         public bool HolyGauntlet;
+        public bool EvilEye;
 
         //Boss Stuff
         public int bossTextProgress, bossMaxProgress;
@@ -154,15 +155,23 @@ namespace Malignant.Common.Players
                     Player.statLife += healAmount;
                 }
             }
-            if(HolyGauntlet)
+            if (HolyGauntlet)
             {
-                if (MalignantLists.unholyEnemies.Contains(target.type) && target.life <= 0) 
+                if (MalignantLists.unholyEnemies.Contains(target.type) && target.life <= 0)
                 {
                     int healAmount = (int)MathHelper.Min(Player.statLifeMax2 - Player.statLife, 10);
                     Player.HealEffect(10);
                     Player.statLife += healAmount;
 
                 }
+            }
+            if (EvilEye)
+            {
+                if (MalignantLists.ghostEnemies.Contains(target.type))
+                {
+                    damageDone = (int)(damageDone * 1.8f);
+                }
+
             }
 
         }
@@ -178,15 +187,23 @@ namespace Malignant.Common.Players
                     Player.statLife += healAmount;
                 }
             }
-            if(HolyGauntlet)
+            if (HolyGauntlet)
             {
-                if (MalignantLists.unholyEnemies.Contains(target.type) && target.life <= 0) 
+                if (MalignantLists.unholyEnemies.Contains(target.type) && target.life <= 0)
                 {
                     int healAmount = (int)MathHelper.Min(Player.statLifeMax2 - Player.statLife, 10);
                     Player.HealEffect(10);
                     Player.statLife += healAmount;
 
                 }
+            }
+            if (EvilEye)
+            {
+                if (MalignantLists.ghostEnemies.Contains(target.type))
+                {
+                    damageDone = (int)(damageDone * 1.8f);
+                }
+
             }
         }
     }

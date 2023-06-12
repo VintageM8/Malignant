@@ -8,9 +8,16 @@ namespace Malignant.Common
     public class MalignantLists 
     {
         public static List<int> unholyEnemies;
-
+        public static List<int> ghostEnemies;
         public static void LoadLists() 
         {
+            ghostEnemies = new List<int>
+            {
+                NPCID.Ghost,
+                NPCID.PirateGhost,
+            };
+
+
             unholyEnemies = new List<int> //Hardcoded AF, ik
             {
                 NPCID.EaterofSouls,
@@ -159,6 +166,7 @@ namespace Malignant.Common
         public static void UnloadLists()
         {
             unholyEnemies = null; //unload list
+            ghostEnemies = null;
         }
     }
 }
