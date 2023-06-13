@@ -300,6 +300,7 @@ Items: {
 	YamaTounge: {
 		DisplayName: Yama Tounge
 		Tooltip: ""
+	}
 
 	FruitOfTheGarden: {
 		DisplayName: Fruit of the Garden
