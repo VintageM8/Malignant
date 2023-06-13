@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Malignant.Common.Players;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using ReLogic.Graphics;
@@ -246,7 +247,7 @@ namespace Malignant.Common.Systems
         public virtual string Description => string.Empty;
         public virtual string TexturePath => (GetType().Namespace + "." + GetType().Name).Replace('.', '/');
         public Texture2D Texture { get; private set; }
-
+        public virtual Alignment Alignment => Alignment.Neutral;
         public virtual SoundStyle SelectSound => SoundID.Tink;
         public virtual SoundStyle UseSound => SoundID.Unlock;
         public virtual SoundStyle SwapSound => SoundID.Unlock;
@@ -273,16 +274,17 @@ namespace Malignant.Common.Systems
 
         public bool TryUseAbility(Player player, EntitySource_PrayerAbility source)
         {
-            if (CanUseAbility(player))
+            if (!CanUseAbility(player))
             {
-                BeginFXCouroutine(OnUseAbilityRoutine(player, source));
-                OnUseAbility(player, source);
-
-                SoundEngine.PlaySound(UseSound, player.Center);
-
-                return true;
+                return false;
             }
-            return false;
+
+            BeginFXCouroutine(OnUseAbilityRoutine(player, source));
+            OnUseAbility(player, source);
+
+            SoundEngine.PlaySound(UseSound, player.Center);
+
+            return true;
         }
 
         /// <summary>
@@ -295,11 +297,20 @@ namespace Malignant.Common.Systems
         int _cooldownTimer;
         public int CooldownTimer { get => _cooldownTimer; set => _cooldownTimer = value; }
         /// <summary>
-        /// By default this checks if CooldownTimer <= 0 so if you plan on overriding this make sure to check for that too if you want the cooldown to work.
+        /// By default this checks if CooldownTimer <= 0 and compares the alignements so if you plan on overriding this make sure to check for that too if you want the cooldown to work.
         /// </summary>
         /// <param name="player"></param>
         /// <returns></returns>
-        public virtual bool CanUseAbility(Player player) => CooldownTimer <= 0;
+        public virtual bool CanUseAbility(Player player)
+        {
+            Alignment playerAlignment = player.GetModPlayer<AlignmentPlayer>().GetAlignment();
+            if (playerAlignment != Alignment.Neutral && (playerAlignment == Alignment.Holy ^ Alignment == Alignment.Holy))
+            {
+                return false;
+            }
+
+            return CooldownTimer <= 0;
+        }
 
         /// <summary>
         /// This method runs when player uses the ability.

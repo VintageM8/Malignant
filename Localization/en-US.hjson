@@ -255,6 +255,11 @@ Mods: {
 				DisplayName: Save Item
 				Tooltip: ""
 			}
+
+			FruitOfTheGarden: {
+				Tooltip: ""
+				DisplayName: Fruit Of The Garden
+			}
 		}
 
 		Buffs: {
