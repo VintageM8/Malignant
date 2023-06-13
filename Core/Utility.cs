@@ -9,14 +9,24 @@ namespace Malignant.Core
 {
     public static class Utility
     {
-    public static int AddItem(this Chest c, int itemID, int amount = 1)
-    {
+        public static Color ConvectiveFlameColor(float progress)
+        {
+            float clampedProgress = Math.Clamp(progress, 0, 1);
+            float r = 1.25f - clampedProgress / 2;
+            float g = clampedProgress < 0.5f ? 4 * clampedProgress * (1 - clampedProgress) : 13 / 12f - clampedProgress / 6f;
+            float b = 2 * clampedProgress;
+            return new Color(r, g, b);
+        }
+
+        public static int AddItem(this Chest c, int itemID, int amount = 1)
+        {
             Item i = new Item();
             i.SetDefaults(itemID);
             i.stack = amount;
             return c.AddItemToShop(i);
-    }
-     public static Rectangle AnimationFrame(this Texture2D texture, ref int frame, ref int frameTick, int frameTime, int frameCount, bool frameTickIncrease, int overrideHeight = 0)
+        }
+
+        public static Rectangle AnimationFrame(this Texture2D texture, ref int frame, ref int frameTick, int frameTime, int frameCount, bool frameTickIncrease, int overrideHeight = 0)
         {
             if (frameTick >= frameTime)
             {
@@ -103,7 +113,7 @@ namespace Malignant.Core
 
         public static Vector2 PolarVector(float radius, float theta) =>
             new Vector2((float)Math.Cos(theta), (float)Math.Sin(theta)) * radius;
-            
+
         public static void SineMovement(this Projectile projectile, Vector2 initialCenter, Vector2 initialVel, float frequencyMultiplier, float amplitude)
         {
             projectile.ai[1]++;
@@ -133,3 +143,4 @@ namespace Malignant.Core
 
     }
 }
+
