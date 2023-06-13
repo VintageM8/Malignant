@@ -13,20 +13,23 @@ namespace Malignant.Common.Players
     {
         public int KarmaPoints { get; private set; } = 0;
 
-        public Alignment GetAlignment()
+        public Alignment Alignement
         {
             // Also temporary
-            if (Player.GetModPlayer<FruitOfTheGardenModPlayer>().ConsumedFruit || KarmaPoints > 0)
+            get
             {
-                return Alignment.Holy;
-            }
+                if (Player.GetModPlayer<FruitOfTheGardenModPlayer>().ConsumedFruit || KarmaPoints > 0)
+                {
+                    return Alignment.Holy;
+                }
 
-            if (KarmaPoints == 0)
-            {
-                return Alignment.Neutral;
-            }
+                if (KarmaPoints == 0)
+                {
+                    return Alignment.Neutral;
+                }
 
-            return Alignment.Unholy;
+                return Alignment.Unholy;
+            }
         }
     }
 }
