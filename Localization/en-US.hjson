@@ -300,6 +300,10 @@ Items: {
 	YamaTounge: {
 		DisplayName: Yama Tounge
 		Tooltip: ""
+
+	FruitOfTheGarden: {
+		DisplayName: Fruit of the Garden
+		Tooltip: "You gain 50 life after each boss you beat"
 	}
 }
 
