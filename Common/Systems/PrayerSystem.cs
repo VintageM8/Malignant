@@ -303,7 +303,7 @@ namespace Malignant.Common.Systems
         /// <returns></returns>
         public virtual bool CanUseAbility(Player player)
         {
-            Alignment playerAlignment = player.GetModPlayer<AlignmentPlayer>().Alignement;
+            Alignment playerAlignment = player.GetModPlayer<AlignmentPlayer>().Alignment;
             if (playerAlignment != Alignment.Neutral && (playerAlignment == Alignment.Holy ^ Alignment == Alignment.Holy))
             {
                 return false;

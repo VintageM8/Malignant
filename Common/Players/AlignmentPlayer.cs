@@ -13,7 +13,7 @@ namespace Malignant.Common.Players
     {
         public int KarmaPoints { get; private set; } = 0;
 
-        public Alignment Alignement
+        public Alignment Alignment
         {
             // Also temporary
             get
