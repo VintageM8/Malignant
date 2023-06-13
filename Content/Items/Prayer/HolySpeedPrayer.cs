@@ -32,6 +32,7 @@ namespace Malignant.Content.Items.Prayer
         public override string DisplayName => "Speed of the Holy";
         public override int Cooldown => 660; // also temporary, TODO balance
         public override SoundStyle SwapSound => SoundManager.Sounds["prayer"];
+        public override Alignment Alignment => Alignment.Holy;
 
         protected override void OnUseAbility(Player player, EntitySource_PrayerAbility source)
         {
