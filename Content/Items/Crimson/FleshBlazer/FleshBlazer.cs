@@ -14,8 +14,8 @@ namespace Malignant.Content.Items.Crimson.FleshBlazer
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hell's Scourcher");
-            Tooltip.SetDefault("Scorch your way through The Wretched\nUses gel as ammo\nRight click to smite The Wretched with a cross");
+            // DisplayName.SetDefault("Hell's Scourcher");
+            // Tooltip.SetDefault("Scorch your way through The Wretched\nUses gel as ammo\nRight click to smite The Wretched with a cross");
         }
 
         public override void SetDefaults()

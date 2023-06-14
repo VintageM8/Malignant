@@ -1,0 +1,418 @@
+Keybinds: {
+	"Use Prayer Abilty.DisplayName": Use  Prayer  Abilty
+	"Change Prayer Ability.DisplayName": Change  Prayer  Ability
+}
+
+Buffs: {
+	Cooldown: {
+		DisplayName: Cooldown
+		Description: Your Prayers will not be heard
+	}
+
+	NoMove: {
+		DisplayName: No Move
+		Description: Ha, cant move
+	}
+
+	SicklyPower: {
+		DisplayName: Sickly Power
+		Description: Our Lord does not approve of this power
+	}
+
+	SmokeDebuff: {
+		DisplayName: Smoke Debuff
+		Description: Mods.Malignant.Buffs.SmokeDebuff.Description
+	}
+
+	LoyalLensBuff: {
+		DisplayName: Loyal Lens Buff
+		Description: Mods.Malignant.Buffs.LoyalLensBuff.Description
+	}
+}
+
+Items: {
+	ArterionSpawn: {
+		DisplayName: Pierced Heart
+		Tooltip: Summons the Infector of the Crimson
+	}
+
+	CursedTome: {
+		DisplayName: Cursed Tome
+		Tooltip: Summons the Infector of the Corruption
+	}
+
+	DepravedBlastBeat: {
+		DisplayName: Depraved Blast Beat
+		Tooltip: After 10 shots hit your projectile becomes empowered
+	}
+
+	CorruptedCord: {
+		DisplayName: Corrupted Cord
+		Tooltip: ""
+	}
+
+	HorridAccessory: {
+		DisplayName: Lich's Phylactery
+		Tooltip: Killing critters refills your lifeforce
+	}
+
+	Boeyr: {
+		DisplayName: Death's Bite
+		Tooltip: ""
+	}
+
+	NightsisterBlade: {
+		DisplayName: Nightsister Blade
+		Tooltip: ""
+	}
+
+	CursedFireballStaff: {
+		DisplayName: Cursed Fireball Staff
+		Tooltip: "<right> to explode the Cursed Flames "
+	}
+
+	Abowmanation: {
+		DisplayName: Abowmanation
+		Tooltip: Shoots a Blood Arrow
+	}
+
+	ArterionSoul: {
+		DisplayName: Arterion's Soul
+		Tooltip: Summons the Infector of the Crimson
+	}
+
+	BloodyVein: {
+		DisplayName: Bloody Vein
+		Tooltip: ""
+	}
+
+	BurstingArtery: {
+		DisplayName: Bursting Artery
+		Tooltip: Bursts into shrapnal on cursor hit
+	}
+
+	HerzanfallDagger: {
+		DisplayName: Heart's Skean
+		Tooltip: Summons orbiting daggers around the player/nDaggers decapitate the Wretched
+	}
+
+	HeartMoniter: {
+		DisplayName: Heart Moniter
+		Tooltip:
+			'''
+			Summons a bloody rune
+			Bloody rune summons homing heart clots when player takes damage
+			'''
+	}
+
+	FleshBlazer: {
+		DisplayName: Flesh Blazer
+		Tooltip:
+			'''
+			Scorch your way through The Wretched
+			Uses gel as ammo
+			Right click to smite The Wretched with a cross
+			'''
+	}
+
+	BorgorGun: {
+		DisplayName: Borgor Gun
+		Tooltip:
+			'''
+			[c/eeff00f:Dedicated Item:] Dedicated to [c/ffa242:BladeBurger]
+			'Exo mechs was worth it tho lmao that boss is actually fun unlike DoG'.
+			How did you get enough burgers to acuire this?
+			'''
+	}
+
+	P3Guitar: {
+		DisplayName: P3's Guitar
+		Tooltip: Metal head of all time
+	}
+
+	DemonShot: {
+		DisplayName: Demon Shot
+		Tooltip: Bursts into a ball of flame
+	}
+
+	MarsHell: {
+		DisplayName: Mars Hell
+		Tooltip: Shoots out a bomb every 4 shots
+	}
+
+	SingedDevastation: {
+		DisplayName: Singed Devastation
+		Tooltip: ""
+	}
+
+	IceBossBag: {
+		DisplayName: Cocytus Loot Bag
+		Tooltip: ""
+	}
+
+	WarlockBossBag: {
+		DisplayName: Warlock Loot Bag
+		Tooltip: ""
+	}
+
+	BloodyChalice: {
+		DisplayName: Bloody Chalice
+		Tooltip:
+			'''
+			Applys a random debuff
+			Has unlimited uses
+			'''
+	}
+
+	BrokenDemonHorn: {
+		DisplayName: Broken Demon Horn
+		Tooltip: ""
+	}
+
+	CrucfixConstructer: {
+		DisplayName: Crucfix Constructer
+		Tooltip:
+			'''
+			Has a slam throw combo attack
+			<right> to throw a crucifix
+			'''
+	}
+
+	Head: {
+		DisplayName: Head
+		Tooltip: ""
+	}
+
+	HolyGauntlet: {
+		DisplayName: Holy Gauntlet
+		Tooltip: Heals life for each Unholy Wretched slain
+	}
+
+	WarbladeofLight: {
+		DisplayName: Warblade of Light
+		Tooltip: Has a swing throw combo attack
+	}
+
+	BloodOfAnointedPrayer: {
+		DisplayName: Blood Of Anointed Prayer
+		Tooltip: ""
+	}
+
+	CommunionPrayer: {
+		DisplayName: Communion Prayer
+		Tooltip: ""
+	}
+
+	FireballPrayer: {
+		DisplayName: Fireball Prayer
+		Tooltip: ""
+	}
+
+	HolySpeedPrayer: {
+		DisplayName: Holy Speed Prayer
+		Tooltip: ""
+	}
+
+	SmiteOfSabbathPrayer: {
+		DisplayName: Smite Of Sabbath Prayer
+		Tooltip: ""
+	}
+
+	IcyTundra: {
+		DisplayName: Winds of Hell
+		Tooltip: Hold <left> to charge up an attack
+	}
+
+	NjorsStaff: {
+		DisplayName: Scepter of Cocytus
+		Tooltip: Hold <right> to charge up an attack
+	}
+
+	IceSword: {
+		DisplayName: Ice Sword
+		Tooltip: The longer you swing the stronger the blade gets
+	}
+
+	FangedDeceiver: {
+		DisplayName: Fanged Deceiver
+		Tooltip: Shoots fangs around the player after 6 shots
+	}
+
+	SpiderNeckless: {
+		DisplayName: Spider Neckless
+		Tooltip:
+			'''
+			All attacks inflict venom
+			Fangs shoot out of the player when hurt
+			'''
+	}
+
+	StaffofSpiderEye: {
+		DisplayName: Spider Eye Staff
+		Tooltip: ""
+	}
+
+	WebTome: {
+		DisplayName: Web Tome
+		Tooltip: ""
+	}
+
+	PlaceItem: {
+		DisplayName: Place Item
+		Tooltip: ""
+	}
+
+	SaveItem: {
+		DisplayName: Save Item
+		Tooltip: ""
+	}
+
+	Titania: {
+		Tooltip: ""
+		DisplayName: Titania
+	}
+
+	FlamesoftheDamned: {
+		Tooltip: ""
+		DisplayName: Flames of the Damned
+	}
+
+	BloodoftheLamb: {
+		DisplayName: Bloodofthe Lamb
+		Tooltip: ""
+	}
+
+	LoyalLens: {
+		DisplayName: Loyal Lens
+		Tooltip: ""
+	}
+
+	EvilEye: {
+		Tooltip: ""
+		DisplayName: Evil Eye
+	}
+
+	WoodenCrucifix: {
+		Tooltip: ""
+		DisplayName: Wooden Crucifix
+	}
+
+	YamaTounge: {
+		DisplayName: Yama Tounge
+		Tooltip: ""
+	}
+
+	FruitOfTheGarden: {
+		DisplayName: Fruit of the Garden
+		Tooltip: "You gain 50 life after each boss you beat"
+	}
+}
+
+NPCs: {
+	CursedOccultist.DisplayName: Cursed Occultist
+	CursedRoller.DisplayName: Cursed Roller
+	SacraficedSoul.DisplayName: Sacraficed Soul
+	Shreiker.DisplayName: Shreiker
+	Warlock.DisplayName: Warlock, The Infected
+	WarlockMinion.DisplayName: Warlock Minion
+	FlyingHeart.DisplayName: Flying Heart
+	HeartMan.DisplayName: Viscera, Primal Hunter
+	Arterion.DisplayName: Arterion, The Infected
+	IchorSlammer.DisplayName: Ichor Slammer
+	MutilatedFlesh.DisplayName: Mutilated Flesh
+	Njor.DisplayName: Cocytus, Gaurdian of the Icelands
+}
+
+Projectiles: {
+	HeldProjectileGun.DisplayName: Held Projectile Gun
+	CorruptVortex.DisplayName: Corrupt Vortex
+	DepravedBlast_Proj.DisplayName: Depraved Blast_ Proj
+	DepravedBlast_Proj2.DisplayName: Depraved Blast_ Proj2
+	CorruptedCordProj.DisplayName: Corrupted Cord Proj
+	BoeyrProjectile.DisplayName: Boeyr Projectile
+	BoeyrSkullProjectile.DisplayName: Boeyr Skull Projectile
+	NightsisterBladeProjectile.DisplayName: Nightsister Blade Projectile
+	CFStaffProj.DisplayName: C F Staff Proj
+	CursedFB.DisplayName: Cursed F B
+	AbowmanationArrow.DisplayName: Abowmanation Arrow
+	AbowmanationHeldProjectile.DisplayName: Abowmanation Held Projectile
+	ArtSoulProj.DisplayName: Art Soul Proj
+	BloodyVeinProj.DisplayName: Bloody Vein Proj
+	Blood.DisplayName: Blood
+	BurstingArt_Held.DisplayName: Bursting Art_ Held
+	BurstingArtyProj.DisplayName: Bursting Arty Proj
+	BurstingArtyProj_Two.DisplayName: Bursting Arty Proj_ Two
+	KnifeProj_Two.DisplayName: Knife Proj_ Two
+	KnifeProjectile.DisplayName: Knife Projectile
+	BloodRune.DisplayName: Blood Rune
+	BlazerFlame.DisplayName: Blazer Flame
+	MalignantFissionExplosion.DisplayName: Malignant Fission Explosion
+	ScourcherBible.DisplayName: Scourcher Bible
+	CarnemProj.DisplayName: Carnem Proj
+	Borgor.DisplayName: Borgor
+	Bun.DisplayName: Bun
+	Cheese.DisplayName: Cheese
+	MusicNote1.DisplayName: Music Note1
+	MusicNote2.DisplayName: Music Note2
+	MusicNote3.DisplayName: Music Note3
+	DemonShotProj.DisplayName: Demon Shot Proj
+	Gernade1.DisplayName: Gernade1
+	MarsHellBoom.DisplayName: Mars Hell Boom
+	Crucifix.DisplayName: Crucifix
+	HammerSlam.DisplayName: Hammer Slam
+	HammerThrow.DisplayName: Hammer Throw
+	LightCross.DisplayName: Light Cross
+	WarbladeSwing.DisplayName: Warblade Swing
+	WarbladeThrow.DisplayName: Warblade Throw
+	NjorEnergy.DisplayName: Njor Energy
+	NjorHoldout.DisplayName: Njor Holdout
+	NjorsStaffproj.DisplayName: Njors Staffproj
+	NjorSwordProj.DisplayName: Njor Sword Proj
+	NjorSwordProj2.DisplayName: Njor Sword Proj2
+	NjorSwordProj3.DisplayName: Njor Sword Proj3
+	NjorSwordProj4.DisplayName: Njor Sword Proj4
+	SpiderFangProjectile.DisplayName: Spider Fang Projectile
+	SpiderEyeProj.DisplayName: Spider Eye Proj
+	CobwebProj.DisplayName: Cobweb Proj
+	OccultRune1.DisplayName: Occult Rune1
+	OccultRune2.DisplayName: Occult Rune2
+	Rune_1.DisplayName: Rune_1
+	Rune_2.DisplayName: Rune_2
+	BloodBlister.DisplayName: Blood Blister
+	BloodSpurt.DisplayName: Blood Spurt
+	BloodySpit.DisplayName: Bloody Spit
+	HealingChunk.DisplayName: Healing Chunk
+	BloodSaw.DisplayName: Blood Saw
+	HeartBomb.DisplayName: Heart Bomb
+	HeartBomb_JesusBeam.DisplayName: Heart Bomb_ Jesus Beam
+	Spike.DisplayName: Spike
+	SpikeSpawner.DisplayName: Spike Spawner
+	SpikeSpawner_2.DisplayName: Spike Spawner_2
+	GenericSpike.DisplayName: Generic Spike
+	HomeSpike.DisplayName: Home Spike
+	IceBomb.DisplayName: Ice Bomb
+	SideSwingLeft.DisplayName: Side Swing Left
+	SideSwingRight.DisplayName: Side Swing Right
+	SimpleShot.DisplayName: Simple Shot
+	CursedWave.DisplayName: Cursed Wave
+	LeechingBlast.DisplayName: Leeching Blast
+	LifeDrainer.DisplayName: Life Drainer
+	WarlockExplosion.DisplayName: Warlock Explosion
+	WarlockRune.DisplayName: Warlock Rune
+	Explosion.DisplayName: Explosion
+	Fireball.DisplayName: Fireball
+	GenericShrapnel.DisplayName: Generic Shrapnel
+	HomingFireball.DisplayName: Homing Fireball
+	HolyWind.DisplayName: Holy Wind
+	SabbathProj.DisplayName: Sabbath Proj
+	WindsofGod.DisplayName: Windsof God
+	CursedFBExplosion.DisplayName: Cursed F B Explosion
+	ShingedThorn2.DisplayName: Shinged Thorn2
+	SingedThorn.DisplayName: Singed Thorn
+	SingedDevastationProj.DisplayName: Singed Devastation Proj
+	SingedDevastationProj2.DisplayName: Singed Devastation Proj2
+	HolyRune.DisplayName: Holy Rune
+	DamnedFireball_2.DisplayName: Damned Fireball_2
+	DamnedFireball.DisplayName: Damned Fireball
+	LoyalLensSummon.DisplayName: Loyal Lens Summon
+}

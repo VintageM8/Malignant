@@ -7,7 +7,7 @@ namespace Malignant.Content.Items.Dedicated.Blade
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cheese");
+            // DisplayName.SetDefault("Cheese");
         }
 
         public override void SetDefaults()

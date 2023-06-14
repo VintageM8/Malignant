@@ -18,7 +18,7 @@ namespace Malignant.Content.Items.Prayer
 
         public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("Gives Wellfed, Tipsy, and Dryad buff\nClears potion cooldown");
+            // Tooltip.SetDefault("Gives Wellfed, Tipsy, and Dryad buff\nClears potion cooldown");
             ItemID.Sets.ItemNoGravity[Item.type] = true;
             Item.consumable = true;
         }
@@ -29,6 +29,7 @@ namespace Malignant.Content.Items.Prayer
         public override string TexturePath => base.TexturePath.Replace(nameof(CommunionAbility), "PrayerTest");
         public override string DisplayName => "Communion";
         public override int Cooldown => 1320;
+        public override Alignment Alignment => Alignment.Holy;
 
         public override SoundStyle SwapSound => SoundManager.Sounds["prayer"];
         protected override void OnUseAbility(Player player, EntitySource_PrayerAbility source)

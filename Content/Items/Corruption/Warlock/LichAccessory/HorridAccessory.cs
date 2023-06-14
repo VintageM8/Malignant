@@ -9,8 +9,8 @@ namespace Malignant.Content.Items.Corruption.Warlock.LichAccessory
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lich's Phylactery");
-            Tooltip.SetDefault("Killing critters replenishes your lifeforce");
+            // DisplayName.SetDefault("Lich's Phylactery");
+            // Tooltip.SetDefault("Killing critters replenishes your lifeforce");
         }
 
         public override void SetDefaults()

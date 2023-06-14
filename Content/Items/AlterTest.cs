@@ -9,7 +9,7 @@ namespace Malignant.Content.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Alter Test");
+            // DisplayName.SetDefault("Alter Test");
         }
 
 

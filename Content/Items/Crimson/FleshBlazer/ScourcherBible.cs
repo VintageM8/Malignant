@@ -12,7 +12,7 @@ namespace Malignant.Content.Items.Crimson.FleshBlazer
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Smiteful Cross");
+            // DisplayName.SetDefault("Smiteful Cross");
         }
 
         public override void SetDefaults()
@@ -69,7 +69,7 @@ namespace Malignant.Content.Items.Crimson.FleshBlazer
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("burp");
+            // DisplayName.SetDefault("burp");
         }
 
         public override void SetDefaults()

@@ -10,6 +10,7 @@ namespace Malignant.Common.Helper
 {
     public static partial class MethodHelper
     {
+        public static int timer;
 
         public static float CircleDividedEqually(float i, float max)
         {

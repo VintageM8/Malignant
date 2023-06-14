@@ -7,6 +7,8 @@ using Terraria.ID;
 using System;
 using System.Collections.Generic;
 using Malignant.Common;
+using Malignant.Common.Systems;
+using Terraria.WorldBuilding;
 
 namespace Malignant.Core
 {
@@ -26,6 +28,7 @@ namespace Malignant.Core
                         List<int> ChestIndexs = new List<int>();
                         int Xlenght = reader.ReadInt32();
                         int Ylenght = reader.ReadInt32();
+                        Malignant.Mod.Logger.Info(Xlenght);
                         for (int i = 0; i <= Xlenght; i++)
                         {
 
@@ -107,7 +110,7 @@ namespace Malignant.Core
         /// <param name="BottomLeft"> bottom left of the placed structure</param>
         /// <param name="Path">path, starting past the mod root folder to read the .str from. Do not inculde the name of the mod in the path, or .str</param>
         /// <returns>A array of ints, corrsponding to the index of chests placed in the struct, from bottom left to top right</returns>
-        public static int[] ReadStruct(Point BottomLeft, string Path)
+        public static int[] ReadStruct(Point BottomLeft, string Path, GenerationProgress p = null)
         {
             using (var stream = Mod.GetFileStream(Path + ".str"))
             {
@@ -115,12 +118,17 @@ namespace Malignant.Core
                 {
                     List<int> ChestIndexs = new List<int>();
                     int Xlenght = reader.ReadInt32();
+                    Mod.Logger.Info(Xlenght);
                     int Ylenght = reader.ReadInt32();
                     for (int i = 0; i <= Xlenght; i++)
                     {
 
                         for (int j = 0; j <= Ylenght; j++)
                         {
+                            if(p != null)
+                            {
+                                p.Value = ((float)i) / Xlenght;
+                            }
                             Tile t = Framing.GetTileSafely((int)(BottomLeft.X + i), (int)(BottomLeft.Y - j));
                             t.ClearEverything();
                             //tile
@@ -228,7 +236,7 @@ namespace Malignant.Core
                 BottomLeft = Pos;
                 return;
             }
-            //string Path = Main.SavePath + "/" + "ModSources" + "/" + Mod.Name + "/" + "SavedStruct.str";
+            //mygames/Terraria/tmodloader(-preview if on preview)
             using (var stream = File.Open(Main.SavePath + "/SavedStruct.str", FileMode.Create))
             {
                 using (var writer = new BinaryWriter(stream))
@@ -351,8 +359,8 @@ namespace Malignant.Core
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Structure Saver");
-            Tooltip.SetDefault("Item used in mod development, use at your own risk! \n if you are a mod dev, go Bottom Left to Top Right");
+            //DisplayName.SetDefault("Structure Saver");
+           // Tooltip.SetDefault("Item used in mod development, use at your own risk! \n if you are a mod dev, go Bottom Left to Top Right");
         }
         public override string Texture => $"Terraria/Images/Item_{ItemID.MagicCuffs}"; //I do not do spriting
         public override void SetDefaults()
@@ -372,8 +380,8 @@ namespace Malignant.Core
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Structure Tester");
-            Tooltip.SetDefault("Item used in mod development, use at your own risk!");
+            //DisplayName.SetDefault("Structure Tester");
+           // Tooltip.SetDefault("Item used in mod development, use at your own risk!");
         }
         public override string Texture => $"Terraria/Images/Item_{ItemID.Shackle}"; //I do not do  spriting
         public override void SetDefaults()

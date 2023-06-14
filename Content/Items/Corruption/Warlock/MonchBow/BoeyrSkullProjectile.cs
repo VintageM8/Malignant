@@ -46,7 +46,7 @@ namespace Malignant.Content.Items.Corruption.Warlock.MonchBow
         int biteTimer;
         public override void AI()
         {
-            if (shouldStickToTarget)
+            if (ShouldStickToTarget)
             {
                 Projectile.Center = target.Center + offsetFromCenterTarget;
                 if (Projectile.timeLeft < TIME_LEFT_ONHIT)
@@ -128,13 +128,13 @@ namespace Malignant.Content.Items.Corruption.Warlock.MonchBow
 
         Vector2 offsetFromCenterTarget;
         NPC target;
-        bool shouldStickToTarget => target is not null && target.life > 0 && target.active;
-        OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        bool ShouldStickToTarget => target is not null && target.life > 0 && target.active;
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.frame = 0;
             SoundEngine.PlaySound(biteSound, Projectile.Center);
 
-            if (!shouldStickToTarget || Projectile.timeLeft > TIME_LEFT_ONHIT)
+            if (!ShouldStickToTarget || Projectile.timeLeft > TIME_LEFT_ONHIT)
             {
                 this.target = target;
                 offsetFromCenterTarget = Projectile.Center - target.Center;
@@ -145,7 +145,7 @@ namespace Malignant.Content.Items.Corruption.Warlock.MonchBow
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (!shouldStickToTarget)
+            if (!ShouldStickToTarget)
             {
                 MethodHelper.NewDustCircular(
                         Projectile.Center,

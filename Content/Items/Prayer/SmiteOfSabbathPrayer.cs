@@ -34,6 +34,7 @@ namespace Malignant.Content.Items.Prayer
         public override string DisplayName => "Smite of the Sabbath";
         public override int Cooldown => 120;
         public override SoundStyle SwapSound => SoundManager.Sounds["prayer"];
+        public override Alignment Alignment => Alignment.Holy;
 
         protected override void OnUseAbility(Player player, EntitySource_PrayerAbility source)
         {

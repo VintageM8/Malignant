@@ -16,7 +16,7 @@ namespace Malignant.Content.Items.Dedicated.P3XY7
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("P3's Guitar");
+            // DisplayName.SetDefault("P3's Guitar");
         }
         public override void SetDefaults()
         {

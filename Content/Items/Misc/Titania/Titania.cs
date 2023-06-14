@@ -1,9 +1,12 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Malignant.Common;
 using Malignant.Content.Projectiles;
 using System;
+using Microsoft.Xna.Framework.Graphics;
+using Malignant.Content.Buffs;
 
 namespace Malignant.Content.Items.Misc.Titania
 {
