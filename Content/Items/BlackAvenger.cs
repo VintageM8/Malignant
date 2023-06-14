@@ -71,17 +71,52 @@ namespace Malignant.Content.Items
                 return;
             }
             ReloadCoolDown -= ReloadCoolDown > 0 ? 1 : 0;
-            if(ReloadCoolDown <= 0)
+            if (ReloadCoolDown <= 0)
             {
                 IsInReloadState = false;
             }
         }
         public override bool CanUseItem(Item item)
         {
-            if(item.type != ModContent.ItemType<BlackAvenger>())
+            if (item.type != ModContent.ItemType<BlackAvenger>())
             {
+                return base.CanUseItem(item);
             }
-            return !IsInReloadState && ReloadCoolDown <= 0;
+            return !IsInReloadState;
+        }
+    }
+    class BlackAvengerBomb : ModProjectile
+    {
+        public override void SetDefaults()
+        {
+            Projectile.width = Projectile.width = 28;
+            Projectile.friendly = true;
+            Projectile.penetrate = 1;
+            Projectile.timeLeft = 300;
+            Projectile.tileCollide = true;
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            if (Projectile.velocity.X != oldVelocity.X)
+            {
+                Projectile.velocity.X = -oldVelocity.X;
+            }
+            if (Projectile.velocity.Y != oldVelocity.Y)
+            {
+                Projectile.velocity.Y = -oldVelocity.Y;
+            }
+            return base.OnTileCollide(oldVelocity);
+        }
+        public override void AI()
+        {
+            if(Projectile.velocity.Y < 20)
+            {
+                Projectile.velocity.Y += .5f;
+            }
+        }
+        public override void Kill(int timeLeft)
+        {
+            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<StickyExplosionProjectile>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
         }
     }
     class StickyExplosionProjectile : ModProjectile
