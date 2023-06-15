@@ -52,7 +52,7 @@ namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
                 type = ModContent.ProjectileType<DepravedBlast_Proj>();
                 damage = 16;
             }
-            if (player.GetModPlayer<MalignantPlayer>().itemCombo >= 3)
+            if (player.GetModPlayer<MalignantPlayer>().itemCombo >= 8)
             {
                 type = ModContent.ProjectileType<DepravedBlast_Proj2>();
                 damage = 24;
