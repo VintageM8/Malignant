@@ -1,23 +1,25 @@
-using Malignant.Common;
+using Malignant.Content.NPCs.Crimson.Heart.Projectiles;
 using Malignant.Common.Systems;
 using Malignant.Content.Items.Crimson.Arterion.MoniterAccessory;
-using Malignant.Content.Projectiles.Enemy.Warlock;
-using Malignant.Core;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.Audio;
-using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.ItemDropRules;
-
+using Malignant.Content.NPCs.Crimson.HeartBoss.Projectiles;
+using Malignant.Content.Projectiles.Enemy;
+using Malignant.Content.Items.Hell.MarsHell;
 
 namespace Malignant.Content.NPCs.Crimson.Heart
 {
     public class HeartMan : ModNPC //its not even a man lol
     {
+        Vector2 meowBitch;
+        bool DrawLinearDash = false;
+        Vector2 playeroldcenter;
+        Vector2 npcoldcenter;
         public override void SetStaticDefaults()
         {
             //DisplayName.SetDefault("Viscera");
@@ -95,29 +97,38 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                 //Main.NewText("AI 1");
 
                 NPC.damage = 0;
-                for (int i = 0; i < (difficulty > 4 ? 10 : 7); i++)
-                {
-                    int damage = expertMode ? 0 : 0;
-                    int p = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X + Main.rand.Next(-60, 60), NPC.Center.Y + Main.rand.Next(-60, 60), Main.rand.NextFloat(-5.3f, 5.3f), Main.rand.NextFloat(-5.3f, 5.3f), ModContent.ProjectileType<BloodSpurt>(), damage, 1, Main.myPlayer, 0, 0);;
-                    Main.projectile[p].scale = Main.rand.NextFloat(.6f, .8f);
-                    DustHelper.DrawStar(Main.projectile[p].Center, 272, pointAmount: 6, mainSize: .9425f, dustDensity: 2, dustSize: .5f, pointDepthMult: 0.3f, noGravity: true);
-
-                    if (Main.projectile[p].velocity == Vector2.Zero)
-                        Main.projectile[p].velocity = new Vector2(2.25f, 2.25f);
-
-                    if (Main.projectile[p].velocity.X < 2.25f && Math.Sign(Main.projectile[p].velocity.X) == Math.Sign(1) || Main.projectile[p].velocity.X > -2.25f && Math.Sign(Main.projectile[p].velocity.X) == Math.Sign(-1))
-                        Main.projectile[p].velocity.X *= 2.15f;
-
-                    Main.projectile[p].netUpdate = true;
-                }
                 if (++AITimer2 == 30)
                 {
-                    NPC.Center = player.Center - Vector2.UnitX * player.direction * 145;
+                    Vector2 pos = new Vector2(player.position.X, player.position.Y - 335);
+                    Vector2 target = pos;
+                    Vector2 moveTo = target - NPC.Center;
+                    NPC.velocity = (moveTo) * 0.18f;
+
+                }
+                if (AITimer2 == 30)
+                {
+                    meowBitch = player.Center;
+                    NPC.velocity = Vector2.Zero;
+                    Vector2 vector16 = NPC.DirectionTo(player.Center) * 7f;
+                    DrawLinearDash = true;
                 }
                 if (AITimer2 == 90)
                 {
                     if (player.direction != NPC.direction)
                     {
+                        NPC.velocity = Vector2.Zero;
+                        Vector2 vector16 = NPC.DirectionTo(player.Center) * 7f;
+                        for (float i = (-9); i <= 9; i++)
+                        {
+
+                            Projectile projectile = Main.projectile[Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, 9.5f * Utils.RotatedBy(NPC.DirectionTo(meowBitch), (double)(MathHelper.ToRadians(32.5f) * (float)i), default(Vector2)), ModContent.ProjectileType<BloodBlister>(), 20, 1f, Main.myPlayer)];
+                            projectile.tileCollide = false;
+                            projectile.friendly = false;
+                            projectile.hostile = true;
+                            projectile.ai[1] = 0.7f;
+                            projectile.timeLeft = 230;
+                        }
+
                         AITimer++;
                         AITimer2 = 0;
                         NPC.ai[3] = 0;
@@ -155,23 +166,21 @@ namespace Malignant.Content.NPCs.Crimson.Heart
             {
                 //Main.NewText("AI 2");
                 AITimer++;
-                if (player.Center.Distance(NPC.Center) > (16 * 2) && AITimer >= 30)
-                    NPC.velocity = Utility.FromAToB(NPC.Center, player.Center, true) * 1.75f;
-                else
-                    NPC.velocity = Vector2.Zero;
-
-                
-                    float rotation = MathHelper.ToRadians(45);
-                    Vector2 pos = NPC.Center - Vector2.UnitY * 23;
-                    for (int i = 0; i < 2; i++)
-                    {
-                        Vector2 perturbedSpeed = (Utility.FromAToB(NPC.Center, player.Center) * 9.5f).RotatedBy(Main.rand.NextFloat(-rotation, rotation));
-                        Vector2 perturbedSpeed1 = (Utility.FromAToB(NPC.Center, player.Center) * 9.5f).RotatedBy(Main.rand.NextFloat(-rotation, rotation));
-                        perturbedSpeed1.Normalize();
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, perturbedSpeed, ModContent.ProjectileType<BloodSpurt>(), 15, 1.5f, player.whoAmI);
-                    }
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, Utility.FromAToB(NPC.Center, player.Center) * 9.5f, ModContent.ProjectileType<BloodySpit>(), 15, 1.5f, player.whoAmI);
-                    AITimer2 = 0;
+                Vector2 pos = new Vector2(player.position.X, player.position.Y - 100);
+                Vector2 target = pos;
+                Vector2 moveTo = target - NPC.Center;
+                NPC.velocity = (moveTo) * 0.055f;
+                if (AITimer >= 20)
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<MarsHellBoom>(), 0, 1f, Main.myPlayer);
+                }
+                if (AITimer >= 30)
+                {
+                    Projectile.NewProjectile(null, new Vector2(NPC.Center.X, NPC.Center.Y + 10), new Vector2(-2, 5), ModContent.ProjectileType<BloodSpurt>(), Main.rand.Next(10, 20), 5);
+                    Projectile.NewProjectile(null, new Vector2(NPC.Center.X, NPC.Center.Y + 10), new Vector2(0, 5), ModContent.ProjectileType<BloodSpurt>(), Main.rand.Next(10, 20), 5);
+                    Projectile.NewProjectile(null, new Vector2(NPC.Center.X, NPC.Center.Y + 10), new Vector2(2, 5), ModContent.ProjectileType<BloodSpurt>(), Main.rand.Next(10, 20), 5);
+                }
+                AITimer2 = 0;
                 
                 if (AITimer >= 180)
                 {
@@ -225,7 +234,7 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                 {
                     NPC.noTileCollide = false;
                     AITimer2 = 1;
-                    NPC.damage = 15;
+                    NPC.damage = 0;
                     Vector2 vector9 = new Vector2(NPC.position.X + (NPC.width * 0.5f), NPC.position.Y + (NPC.height * 0.5f));
                     float rotation2 = (float)Math.Atan2((vector9.Y) - (player.Center.Y), (vector9.X) - (player.Center.X));
                     NPC.velocity.X = (float)(Math.Cos(rotation2) * 65) * -1;
@@ -244,12 +253,81 @@ namespace Malignant.Content.NPCs.Crimson.Heart
             {
                 //Main.NewText("AI 4");
                 AITimer++;
-                if (AITimer == 1 || AITimer == 100)
-                    
-                    for (int i = 0; i < 3; i++)
+                AITimer++;
+                Vector2 pos = new Vector2(player.position.X, player.position.Y - 100);
+                Vector2 target = pos;
+                Vector2 moveTo = target - NPC.Center;
+                NPC.velocity = (moveTo) * 0.085f;
+                if (AITimer >= 20)
+                {
+                    CameraSystem.ScreenShakeAmount = 2.5f;
+
+                    for (int i = 0; i < 3; i++) //Spike Alert
                     {
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HealingChunk>(), 0, 0, player.whoAmI, 0, 0);
+                        // Get the ground beneath the player
+                        Vector2 playerPos = new Vector2((player.position.X - 30 * i) / 16, (player.position.Y) / 16);
+                        Vector2 playerPos2 = new Vector2((player.position.X + 30 * i) / 16, (player.position.Y) / 16);
+                        Tile tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
+                        while (!tile.HasTile || tile.TileType == TileID.Trees)
+                        {
+                            playerPos.Y += 1;
+                            tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
+                        }
+
+                        Tile tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
+                        while (!tile2.HasTile || tile2.TileType == TileID.Trees)
+                        {
+                            playerPos2.Y += 1;
+                            tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
+                        }
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            if (i == 0)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<MarsHellBoom>(), 28, 2.5f, Main.myPlayer, (int)0f);
+                            }
+                            else
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<MarsHellBoom>(), 28, 2.5f, Main.myPlayer, (int)0f);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<MarsHellBoom>(), 28, 2.5f, Main.myPlayer, (int)0f);
+                            }
+                        }
                     }
+
+                }
+                if (AITimer >= 120)
+                {
+                    for (int i = 0; i < 3; i++) //Spikes
+                    {
+                        Vector2 playerPos = new Vector2((player.position.X - 30 * i) / 16, (player.position.Y) / 16);
+                        Vector2 playerPos2 = new Vector2((player.position.X + 30 * i) / 16, (player.position.Y) / 16);
+                        Tile tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
+                        while (!tile.HasTile || tile.TileType == TileID.Trees)
+                        {
+                            playerPos.Y += 1;
+                            tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
+                        }
+
+                        Tile tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
+                        while (!tile2.HasTile || tile2.TileType == TileID.Trees)
+                        {
+                            playerPos2.Y += 1;
+                            tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
+                        }
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            if (i == 0)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<Spike>(), 28, 2.5f, Main.myPlayer, (int)0f);
+                            }
+                            else
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<Spike>(), 28, 2.5f, Main.myPlayer, (int)0f);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<Spike>(), 28, 2.5f, Main.myPlayer, (int)0f);
+                            }
+                        }
+                    }
+                }
                 NPC.damage = 0;
                 if (AITimer >= 200)
                 {
@@ -285,5 +363,31 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                 Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.CrimsonTorch, 2.5f * hitDirection, -2.5f, 0, default, .34f);
             }
         }
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            if (DrawLinearDash)
+                DrawDashLinear(spriteBatch, npcoldcenter, playeroldcenter, Color.Lerp(Color.White, Color.Red, NPC.ai[2]));
+            return base.PreDraw(spriteBatch, screenPos, drawColor);
+        }
+
+        #region stuff
+        private void DrawDashLinear(SpriteBatch spriteBatch, Vector2 start, Vector2 end, Color color)
+        {
+            Vector2 unit = end - start;
+            unit.Normalize();
+            DrawLine(start, end + unit * 4000, color, spriteBatch);
+        }
+        private void DrawLine(Vector2 start, Vector2 end, Color color, SpriteBatch spriteBatch, float scale = 1)
+        {
+            Vector2 unit = end - start;
+            float length = unit.Length();
+            unit.Normalize();
+            for (int i = 0; i < length; i++)
+            {
+                Vector2 drawpos = start + unit * i - Main.screenPosition;
+                spriteBatch.Draw(ModContent.Request<Texture2D>("Malignant/Assets/Textures/Pixel").Value, drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            }
+        }
+        #endregion
     }
 }
