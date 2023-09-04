@@ -45,7 +45,7 @@ namespace Malignant.Content.NPCs.Crimson.IchorSlammer
 
         public override void SetDefaults()
         {
-            NPC.lifeMax = 100;
+            NPC.lifeMax = 109;
             NPC.damage = 40;
             NPC.defense = 15;
             NPC.knockBackResist = 0f;
