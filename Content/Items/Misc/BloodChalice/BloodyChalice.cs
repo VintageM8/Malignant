@@ -1,6 +1,14 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
+using Malignant.Content.Items.Misc.Titania;
+using Malignant.Content.Projectiles.Prayer;
+using Mono.Cecil;
+using Terraria.DataStructures;
+using Malignant.Content.Items.Crimson.FleshBlazer;
+using System;
+using Terraria.GameContent;
 
 namespace Malignant.Content.Items.Misc.BloodChalice
 {
@@ -8,52 +16,40 @@ namespace Malignant.Content.Items.Misc.BloodChalice
     {
         public override void SetStaticDefaults()
         {
-            //DisplayName.SetDefault("Bloody Chalice");
-            //ooltip.SetDefault("Heals for 200 life but applies a random debuff each use\n Has unlimited uses\n[c/660000:Cursed Items:]");
+
+            Item.staff[Item.type] = true;
         }
 
         public override void SetDefaults()
         {
-            Item.width = 20;
-            Item.height = 26;
-            Item.useStyle = ItemUseStyleID.EatFood;
-            Item.useAnimation = 17;
-            Item.useTime = 17;
-            Item.useTurn = true;
-            Item.UseSound = SoundID.Item3;
-            Item.maxStack = 1;
-            Item.consumable = false;
-            Item.rare = ItemRarityID.Expert;
-            Item.healLife = 220;
-            Item.potion = true;
-            Item.value = Item.sellPrice(0, 4, 0, 0);
+            Item.damage = 1;
+            Item.width = 40;
+            Item.height = 40;
+            Item.mana = 3;
+            Item.useTime = 2;
+            Item.DamageType = DamageClass.Generic;
+            Item.useAnimation = 2;
+            Item.useStyle = 5;
+            Item.knockBack = 10;
+            Item.value = 1000;
+            Item.rare = 2;
+            Item.UseSound = SoundID.Item8;
+            Item.channel = true;
+            Item.noMelee = true;
+            Item.autoReuse = false;
+            Item.useTurn = false;
+            Item.shoot = ProjectileID.BloodArrow;
+            Item.shootSpeed = 14;
         }
-
-        public override void OnConsumeItem(Player player)
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-
-            if (Main.rand.NextBool(5))
             {
-                int buffType = 0;
-                switch (Main.rand.Next(4))
-                {
-                    case 0:
-                        buffType = BuffID.OnFire;
-                        break;
-                    case 1:
-                        buffType = BuffID.Poisoned;
-                        break;
-                    case 2:
-                        buffType = BuffID.Confused;
-                        break;
-                    case 4:
-                        buffType = BuffID.Frostburn;
-                        break;
-                    default:
-                        break;
-                }
-                player.AddBuff(buffType, (int)(60 * Main.rand.NextFloat(2f, 5f)));
+                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<HolyRune>(), Item.damage - 13, Item.knockBack / 2, player.whoAmI);
+
+                Projectile.NewProjectile(source, player.Center, player.Center.DirectionTo(Main.MouseWorld) * 21, ModContent.ProjectileType<HeartThing>(), Item.damage - 13, 45, player.whoAmI);
+                return false;
             }
         }
+
     }
 }

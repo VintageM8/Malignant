@@ -35,6 +35,7 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
             Projectile.tileCollide = false;
             Projectile.penetrate = -1;
             Projectile.scale = 1f;
+            Projectile.DamageType = DamageClass.Ranged;
         }
 
         public override void AI()
@@ -45,7 +46,7 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
             timer++;
             if (timer == 1)
             {
-                Projectile.velocity *= 20;
+                Projectile.velocity *= 8;
             }
             if (timer <= 15)
             {
@@ -96,17 +97,9 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            CameraSystem.ScreenShakeAmount = 5f;
+            CameraSystem.ScreenShakeAmount = 2.5f;
             //SoundEngine.PlaySound(SoundID.DD2_BetsyFireballImpact);
             //Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<MalignantFissionExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
-            for (int i = 0; i < 3; i++)
-            {
-                if (Main.myPlayer == Projectile.owner)
-                {
-                    Vector2 velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-10f, 10f))) * Main.rand.NextFloat(0.8f, 1.1f);
-                    Projectile.NewProjectileDirect(Projectile.GetSource_FromAI(), Projectile.Center, velocity / 4, ModContent.ProjectileType<Crucifix>(), (int)(Projectile.damage * 0.66f), 1f, Projectile.owner);
-                }
-            }
         }
 
         public override bool PreDraw(ref Color lightColor)

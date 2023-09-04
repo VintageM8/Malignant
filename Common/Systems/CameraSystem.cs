@@ -14,7 +14,7 @@ namespace Malignant.Common.Systems
 
         public override void ModifyScreenPosition()
         {
-            Player player = Main.LocalPlayer;           
+            Player player = Main.LocalPlayer;
             if (!Main.gameMenu)
             {
                 ShakeTimer++;
@@ -34,6 +34,24 @@ namespace Malignant.Common.Systems
                 ShakeTimer = 0;
             }
         }
+        float zoomBefore;
+        public static float zoomAmount;
+        public static Vector2 cameraChangeStartPoint;
+        public static Vector2 CameraChangePos;
+        public static float CameraChangeTransition;
+        public static int CameraChangeLength;
+        public static bool isChangingCameraPos;
+        public static void ChangeCameraPos(Vector2 pos, int length, float zoom = 1.65f)
+        {
+            cameraChangeStartPoint = Main.screenPosition;
+            CameraChangeLength = length;
+            CameraChangePos = pos - new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
+            isChangingCameraPos = true;
+            CameraChangeTransition = 0;
+            if (Main.GameZoomTarget < zoom)
+                zoomAmount = zoom;
+        }
+
         public class BossTitleStyleID
         {
             public static readonly int Generic = -1;

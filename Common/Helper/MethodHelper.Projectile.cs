@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Malignant.Common.Helper
 {
     public static partial class MethodHelper
     {
         public static int timer;
-
+        public static bool IsHammer(this Projectile proj) => proj.CountsAsClass(DamageClass.Melee);
         public static float CircleDividedEqually(float i, float max)
         {
             return 2f * (float)Math.PI / max * i;

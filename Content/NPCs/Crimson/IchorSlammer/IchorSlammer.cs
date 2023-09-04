@@ -169,7 +169,8 @@ namespace Malignant.Content.NPCs.Crimson.IchorSlammer
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneOverworldHeight && !Main.dayTime)
+            
+            if (spawnInfo.Player.ZoneCrimson && !Main.dayTime)
                 return 0.15f;
             return 0;
         }

@@ -12,6 +12,7 @@ namespace Malignant.Content.Items.Hell.MarsHell
 {
     public class MarsHell : HeldGunModItem
     {
+        private int cooldown = 0;
         public override (float centerYOffset, float muzzleOffset, Vector2 drawOrigin, Vector2 recoil) HeldProjectileData => (5, 35, new Vector2(11, 11), new Vector2(8, 0.7f));
 
         public override void SetStaticDefaults()
@@ -43,9 +44,19 @@ namespace Malignant.Content.Items.Hell.MarsHell
             Item.channel = true;
         }
 
+        public override void HoldItem(Player Player)
+        {
+            cooldown--;
+        }
+
         private int shotCount;
         public override void ShootGun(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            if (player.altFunctionUse == 2)
+            {
+                cooldown = 130;
+            }
+
             for (int i = 0; i < 6; i++)
             {
                 Vector2 newVelocity = velocity.RotatedByRandom(MathHelper.ToRadians(15f));
@@ -60,15 +71,6 @@ namespace Malignant.Content.Items.Hell.MarsHell
                     knockback,
                     player.whoAmI
                 ).netUpdate = true;
-            }
-
-            if (++shotCount > 4)
-            {
-                {
-                    Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Gernade1>(), damage, knockback, player.whoAmI);
-                }
-
-                shotCount = 0;
             }
         }
 
@@ -95,6 +97,9 @@ namespace Malignant.Content.Items.Hell.MarsHell
                 Item.useTime = 45;
                 Item.useAnimation = 45;
                 Item.shootSpeed = 12f;
+
+                if (cooldown > 0)
+                    return false;
             }
             else
             {

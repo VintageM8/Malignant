@@ -10,6 +10,9 @@ using Terraria.WorldBuilding;
 using Malignant.Core;
 using Mono.Cecil;
 using System.Linq;
+using Malignant.Content.Items.Misc.Titania;
+using static Terraria.ModLoader.ModContent;
+using Malignant.Content.Items.Misc;
 
 namespace Malignant.Common.Systems;
 
@@ -29,11 +32,11 @@ public class MalignantSystem : ModSystem
         {
             progress.Message = "Creating Church(Maligant)";
         }
-        Point Location = FindChurchLoc(progress, out int groundType);
+        Point Location = FindChurchLoc(progress, out int groundType); 
         //no chests
         Chest c = Main.chest[StructureLoader.ReadStruct(Location, "Assets/Structures/Church" , progress)[0]];
-        c.AddItem(ItemID.Wood, 14);
-        c.AddItem(ItemID.Torch, 10);
+        c.AddItem(ItemType<Titania>(), 1);
+        c.AddItem(ItemType<FruitOfTheGarden>(), 1);
         for (int i = -5; i < CHURCH_X_LENGTH + 5; i++) {
             for(int j = 0; j < MAX_H_DIF; j++)
             {

@@ -18,18 +18,20 @@ namespace Malignant.Content.Items.Spider.StaffSpiderEye
 
         public override void SetDefaults()
         {
-            Item.damage = 132;
+            Item.damage = 16;
             Item.DamageType = DamageClass.Magic;
             Item.width = 40;
+            Item.mana = 8;
             Item.height = 40;
-            Item.useTime = 30;
-            Item.useAnimation = 30;
+            Item.useTime = 18;
+            Item.useAnimation = 18;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 0;
             Item.value = Item.sellPrice(silver: 460);
             Item.rare = ItemRarityID.Orange;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
+            Item.shootSpeed = 10f;
             Item.shoot = ModContent.ProjectileType<SpiderEyeProj>();
         }
 
@@ -38,7 +40,6 @@ namespace Malignant.Content.Items.Spider.StaffSpiderEye
             CreateRecipe()
                 .AddIngredient(ItemID.Cobweb, 18)
                 .AddIngredient(ItemID.SpiderFang, 22)
-                .AddIngredient(ItemID.Ectoplasm, 6)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

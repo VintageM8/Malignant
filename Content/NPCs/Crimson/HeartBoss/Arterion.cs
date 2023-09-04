@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Malignant.Content.NPCs.Crimson.HeartBoss.Projectiles;
 using System;
-using Malignant.Content.NPCs.Crimson.Heart;
+using Malignant.Content.NPCs.Crimson.Heart.Projectiles;
 using Malignant.Content.Dusts;
 
 namespace Malignant.Content.NPCs.Crimson.HeartBoss
@@ -267,7 +267,7 @@ namespace Malignant.Content.NPCs.Crimson.HeartBoss
 
                         if (attackTime == 1) //Small Tendrils + Heal 
                         {
-                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HealingChunk>(), 0, 0, player.whoAmI, 0, 0); //Heal
+                            //Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<HealingChunk>(), 0, 0, player.whoAmI, 0, 0); //Heal
 
                             for (int i = 0; i < 3; i++) //Small Tendrails 
                             {

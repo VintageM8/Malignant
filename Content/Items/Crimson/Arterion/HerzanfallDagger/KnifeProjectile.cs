@@ -135,20 +135,23 @@ namespace Malignant.Content.Items.Crimson.Arterion.HerzanfallDagger
             MalignantPlayer modplayer = player.GetModPlayer<MalignantPlayer>();
 
             int itemType = -1;
-            switch (Main.rand.Next(3))
+            if (Proj_State == 5)
             {
-                case 0:
-                    itemType = ModContent.ItemType<Head>();
-                    break;
-                case 1:
-                    itemType = ModContent.ItemType<Head>();
-                    break;
-                default:
-                    itemType = ModContent.ItemType<Head>();
-                    break;
-            }
-            Item.NewItem(player.GetSource_OnHit(target), target.Center, itemType);
+                switch (Main.rand.Next(3))
+                {
+                    case 0:
+                        itemType = ModContent.ItemType<Head>();
+                        break;
+                    case 1:
+                        itemType = ModContent.ItemType<Head>();
+                        break;
+                    default:
+                        itemType = ModContent.ItemType<Head>();
+                        break;
+                }
+                Item.NewItem(player.GetSource_OnHit(target), target.Center, itemType);
 
+            }
             Terraria.Audio.SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Projectile.position);
             for (int i = 0; i < 10; i++)
             {

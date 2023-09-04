@@ -25,7 +25,7 @@ namespace Malignant.Content.Items.Spider.TomeofWebs
             }
             for (int num686 = 0; num686 < 30; num686++)
             {
-                int num687 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Blood, Projectile.velocity.X, Projectile.velocity.Y, 100, default(Color), 1.7f);
+                int num687 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Web, Projectile.velocity.X, Projectile.velocity.Y, 100, default(Color), 1.7f);
                 Main.dust[num687].noGravity = true;
                 Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.VenomStaff, Projectile.velocity.X, Projectile.velocity.Y, 100);
             }
@@ -48,7 +48,7 @@ namespace Malignant.Content.Items.Spider.TomeofWebs
         {
             Dust dust;
             Vector2 position = Projectile.Center;
-            dust = Main.dust[Terraria.Dust.NewDust(position, 20, 20, 5, 0, 0, 0, new Color(255, 255, 255), 0.5f)];
+            dust = Main.dust[Terraria.Dust.NewDust(position, 20, 20, DustID.Web, 0, 0, 0, new Color(255, 255, 255), 0.5f)];
             Projectile.rotation += 0.5f;
             Projectile.velocity *= 0.95f;
         }

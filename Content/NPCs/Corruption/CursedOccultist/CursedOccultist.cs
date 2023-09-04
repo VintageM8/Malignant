@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -40,6 +41,13 @@ namespace Malignant.Content.NPCs.Corruption.CursedOccultist
             NPC.HitSound = SoundID.NPCHit1;
         }
 
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCrimson,
+                new FlavorTextBestiaryInfoElement("These cultests have learnd the ancient and damned magic of the Warlock, becoming his deciples."),
+            });
+        }
 
         public override void SendExtraAI(BinaryWriter writer)
         {

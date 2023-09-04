@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using Malignant.Common.Players;
 using Malignant.Common.Systems;
 using Malignant.Content.Items.Crimson.FleshBlazer;
+using Terraria.Audio;
 
 namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
 {
@@ -41,6 +42,7 @@ namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
 
         public override void Kill(int timeLeft)
         {
+            SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
             CameraSystem.ScreenShakeAmount = 5f;
             Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<CorruptVortex>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 

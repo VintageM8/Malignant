@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System.IO;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -33,6 +34,13 @@ namespace Malignant.Content.NPCs.Corruption.CursedRoller
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = 26;
             AIType = NPCID.Unicorn;
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption,
+                new FlavorTextBestiaryInfoElement("It rolls and shoots fire....watch out"),
+            });
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo) => spawnInfo.Player.ZoneCorrupt && spawnInfo.Player.ZoneOverworldHeight ? .075f : 0f;

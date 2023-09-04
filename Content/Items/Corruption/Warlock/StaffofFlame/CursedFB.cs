@@ -1,4 +1,6 @@
-﻿using Malignant.Content.Items.Crimson.FleshBlazer;
+﻿using Malignant.Common.Helper;
+using Malignant.Content.Dusts;
+using Malignant.Content.Items.Crimson.FleshBlazer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ParticleLibrary;
@@ -12,12 +14,13 @@ namespace Malignant.Content.Items.Corruption.Warlock.StaffofFlame
 {
     public class CursedFB : ModProjectile
     {
+        public override Color? GetAlpha(Color lightColor) => new(255, 255, 255, 100);
+
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Projectile.type] = 4;
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         }
-
-        public override Color? GetAlpha(Color lightColor) => new(255, 255, 255, 100);
 
         public override void SetDefaults()
         {
@@ -40,20 +43,7 @@ namespace Malignant.Content.Items.Corruption.Warlock.StaffofFlame
 
         public override void AI()
         {
-            Vector3 RGB = new Vector3(1.45f, 2.55f, 0.94f);
-            float multiplier = 0.2f;
-            float max = 1f;
-            float min = 0.5f;
-            RGB *= multiplier;
-            if (RGB.X > max)
-            {
-                multiplier = 0.3f;
-            }
-            if (RGB.X < min)
-            {
-                multiplier = 0.6f;
-            }
-            Lighting.AddLight(Projectile.position, RGB.X, RGB.Y, RGB.Z);
+           
 
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
@@ -61,25 +51,8 @@ namespace Malignant.Content.Items.Corruption.Warlock.StaffofFlame
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
             Projectile.velocity *= 0.98f;
 
-            Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Water, new Vector2(Main.rand.NextFloat(-0.2f, 0.2f)), 0, default, 1f);
+            Dust dust = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<Smoke>(), new Vector2(Main.rand.NextFloat(-0.2f, 0.2f)), 0, default, 1f);
             dust.noGravity = true;
-
-            if (initilize)
-            {
-                int numberDust = 10;
-
-                SoundEngine.PlaySound(SoundID.Waterfall, Projectile.Center);
-
-                for (int i = 0; i < numberDust; i++)
-                {
-                    Vector2 speed = Main.rand.NextVector2Circular(1f, 1f);
-
-                    dust = Dust.NewDustPerfect(Projectile.Center, DustID.CursedTorch, speed * 5, 0, default, 1f);
-                    dust.noGravity = true;
-                }
-
-                initilize = false;
-            }
 
             Vector2 move = Vector2.Zero;
             float distance = 200f;
@@ -133,14 +106,71 @@ namespace Malignant.Content.Items.Corruption.Warlock.StaffofFlame
                Projectile.knockBack * player.ownedProjectileCounts[Projectile.type], Projectile.owner);
 
             Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<CursedFBExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
-            ParticleManager.NewParticle(Projectile.Center, dir * Main.rand.NextFloat(10, 25), ParticleManager.NewInstance<StarParticle>(), new Color(0.50f, 2f, 0.5f, 0), 0.3f, Projectile.whoAmI, Layer: Particle.Layer.BeforeNPCs);
+
+            for (int i = 0; i < 10; i++)
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(16, 16), 0, 0, DustID.CursedTorch);
+                dust.velocity = Main.rand.NextVector2Circular(10, 10);
+                dust.scale = Main.rand.NextFloat(1.5f, 1.9f);
+                dust.alpha = 70 + Main.rand.Next(60);
+                dust.rotation = Main.rand.NextFloat(6.28f);
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(16, 16), 0, 0, DustID.CursedTorch);
+                dust.velocity = Main.rand.NextVector2Circular(10, 10);
+                dust.scale = Main.rand.NextFloat(1.5f, 1.9f);
+                dust.alpha = Main.rand.Next(80) + 40;
+                dust.rotation = Main.rand.NextFloat(6.28f);
+
+                Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(25, 25), DustID.CursedTorch).scale = 0.9f;
+            }
 
 
             if (player.altFunctionUse == 2)
             {
+                SoundEngine.PlaySound(SoundID.DD2_BetsyFireballImpact, Projectile.Center);
+
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, Vector2.Zero, ProjectileID.CursedFlameFriendly, Projectile.damage + player.ownedProjectileCounts[Projectile.type] * 2,
                Projectile.knockBack * player.ownedProjectileCounts[Projectile.type], Projectile.owner);
             }
+        }
+
+        public Trail trail;
+        public Trail trail2;
+        private bool initialized;
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+
+            Texture2D trailTexture = ModContent.Request<Texture2D>("Malignant/Assets/Textures/Trails/Stretched").Value;
+
+            if (trail == null)
+            {
+                trail = new Trail(trailTexture, Trail.DefaultPass, (p) => new Vector2(40f), (p) => Projectile.GetAlpha(new Color(50, 205, 50, 100)));
+                trail.drawOffset = Projectile.Size / 2f;
+            }
+            if (trail2 == null)
+            {
+                trail2 = new Trail(trailTexture, Trail.DefaultPass, (p) => new Vector2(15f), (p) => Projectile.GetAlpha(new Color(255, 255, 255, 100)));
+                trail2.drawOffset = Projectile.Size / 2f;
+            }
+
+            trail.Draw(Projectile.oldPos);
+            trail2.Draw(Projectile.oldPos);
+            Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
+
+            int frameHeight = texture.Height / Main.projFrames[Projectile.type];
+            int frameY = frameHeight * Projectile.frame;
+
+            Rectangle sourceRectangle = new Rectangle(0, frameY, texture.Width, frameHeight);
+            Vector2 origin = sourceRectangle.Size() / 2f;
+            Vector2 position = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
+            Color color = Projectile.GetAlpha(lightColor);
+
+            Main.EntitySpriteDraw(texture, position, sourceRectangle, color, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0);
+            return false;
+
         }
 
         public class CursedFBExplosion : ModProjectile

@@ -7,13 +7,32 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Malignant.Content.NPCs.Crimson.Heart;
+using Malignant.Common.Systems;
+using Malignant.Content.Items.Hell.MarsHell;
 
 namespace Malignant.Content.NPCs.Crimson.FlyingHeart
 {
     public class FlyingHeart : ModNPC
     {
-        int frame = 0;
-        private float hitDirection;
+        enum StateID
+        {
+            Spawn,
+            Floating,
+            GroundPound,
+            HitGround,
+        };
+
+        StateID state = StateID.Spawn;
+
+        float counter;
+
+        float timer;
+
+        float heightMod = 1f;
+
+        float widthMod = 1f;
+
+        float maxVelocity = 5f;
 
         public override void SetStaticDefaults()
         {
@@ -66,138 +85,97 @@ namespace Malignant.Content.NPCs.Crimson.FlyingHeart
 
         public override void AI()
         {
-            NPC.rotation = NPC.velocity.X * .08f;
-            bool expertMode = Main.expertMode;
-            float velMax = 1f;
-            float acceleration = 0.011f;
+            Player player = Main.player[NPC.target];
+
+            if (state == StateID.Spawn)
+            {
+                state = StateID.Floating;
+            }
+
             NPC.TargetClosest(true);
-            Vector2 center = NPC.Center;
-            float deltaX = Main.player[NPC.target].position.X + (Main.player[NPC.target].width / 2) - center.X;
-            float deltaY = Main.player[NPC.target].position.Y + (Main.player[NPC.target].height / 2) - center.Y;
-            float distance = NPC.Distance(Main.player[NPC.target].Center);
-            NPC.ai[1] += 1f;
+            //Lighting.AddLight(NPC.Center, new Color(241, 212, 62).ToVector3() * 0.5f);
 
-            if (distance < 240)
+            if (state == StateID.GroundPound)
             {
-                if (NPC.ai[1] >= 120 && NPC.ai[1] <= 180)
-                {
-                    if (Main.rand.NextBool(10) && Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        SoundEngine.PlaySound(SoundID.Item34, NPC.Center);
-                        Vector2 direction = Main.player[NPC.target].Center - NPC.Center;
-                        direction.Normalize();
-                        direction.X *= 11.5f;
-                        direction.Y *= 8;
-                        int damage = expertMode ? 11 : 13;
-                        int vomit = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y + 4, direction.X, direction.Y + Main.rand.NextFloat(-.5f, .5f), ModContent.ProjectileType<BloodSpurt>(), damage, 1, Main.myPlayer, 0, 0);
-                        Main.projectile[vomit].netUpdate = true;
-                        NPC.netUpdate = true;
-                    }
-                }
-            }
-
-            if (Main.rand.NextFloat() < 0.131579f)
-            {
-                int d = Dust.NewDust(NPC.position, NPC.width, NPC.height + 10, DustID.Blood, 0, 1f, 0, new Color(), 0.7f);
-                Main.dust[d].velocity *= .1f;
-            }
-
-            if (NPC.ai[1] == 120 && distance < 240)
-            {
-                SoundEngine.PlaySound(SoundID.NPCDeath13, NPC.Center);
-                SoundEngine.PlaySound(SoundID.Zombie40, NPC.Center);
-            }
-
-            if (NPC.ai[1] > 40 && NPC.ai[1] < 180)
-            {
-                if (distance < 240)
-                {
-                    float num395 = Main.mouseTextColor / 200f - 0.25f;
-                    num395 *= 0.2f;
-                    NPC.scale = num395 + 0.95f;
-                }
-            }
-
-            if (NPC.ai[1] > 200.0)
-            {
-                if (NPC.ai[1] > 300.0)
-                    NPC.ai[1] = 0f;
-            }
-            else if (distance < 120.0)
-            {
-                NPC.ai[0] += 0.9f;
-
-                if (NPC.ai[0] > 0f)
-                    NPC.velocity.Y = NPC.velocity.Y + 0.039f;
-                else
-                    NPC.velocity.Y = NPC.velocity.Y - 0.019f;
-
-                if (NPC.ai[0] < -100f || NPC.ai[0] > 100f)
-                    NPC.velocity.X = NPC.velocity.X + 0.029f;
-                else
-                    NPC.velocity.X = NPC.velocity.X - 0.029f;
-
-                if (NPC.ai[0] > 25f)
-                    NPC.ai[0] = -200f;
-            }
-
-            if (Main.rand.NextBool(30) && Main.netMode != NetmodeID.MultiplayerClient)
-            {
-                if (Main.rand.NextBool(2))
-                    NPC.velocity.Y = NPC.velocity.Y + 0.439f;
-                else
-                    NPC.velocity.Y = NPC.velocity.Y - 0.419f;
-                NPC.netUpdate = true;
-            }
-
-            if (distance > 350.0)
-            {
-                velMax = 5f;
-                acceleration = 0.2f;
-            }
-            else if (distance > 300.0)
-            {
-                velMax = 3f;
-                acceleration = 0.25f;
-            }
-            else if (distance > 250.0)
-            {
-                velMax = 2.5f;
-                acceleration = 0.13f;
-            }
-
-            if (distance > 500)
-                NPC.noTileCollide = true;
-            else
                 NPC.noTileCollide = false;
+                NPC.damage = 100;
 
-            float stepRatio = velMax / distance;
-            float velLimitX = deltaX * stepRatio;
-            float velLimitY = deltaY * stepRatio;
+                NPC.velocity.X *= 0.7f;
+                NPC.velocity.Y += 0.5f;
 
-            if (Main.player[NPC.target].dead)
-            {
-                velLimitX = (float)((NPC.direction * velMax) / 2.0);
-                velLimitY = (float)((-velMax) / 2.0);
+
+                if (NPC.velocity.Y >= 0f)
+                {
+                    heightMod = 1f + (NPC.velocity.Length() * 0.1f);
+                    widthMod = 1f - (NPC.velocity.Length() * 0.1f);
+                }
+
+                if (heightMod >= 2f)
+                {
+                    heightMod = 2f;
+                }
+
+                if (widthMod <= 0.5f)
+                {
+                    widthMod = 0.5f;
+                }
+
+                if (NPC.collideY)
+                {
+                    state = StateID.HitGround;
+                    SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, NPC.Center);
+                }
             }
 
-            if (NPC.velocity.X < velLimitX)
-                NPC.velocity.X = NPC.velocity.X + acceleration;
-            else if (NPC.velocity.X > velLimitX)
-                NPC.velocity.X = NPC.velocity.X - acceleration;
+            if (state == StateID.Floating)
+            {
+                NPC.noTileCollide = true;
+                NPC.damage = 0;
 
-            if (NPC.velocity.Y < velLimitY)
-                NPC.velocity.Y = NPC.velocity.Y + acceleration;
-            else if (NPC.velocity.Y > velLimitY)
-                NPC.velocity.Y = NPC.velocity.Y - acceleration;
-            NPC.spriteDirection = -NPC.direction;
-        }
-        
+                NPC.spriteDirection = NPC.direction;
 
-        public override void HitEffect(NPC.HitInfo hit)
-        {
-            for (int k = 0; k < 23; k++)
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, hitDirection * 1.5f, -1f, 0, default, .91f);
+                NPC.velocity += ((player.Center + new Vector2(0, -200)) - NPC.Center) * 0.02f;
+
+                if (Math.Abs(NPC.velocity.X) >= maxVelocity)
+                {
+                    NPC.velocity.X = maxVelocity * Math.Sign(NPC.velocity.X);
+                }
+
+                if (Math.Abs(NPC.velocity.Y) >= maxVelocity)
+                {
+                    NPC.velocity.Y = maxVelocity * Math.Sign(NPC.velocity.Y);
+                }
+
+                NPC.ai[0]++;
+
+                if (NPC.ai[0] >= 60f)
+                {
+                    NPC.velocity.Y -= 5f;
+                    NPC.ai[0] = 0f;
+
+
+                    SoundEngine.PlaySound(SoundID.DD2_WyvernDiveDown, NPC.Center);
+                    state = StateID.GroundPound;
+
+                }
+
+                if (NPC.Distance(player.Center) >= 300f)
+                {
+                    NPC.ai[0] = 0f;
+                }
+            }
+
+            if (state == StateID.HitGround)
+            {
+                CameraSystem.ScreenShakeAmount = 3f;
+
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<MarsHellBoom>(), 0, 1f, Main.myPlayer);
+                widthMod = 2f;
+                heightMod = 0.5f;
+
+                state = StateID.Floating;
+
+            }
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)

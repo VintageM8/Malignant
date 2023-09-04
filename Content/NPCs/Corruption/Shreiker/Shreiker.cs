@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria.Utilities;
+using Terraria.GameContent.Bestiary;
 
 namespace Malignant.Content.NPCs.Corruption.Shreiker
 {
@@ -29,6 +30,14 @@ namespace Malignant.Content.NPCs.Corruption.Shreiker
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0f;
             NPC.lavaImmune = true;
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption,
+                new FlavorTextBestiaryInfoElement("Once a fallower of Our Lord, now a lifeliss husk that lurks around Terraria, mf cant even get a job."),
+            });
         }
 
         int frame = 0;

@@ -46,8 +46,8 @@ namespace Malignant.Content.Items.Crimson.FleshBlazer
 
         public override void Kill(int timeLeft)
         {
+            SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
             CameraSystem.ScreenShakeAmount = 5f;
-            //SoundEngine.PlaySound(new SoundStyle("Regressus/Sounds/Custom/FireHit"));
             Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<MalignantFissionExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
             for (int k = 0; k < 20; k++)

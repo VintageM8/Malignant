@@ -4,6 +4,8 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.DataStructures;
 using Malignant.Common.Players;
+using Malignant.Content.Buffs;
+using Malignant.Content.Items.Crimson.FleshBlazer;
 
 namespace Malignant.Content.Items.Misc.CrucifixConstructer
 {
@@ -13,8 +15,8 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
         {
             //DisplayName.SetDefault("Crucifix Constructer");
             //Tooltip.SetDefault("[c/eeff00f:Combo Weapon:] Hammer slams down then gets thrown at the nearest foe " +
-                //"\nHas chance to stick crucifixs in your foe" +
-                //"\nEach time the thrown hammer hits a crucifix, the crucifix deals damage.");
+            //"\nHas chance to stick crucifixs in your foe" +
+            //"\nEach time the thrown hammer hits a crucifix, the crucifix deals damage.");
         }
 
         public int AttackCounter = 1;
@@ -25,8 +27,8 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
             Item.DamageType = DamageClass.Melee;
             Item.width = 0;
             Item.height = 0;
-            Item.useAnimation = 7;
-            Item.useTime = 7;
+            Item.useAnimation = 30;
+            Item.useTime = 30;
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.knockBack = 4;
             Item.value = 10000;
@@ -34,38 +36,51 @@ namespace Malignant.Content.Items.Misc.CrucifixConstructer
             Item.rare = ItemRarityID.Yellow;
 
             Item.UseSound = SoundID.Item1;
-            Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<HammerSlam>();
-            Item.shootSpeed = 12f;
+            Item.autoReuse = false;
+            Item.shoot = ModContent.ProjectileType<HammerThrow>();
+            Item.shootSpeed = 10f;
             Item.noUseGraphic = true;
             Item.value = Item.sellPrice(0, 4, 0, 0);
         }
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            int dir = AttackCounter;
-            AttackCounter = -AttackCounter;
 
-            player.GetModPlayer<MalignantPlayer>().itemCombo++;
-            player.GetModPlayer<MalignantPlayer>().itemComboReset = 600;
-            if (player.GetModPlayer<MalignantPlayer>().itemCombo <= 2 || player.GetModPlayer<MalignantPlayer>().itemCombo == 9)
+            if (player.altFunctionUse == 2)
             {
-                Item.UseSound = SoundID.Item1;
-                Projectile.NewProjectile(null, position, velocity * 12, ModContent.ProjectileType<HammerSlam>(), damage, knockback, player.whoAmI, 1, dir);
-
-
+                Vector2 dir = Vector2.Normalize(velocity) * 9;
+                velocity = dir;
+                for (int i = 0; i < 5; i++)
+                {
+                    type = ModContent.ProjectileType<Crucifix>();
+                }
             }
-            if (player.GetModPlayer<MalignantPlayer>().itemCombo == 4)
-            {
-                Projectile.NewProjectile(null, position, velocity / 5, ModContent.ProjectileType<HammerThrow>(), damage, knockback, player.whoAmI);
-                Item.UseSound = SoundID.Item1;
-                player.GetModPlayer<MalignantPlayer>().itemCombo = 0;
 
-            }
         }
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+
+        public override bool CanUseItem(Player Player)
         {
-            return false;
+            if (Player.altFunctionUse == 2)
+            {
+                Item.useStyle = ItemUseStyleID.Swing;
+                Item.useTime = 15;
+                Item.useAnimation = 15;
+                Item.shootSpeed = 10f;
+            }
+            else
+            {
+                Item.useTime = 30;
+                Item.useAnimation = 30;
+                Item.useStyle = ItemUseStyleID.Shoot;
+                Item.shootSpeed = 10f;
+            }
+
+            return base.CanUseItem(Player);
+        }
+
+        public override bool AltFunctionUse(Player Player)
+        {
+            return true;
         }
     }
 }

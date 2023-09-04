@@ -46,9 +46,9 @@ namespace Malignant.Content.Items.Corruption.Warlock.NightsisterBlade
         }
         public override bool CanUseItem(Player player)
         {
-            
+        
+            return player.ownedProjectileCounts[Item.shoot] < 6;
 
-            return true;
         }
     }
 }

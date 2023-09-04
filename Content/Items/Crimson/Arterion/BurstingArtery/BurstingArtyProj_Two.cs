@@ -49,8 +49,7 @@ namespace Malignant.Content.Items.Crimson.Arterion.BurstingArtery
                 Dust.NewDustPerfect(Projectile.Center + new Vector2(0f, 28f), DustID.CrimsonTorch, vel, 0, new Color(255, 255, 60) * 0.8f, 0.95f);
 
                 Dust.NewDustPerfect(Projectile.Center, DustID.CrimsonTorch, vel * 1.2f, 0, new Color(150, 80, 40), Main.rand.NextFloat(0.2f, 0.4f));
-            }
-            SoundEngine.PlaySound(SoundID.NPCHit4.WithPitchOffset(Main.rand.NextFloat(-0.1f, 0.1f)).WithVolumeScale(0.5f), Projectile.position);
+            }          
         }
     }
 }

@@ -11,15 +11,15 @@ using Terraria.GameContent.ItemDropRules;
 using Malignant.Content.NPCs.Crimson.HeartBoss.Projectiles;
 using Malignant.Content.Projectiles.Enemy;
 using Malignant.Content.Items.Hell.MarsHell;
+using System.IO;
+using Terraria.Audio;
+using Terraria.Utilities;
+using Malignant.Core;
 
 namespace Malignant.Content.NPCs.Crimson.Heart
 {
     public class HeartMan : ModNPC //its not even a man lol
     {
-        Vector2 meowBitch;
-        bool DrawLinearDash = false;
-        Vector2 playeroldcenter;
-        Vector2 npcoldcenter;
         public override void SetStaticDefaults()
         {
             //DisplayName.SetDefault("Viscera");
@@ -54,13 +54,38 @@ namespace Malignant.Content.NPCs.Crimson.Heart
 
         }
 
-        private const int Intro = 0;
-        private const int Dash = 0;
-        private const int BloodBurst = 1;
-        private const int BloodRain = 2;
-        private const int Heal = 3;
-
-        int difficulty;
+        float deathAlpha;
+        bool ded;
+        Vector2 pointOfInterest;
+        public float dustNum = 0;
+        public float dustHeight = -40;
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.WriteVector2(pointOfInterest);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            pointOfInterest = reader.ReadVector2();
+        }
+        public override bool CheckDead()
+        {
+            if (NPC.life <= 0 && !ded)
+            {
+                NPC.life = 1;
+                AIState = Death;
+                NPC.frameCounter = 0;
+                NPC.immortal = true;
+                NPC.dontTakeDamage = true;
+                //CameraSystem.ChangeCameraPos(NPC.Center, 300);
+                CameraSystem.ScreenShakeAmount = 20;
+                ded = true;
+                AITimer = AITimer2 = 0;
+                NPC.velocity = Vector2.Zero;
+                NPC.life = 1;
+                return false;
+            }
+            return true;
+        }
         public float AIState
         {
             get => NPC.ai[0];
@@ -76,318 +101,219 @@ namespace Malignant.Content.NPCs.Crimson.Heart
             get => NPC.ai[2];
             set => NPC.ai[2] = value;
         }
-
-        float alpha = 1;
+        public float AITimer3
+        {
+            get => NPC.ai[3];
+            set => NPC.ai[3] = value;
+        }
+        const int Death = -1, Spawn = 0, Idle = 1, FlameThrower = 2, RocksAtPlayer = 3, RockFall = 4, RandomLasers = 5, SpinDash = 6, RepeatedBanging = 7;
+        Vector2 lastPos;
+        //SoundStyle summon = new("EbonianMod/Sounds/ExolSummon");
+        /*SoundStyle roar = new("EbonianMod/Sounds/ExolRoar")
+        {
+            PitchVariance = 0.25f,
+        };*/
         public override void AI()
         {
             Player player = Main.player[NPC.target];
-            if (!player.active || player.dead)
-                NPC.timeLeft = 2;
-            if (NPC.life < 100)
+            NPC.TargetClosest(false);
+            if (player.dead || !player.active || !player.ZoneCrimson)
             {
-                alpha = Utils.GetLerpValue(0, 100, NPC.life);
-            }
-            NPC.spriteDirection = NPC.direction;
-            bool expertMode = Main.expertMode;
-
-            Lighting.AddLight((int)(NPC.Center.X / 16f), (int)(NPC.Center.Y / 16f), 0.122f, .5f, .48f);
-
-            if (AIState == Dash)
-            {
-                //Main.NewText("AI 1");
-
-                NPC.damage = 0;
-                if (++AITimer2 == 30)
+                NPC.TargetClosest(false);
+                player = Main.player[NPC.target];
+                if (NPC.HasValidTarget)
                 {
-                    Vector2 pos = new Vector2(player.position.X, player.position.Y - 335);
-                    Vector2 target = pos;
-                    Vector2 moveTo = target - NPC.Center;
-                    NPC.velocity = (moveTo) * 0.18f;
-
-                }
-                if (AITimer2 == 30)
-                {
-                    meowBitch = player.Center;
-                    NPC.velocity = Vector2.Zero;
-                    Vector2 vector16 = NPC.DirectionTo(player.Center) * 7f;
-                    DrawLinearDash = true;
-                }
-                if (AITimer2 == 90)
-                {
-                    if (player.direction != NPC.direction)
-                    {
-                        NPC.velocity = Vector2.Zero;
-                        Vector2 vector16 = NPC.DirectionTo(player.Center) * 7f;
-                        for (float i = (-9); i <= 9; i++)
-                        {
-
-                            Projectile projectile = Main.projectile[Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, 9.5f * Utils.RotatedBy(NPC.DirectionTo(meowBitch), (double)(MathHelper.ToRadians(32.5f) * (float)i), default(Vector2)), ModContent.ProjectileType<BloodBlister>(), 20, 1f, Main.myPlayer)];
-                            projectile.tileCollide = false;
-                            projectile.friendly = false;
-                            projectile.hostile = true;
-                            projectile.ai[1] = 0.7f;
-                            projectile.timeLeft = 230;
-                        }
-
-                        AITimer++;
-                        AITimer2 = 0;
-                        NPC.ai[3] = 0;
-                    }
-                    else
-                    {
-                        Terraria.Audio.SoundStyle ae = new Terraria.Audio.SoundStyle("Malignant/Assets/SFX/HeartbeatFx")
-                        {
-                            Pitch = -0.5f
-                        };
-                        Terraria.Audio.SoundEngine.PlaySound(ae);
-                    }
-                }
-                if (AITimer2 >= 205)
-                {
-                    NPC.damage = 0;
-                    AITimer++;
-                    AITimer2 = 0;
-                    NPC.ai[3] = 0;
-
-                }
-                if (AITimer2 > 90)
-                {
-                    NPC.ai[3] = (float)Math.Sin((double)((AITimer2 - 90) / 115)) * 2;
-                }
-                if (AITimer == 2)
-                {
+                    AIState = Spawn;
                     AITimer = 0;
-                    AITimer2 = 0;
-                    NPC.ai[3] = 0;
-                    AIState = BloodBurst;
                 }
+                if (player.dead || !player.active || !player.ZoneCrimson)
+                {
+                    NPC.velocity.Y = 30;
+                    NPC.timeLeft = 10;
+                    NPC.active = false;
+                }
+                return;
             }
-            else if (AIState == BloodBurst)
+            if (Main.rand.NextBool(5))
+                /*if (NPC.life < NPC.lifeMax / 4) To do later on
+                {
+                    Helper.DustExplosion(NPC.Center, Vector2.One, 2, Color.Gray * 0.45f, false, false, 0.6f, 0.5f, new(Main.rand.NextFloat(-4, 4), -10));
+                }
+                else if (NPC.life < NPC.lifeMax / 3)
+                {
+                    Helper.DustExplosion(NPC.Center, Vector2.One, 2, Color.Gray * 0.35f, false, false, 0.4f, 0.5f, -Vector2.UnitY * Main.rand.NextFloat(6, 8));
+                }
+                else if (NPC.life < NPC.lifeMax / 2)
+                {
+                    Helper.DustExplosion(NPC.Center, Vector2.One, 2, Color.Gray * 0.25f, false, false, 0.2f, 0.5f, -Vector2.UnitY * Main.rand.NextFloat(4, 8));
+                }*/
+
+            if (AIState == Death)
             {
-                //Main.NewText("AI 2");
-                AITimer++;
-                Vector2 pos = new Vector2(player.position.X, player.position.Y - 100);
-                Vector2 target = pos;
-                Vector2 moveTo = target - NPC.Center;
-                NPC.velocity = (moveTo) * 0.055f;
-                if (AITimer >= 20)
-                {
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<MarsHellBoom>(), 0, 1f, Main.myPlayer);
-                }
-                if (AITimer >= 30)
-                {
-                    Projectile.NewProjectile(null, new Vector2(NPC.Center.X, NPC.Center.Y + 10), new Vector2(-2, 5), ModContent.ProjectileType<BloodSpurt>(), Main.rand.Next(10, 20), 5);
-                    Projectile.NewProjectile(null, new Vector2(NPC.Center.X, NPC.Center.Y + 10), new Vector2(0, 5), ModContent.ProjectileType<BloodSpurt>(), Main.rand.Next(10, 20), 5);
-                    Projectile.NewProjectile(null, new Vector2(NPC.Center.X, NPC.Center.Y + 10), new Vector2(2, 5), ModContent.ProjectileType<BloodSpurt>(), Main.rand.Next(10, 20), 5);
-                }
-                AITimer2 = 0;
                 
-                if (AITimer >= 180)
-                {
-                    AITimer = 0;
-                    AITimer2 = 0;
-                    NPC.ai[3] = 0;
-                    AIState = BloodRain;
-                    NPC.velocity = Vector2.Zero;
-                }
             }
-            else if (AIState == BloodRain)
+            else if (AIState == Spawn) //This doesnt work for some reason
             {
-                //Main.NewText("AI 3");
                 AITimer++;
                 if (AITimer == 1)
                 {
-                    NPC.ai[3] = 1;
+                    CameraSystem.SetBossTitle(180, "Viscera, Primal Hunter", Color.Crimson);
+                        CameraSystem.ChangeCameraPos(NPC.Center, 180);
+                        dustHeight += 0.2f;
+                        dustNum += 0.020f;
+                        for (int i = 0; i < dustNum; i++)
+                        {
+                            Vector2 speed = Main.rand.NextVector2CircularEdge(1f, 1f);
+                            Dust d = Dust.NewDustPerfect(new Vector2(NPC.Center.X, NPC.Center.Y - dustHeight), DustID.BlueCrystalShard, speed * 10);
+                            d.noGravity = true;
+                        }
+                        //SoundEngine.PlaySound(summon);
+                        CameraSystem.ScreenShakeAmount = 15f;
                 }
-                else if (AITimer == 101)
+                if (AITimer >= 30)
                 {
-                    NPC.ai[3] = -1;
-                }
-                if (AITimer == 100)
-                {
-                    AITimer2 = 2;
-                }
-                if (AITimer2 == 0)
-                {
-                    NPC.velocity = Vector2.Zero;
-                    NPC.Center = Vector2.Lerp(NPC.Center, player.Center + Vector2.UnitX * 340 * NPC.ai[3], 0.035f);
-                }
-                if (AITimer2 == 3)
-                {
-                    AITimer++;
-                    Vector2 rainPos = new Vector2(Main.screenPosition.X + Main.screenWidth * Main.rand.NextFloat(), Main.screenPosition.Y);
-                    if (AITimer % 5 == 0)
-                    {
-                        Projectile p = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), rainPos, Vector2.UnitY * 10, ModContent.ProjectileType<BloodBlister>(), 25, 1);
-
-                    }
-                }
-                if (AITimer2 == 1 || AITimer2 == 3)
-                    NPC.direction = NPC.velocity.X > 1 ? 1 : -1;
-                if (NPC.collideX && AITimer2 == 1)
-                {
-                    CameraSystem.ScreenShakeAmount = 8;
-                    NPC.velocity = Vector2.Zero;
-                    AITimer2 = 3;
-                }
-                if (AITimer2 == 2)
-                {
-                    NPC.noTileCollide = false;
-                    AITimer2 = 1;
-                    NPC.damage = 0;
-                    Vector2 vector9 = new Vector2(NPC.position.X + (NPC.width * 0.5f), NPC.position.Y + (NPC.height * 0.5f));
-                    float rotation2 = (float)Math.Atan2((vector9.Y) - (player.Center.Y), (vector9.X) - (player.Center.X));
-                    NPC.velocity.X = (float)(Math.Cos(rotation2) * 65) * -1;
-                }
-                if (AITimer >= 200)
-                {
-                    NPC.noTileCollide = true;
-                    AIState = Heal;
-                    NPC.aiStyle = 0;
                     AITimer = 0;
-                    AITimer2 = 0;
-                    NPC.ai[3] = 0;
+                    AIState = FlameThrower;
                 }
             }
-            else if (AIState == Heal)
+            else if (AIState == FlameThrower)
             {
-                //Main.NewText("AI 4");
+                NPC.damage = 0;
                 AITimer++;
+                if (AITimer == 1)
+                {
+                    CameraSystem.ScreenShakeAmount = 5f;
+                    //SoundEngine.PlaySound(roar);
+                }
+                if (AITimer < 30)
+                {
+                    Vector2 pos = new Vector2(player.position.X, player.position.Y - 100);
+                    Vector2 target = pos;
+                    Vector2 moveTo = target - NPC.Center;
+                    NPC.velocity = (moveTo) * 0.18f;
+                }
+                if (AITimer == 30)
+                {
+                    lastPos = player.Center;
+                    NPC.velocity = Vector2.Zero;
+                    Vector2 vector16 = NPC.DirectionTo(player.Center) * 7f;
+                }
+                if (AITimer == 60)
+                {
+                    NPC.velocity = Vector2.Zero;
+                        float rotation = MathHelper.ToRadians(45);
+                        Terraria.Audio.SoundEngine.PlaySound(SoundID.Item9);
+                        Vector2 pos = NPC.Center - Vector2.UnitY * 23;
+                        for (int i = 0; i < 2; i++)
+                        {
+                            Vector2 perturbedSpeed = (Utility.FromAToB(NPC.Center, player.Center) * 9.5f).RotatedBy(Main.rand.NextFloat(-rotation, rotation));
+                            Vector2 perturbedSpeed1 = (Utility.FromAToB(NPC.Center, player.Center) * 9.5f).RotatedBy(Main.rand.NextFloat(-rotation, rotation));
+                            perturbedSpeed1.Normalize();
+
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, perturbedSpeed, ModContent.ProjectileType<BloodBlister>(), 15, 1.5f, player.whoAmI);
+                        }
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, Utility.FromAToB(NPC.Center, player.Center) * 9.5f, ModContent.ProjectileType<BloodBlister>(), 15, 1.5f, player.whoAmI);
+
+
+
+                    }
+
+                    if (AITimer >= 100)
+                {
+                    NPC.rotation = 0;
+                    NPC.velocity.X = 0;
+                    NPC.velocity.Y = 0;
+                    AITimer = 0;
+                    AITimer2 = 0;
+                    AITimer3 = 0;
+                    AIState = RocksAtPlayer;
+                }
+            }
+            else if (AIState == RocksAtPlayer)
+            {
                 AITimer++;
-                Vector2 pos = new Vector2(player.position.X, player.position.Y - 100);
+                if (AITimer == 1)
+                    SoundEngine.PlaySound(SoundID.Roar);
+                Vector2 pos = new Vector2(player.position.X, player.position.Y - 335);
                 Vector2 target = pos;
                 Vector2 moveTo = target - NPC.Center;
-                NPC.velocity = (moveTo) * 0.085f;
-                if (AITimer >= 20)
+                NPC.velocity = (moveTo) * 0.18f;
+
+                if (AITimer < 100 && AITimer % 20 == 0)
                 {
-                    CameraSystem.ScreenShakeAmount = 2.5f;
-
-                    for (int i = 0; i < 3; i++) //Spike Alert
-                    {
-                        // Get the ground beneath the player
-                        Vector2 playerPos = new Vector2((player.position.X - 30 * i) / 16, (player.position.Y) / 16);
-                        Vector2 playerPos2 = new Vector2((player.position.X + 30 * i) / 16, (player.position.Y) / 16);
-                        Tile tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
-                        while (!tile.HasTile || tile.TileType == TileID.Trees)
+                        for (int i = 0; i < 3; i++) //Tendrails 
                         {
-                            playerPos.Y += 1;
-                            tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
-                        }
-
-                        Tile tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
-                        while (!tile2.HasTile || tile2.TileType == TileID.Trees)
-                        {
-                            playerPos2.Y += 1;
-                            tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
-                        }
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            if (i == 0)
+                            // Get the ground beneath the player
+                            Vector2 playerPos = new Vector2((player.position.X - 30 * i) / 16, (player.position.Y) / 16);
+                            Vector2 playerPos2 = new Vector2((player.position.X + 30 * i) / 16, (player.position.Y) / 16);
+                            Tile tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
+                            while (!tile.HasTile || tile.TileType == TileID.Trees)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<MarsHellBoom>(), 28, 2.5f, Main.myPlayer, (int)0f);
+                                playerPos.Y += 1;
+                                tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
                             }
-                            else
+
+                            Tile tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
+                            while (!tile2.HasTile || tile2.TileType == TileID.Trees)
                             {
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<MarsHellBoom>(), 28, 2.5f, Main.myPlayer, (int)0f);
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<MarsHellBoom>(), 28, 2.5f, Main.myPlayer, (int)0f);
+                                playerPos2.Y += 1;
+                                tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
+                            }
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                if (i == 0)
+                                {
+                                    //Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<MarsHellBoom>(), 28, 2.5f, Main.myPlayer, (int)0f);
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<Spike>(), 28, 2.5f, Main.myPlayer, (int)0f);
+                                }
+                                else
+                                {
+                                    //Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<MarsHellBoom>(), 28, 2.5f, Main.myPlayer, (int)0f);
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<Spike>(), 28, 2.5f, Main.myPlayer, (int)0f);
+                                    //Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<MarsHellBoom>(), 28, 2.5f, Main.myPlayer, (int)0f);
+                                    Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<Spike>(), 28, 2.5f, Main.myPlayer, (int)0f);
+                                }
                             }
                         }
                     }
-
-                }
-                if (AITimer >= 120)
+                if (AITimer >= 100)
                 {
-                    for (int i = 0; i < 3; i++) //Spikes
-                    {
-                        Vector2 playerPos = new Vector2((player.position.X - 30 * i) / 16, (player.position.Y) / 16);
-                        Vector2 playerPos2 = new Vector2((player.position.X + 30 * i) / 16, (player.position.Y) / 16);
-                        Tile tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
-                        while (!tile.HasTile || tile.TileType == TileID.Trees)
-                        {
-                            playerPos.Y += 1;
-                            tile = Framing.GetTileSafely((int)playerPos.X, (int)playerPos.Y);
-                        }
-
-                        Tile tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
-                        while (!tile2.HasTile || tile2.TileType == TileID.Trees)
-                        {
-                            playerPos2.Y += 1;
-                            tile2 = Framing.GetTileSafely((int)playerPos2.X, (int)playerPos2.Y);
-                        }
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            if (i == 0)
-                            {
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<Spike>(), 28, 2.5f, Main.myPlayer, (int)0f);
-                            }
-                            else
-                            {
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<Spike>(), 28, 2.5f, Main.myPlayer, (int)0f);
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), playerPos * 16, new Vector2(0, -10), ModContent.ProjectileType<Spike>(), 28, 2.5f, Main.myPlayer, (int)0f);
-                            }
-                        }
-                    }
-                }
-                NPC.damage = 0;
-                if (AITimer >= 200)
-                {
-                    AIState = Dash;
+                    NPC.rotation = 0;
+                    NPC.velocity.X = 0;
+                    NPC.velocity.Y = 0;
                     AITimer = 0;
                     AITimer2 = 0;
-                    NPC.ai[3] = 0;
+                    AITimer3 = 0;
+                    AIState = RockFall;
                 }
             }
-
-        }
-
-        /*public override void FindFrame(int frameHeight)
-        {
-            NPC.frameCounter++;
-
-            if (NPC.frameCounter % 6f == 5f)
+            else if (AIState == RockFall)
             {
-                NPC.frame.Y += frameHeight;
-            }
-            if (NPC.frame.Y >= frameHeight * 6)
-            {
-                NPC.frame.Y = 0;
-            }
-        }*/
-        private float hitDirection;
+                AITimer++;
+                if (AITimer == 1)
+                        SoundEngine.PlaySound(SoundID.Roar);
+                    Vector2 pos = new Vector2(player.position.X, player.position.Y - 180);
+                    Vector2 target = pos;
+                    Vector2 moveTo = target - NPC.Center;
+                    NPC.velocity = (moveTo) * 0.18f;
+                if (AITimer % 10 == 0 && AITimer > 60)
+                {
 
-        public override void HitEffect(NPC.HitInfo hit)
-        {
-            for (int k = 0; k < 30; k++)
-            {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * hitDirection, -2.5f, 0, Color.White, 0.7f);
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.CrimsonTorch, 2.5f * hitDirection, -2.5f, 0, default, .34f);
-            }
-        }
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            if (DrawLinearDash)
-                DrawDashLinear(spriteBatch, npcoldcenter, playeroldcenter, Color.Lerp(Color.White, Color.Red, NPC.ai[2]));
-            return base.PreDraw(spriteBatch, screenPos, drawColor);
-        }
+                   Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Bottom, Vector2.Zero, ModContent.ProjectileType<BloodBombTwo>(), 1, Main.myPlayer, NPC.whoAmI);
 
-        #region stuff
-        private void DrawDashLinear(SpriteBatch spriteBatch, Vector2 start, Vector2 end, Color color)
-        {
-            Vector2 unit = end - start;
-            unit.Normalize();
-            DrawLine(start, end + unit * 4000, color, spriteBatch);
-        }
-        private void DrawLine(Vector2 start, Vector2 end, Color color, SpriteBatch spriteBatch, float scale = 1)
-        {
-            Vector2 unit = end - start;
-            float length = unit.Length();
-            unit.Normalize();
-            for (int i = 0; i < length; i++)
-            {
-                Vector2 drawpos = start + unit * i - Main.screenPosition;
-                spriteBatch.Draw(ModContent.Request<Texture2D>("Malignant/Assets/Textures/Pixel").Value, drawpos, null, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                }
+                if (AITimer >= 100)
+                {
+                    NPC.noTileCollide = true;
+                    NPC.rotation = 0;
+                    NPC.velocity.X = 0;
+                    NPC.velocity.Y = 0;
+                    AITimer = 0;
+                    AITimer2 = 0;
+                    AITimer3 = 0;
+                    AIState = FlameThrower;
+                }
             }
         }
-        #endregion
     }
 }
