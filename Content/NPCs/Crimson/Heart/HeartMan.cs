@@ -44,7 +44,7 @@ namespace Malignant.Content.NPCs.Crimson.Heart
             NPC.noTileCollide = true;
             NPC.lavaImmune = true;
             NPC.boss = true;
-            Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Viscera");
+            Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Boss/Viscera");
 
         }
 

@@ -38,7 +38,7 @@ namespace Malignant.Content.NPCs.Norse.Njor
 			NPC.SpawnWithHigherTime(30);
             if (!Main.dedServ)
             {
-                Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Njor");
+                Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Boss/Njor");
             }
 
         }
