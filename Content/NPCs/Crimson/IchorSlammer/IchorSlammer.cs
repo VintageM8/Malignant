@@ -66,10 +66,8 @@ namespace Malignant.Content.NPCs.Crimson.IchorSlammer
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Moon,
-                new FlavorTextBestiaryInfoElement("God I wish I was you, this mf has a FAT ass."),
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCrimson,
+                new FlavorTextBestiaryInfoElement("After the rapture, flesh of the Wretched lummped together and now roam the forsakan lands"),
             });
         }
 
@@ -169,8 +167,8 @@ namespace Malignant.Content.NPCs.Crimson.IchorSlammer
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            
-            if (spawnInfo.Player.ZoneCrimson && !Main.dayTime)
+         
+            if (spawnInfo.Player.ZoneCrimson && Main.hardMode)
                 return 0.15f;
             return 0;
         }

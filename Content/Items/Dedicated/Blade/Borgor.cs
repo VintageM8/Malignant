@@ -26,28 +26,6 @@ namespace Malignant.Content.Items.Dedicated.Blade
             Projectile.DamageType = DamageClass.Ranged;
         }
 
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-
-            SoundEngine.PlaySound(SoundID.SplashWeak, Projectile.position);
-            for (int i = 0; i < 10; i++)
-            {
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.RedTorch,
-                              -Projectile.velocity.X * 0.3f, -Projectile.velocity.Y * 0.3f, Scale: 2);
-
-            }
-
-            for (int i = 0; i < Main.rand.Next(1, 2); i++)
-            {
-                Vector2 perturbedSpeed = Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(360));
-                //Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<Patty>(), 20, 5f, Projectile.owner); 
-                //OH OH RIELY AUTO PARTS 
-                Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<Cheese>(), 20, 5f, Projectile.owner);
-                Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.position.X, Projectile.position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<Bun>(), 20, 5f, Projectile.owner);
-            }
-
-        }
-
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
@@ -61,13 +39,6 @@ namespace Malignant.Content.Items.Dedicated.Blade
 
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
             return false;
-        }
-        public override void AI()
-        {
-            Projectile.rotation += 100;
-            int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.RedTorch, Projectile.velocity.X, Projectile.velocity.Y, 0, Color.White, 1);
-            Main.dust[dust].velocity /= 1.2f;
-            Main.dust[dust].noGravity = true;
         }
     }
 }  

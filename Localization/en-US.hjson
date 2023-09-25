@@ -97,6 +97,8 @@ Mods: {
 			BloodBombTwo.DisplayName: Blood Bomb Two
 			CrimsonStuff.DisplayName: Crimson Stuff
 			HeartThing.DisplayName: Heart Thing
+			SpiderEyeProj_Two.DisplayName: Spider Eye Proj_ Two
+			SpiderViz.DisplayName: Spider Viz
 		}
 
 		NPCs: {
@@ -378,6 +380,16 @@ Mods: {
 			ShieldOfRighteousness: {
 				Tooltip: ""
 				DisplayName: Shield Of Righteousness
+			}
+
+			FrostedBeacon: {
+				DisplayName: Frosted Beacon
+				Tooltip: ""
+			}
+
+			VisceraSummon: {
+				DisplayName: Viscera Summon
+				Tooltip: ""
 			}
 		}
 

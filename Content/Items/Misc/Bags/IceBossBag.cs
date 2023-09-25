@@ -1,4 +1,4 @@
-using Malignant.Content.Items.Snow.Cocytus;
+using Malignant.Content.Items.Snow.Cocytus.ForgottenFrost;
 using Malignant.Content.Items.Snow.Cocytus.NjorStaff;
 using Malignant.Content.Items.Snow.Cocytus.NjorSword;
 using Malignant.Content.NPCs.Norse.Njor;

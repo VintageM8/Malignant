@@ -15,6 +15,8 @@ using System.IO;
 using Terraria.Audio;
 using Terraria.Utilities;
 using Malignant.Core;
+using Malignant.Common.Helper;
+using Terraria.GameContent;
 
 namespace Malignant.Content.NPCs.Crimson.Heart
 {
@@ -86,6 +88,7 @@ namespace Malignant.Content.NPCs.Crimson.Heart
             }
             return true;
         }
+        #region AI States
         public float AIState
         {
             get => NPC.ai[0];
@@ -108,11 +111,10 @@ namespace Malignant.Content.NPCs.Crimson.Heart
         }
         const int Death = -1, Spawn = 0, Idle = 1, FlameThrower = 2, RocksAtPlayer = 3, RockFall = 4, RandomLasers = 5, SpinDash = 6, RepeatedBanging = 7;
         Vector2 lastPos;
-        //SoundStyle summon = new("EbonianMod/Sounds/ExolSummon");
-        /*SoundStyle roar = new("EbonianMod/Sounds/ExolRoar")
-        {
-            PitchVariance = 0.25f,
-        };*/
+        #endregion
+
+
+
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -135,18 +137,6 @@ namespace Malignant.Content.NPCs.Crimson.Heart
                 return;
             }
             if (Main.rand.NextBool(5))
-                /*if (NPC.life < NPC.lifeMax / 4) To do later on
-                {
-                    Helper.DustExplosion(NPC.Center, Vector2.One, 2, Color.Gray * 0.45f, false, false, 0.6f, 0.5f, new(Main.rand.NextFloat(-4, 4), -10));
-                }
-                else if (NPC.life < NPC.lifeMax / 3)
-                {
-                    Helper.DustExplosion(NPC.Center, Vector2.One, 2, Color.Gray * 0.35f, false, false, 0.4f, 0.5f, -Vector2.UnitY * Main.rand.NextFloat(6, 8));
-                }
-                else if (NPC.life < NPC.lifeMax / 2)
-                {
-                    Helper.DustExplosion(NPC.Center, Vector2.One, 2, Color.Gray * 0.25f, false, false, 0.2f, 0.5f, -Vector2.UnitY * Main.rand.NextFloat(4, 8));
-                }*/
 
             if (AIState == Death)
             {

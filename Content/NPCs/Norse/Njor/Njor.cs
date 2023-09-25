@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Malignant.Content.Projectiles.Enemy.Njor;
 using Terraria.GameContent.ItemDropRules;
 using static Terraria.ModLoader.ModContent;
-using Malignant.Content.Items.Snow.Cocytus;
+using Malignant.Content.Items.Snow.Cocytus.ForgottenFrost;
 using Malignant.Content.Items.Snow.Cocytus.NjorStaff;
 using Malignant.Content.Items.Snow.Cocytus.NjorSword;
 

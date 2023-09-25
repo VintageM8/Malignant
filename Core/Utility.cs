@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Malignant.Core
 {
@@ -139,6 +140,35 @@ namespace Malignant.Core
             Effect effect = (Effect)spriteBatch.GetType().GetField("customEffect", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(spriteBatch);
             Matrix matrix = (Matrix)spriteBatch.GetType().GetField("transformMatrix", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(spriteBatch);
             spriteBatch.Begin(sortMode, blendState, samplerState, depthStencilState, rasterizerState, effect, matrix);
+        }
+
+        public static List<T> Shuffle<T>(this List<T> list)
+        {
+            int c = list.Count;
+            List<T> current = new List<T>();
+            for (int i = 0; i < c; i++)
+            {
+                int index = Main.rand.Next(list.Count);
+                current.Add(list[index]);
+                list.RemoveAt(index);
+            }
+
+            return current;
+        }
+
+        public static T[] Shuffle<T>(this T[] array)
+        {
+            int n = array.Length;
+            while (n > 1)
+            {
+                int k = Main.rand.Next(n--);
+                T temp = array[n];
+                array[n] = array[k];
+                array[k] = temp;
+            }
+
+            return array;
+            //return Shuffle<T>(new List<T>(array)).ToArray();
         }
 
     }

@@ -11,8 +11,6 @@ namespace Malignant.Content.Items.Spider.StaffSpiderEye
     {
         public override void SetStaticDefaults()
         {
-            //DisplayName.SetDefault("Staff of the Spider Eye");
-            //Tooltip.SetDefault("Shoots out fangs");
             Item.staff[Item.type] = true;
         }
 
@@ -30,7 +28,7 @@ namespace Malignant.Content.Items.Spider.StaffSpiderEye
             Item.value = Item.sellPrice(silver: 460);
             Item.rare = ItemRarityID.Orange;
             Item.UseSound = SoundID.Item1;
-            Item.autoReuse = true;
+            Item.autoReuse = false;
             Item.shootSpeed = 10f;
             Item.shoot = ModContent.ProjectileType<SpiderEyeProj>();
         }
