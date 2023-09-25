@@ -29,8 +29,8 @@ namespace Malignant.Content.Items.Hell.MarsHell
             Item.width = Item.height = 38;
             Item.crit = 0;
             Item.damage = 20;
-            Item.useAnimation = 28;
-            Item.useTime = 28;
+            Item.useAnimation = 55;
+            Item.useTime = 55;
             Item.noMelee = true;
             Item.autoReuse = false;
             //Item.useAmmo = AmmoID.Bullet;
@@ -41,6 +41,7 @@ namespace Malignant.Content.Items.Hell.MarsHell
             Item.shootSpeed = 15f;
             Item.noUseGraphic = true;
             Item.shoot = ProjectileID.Bullet;
+            Item.useAmmo = AmmoID.Bullet;
             Item.channel = true;
         }
 
@@ -94,8 +95,8 @@ namespace Malignant.Content.Items.Hell.MarsHell
             if (Player.altFunctionUse == 2)
             {
                 Item.useStyle = ItemUseStyleID.Shoot;
-                Item.useTime = 45;
-                Item.useAnimation = 45;
+                Item.useTime = 55;
+                Item.useAnimation = 55;
                 Item.shootSpeed = 12f;
 
                 if (cooldown > 0)
@@ -103,8 +104,8 @@ namespace Malignant.Content.Items.Hell.MarsHell
             }
             else
             {
-                Item.useTime = 20;
-                Item.useAnimation = 20;
+                Item.useTime = 55;
+                Item.useAnimation = 55;
                 Item.useStyle = ItemUseStyleID.Shoot;
                 Item.shootSpeed = 5f;
             }

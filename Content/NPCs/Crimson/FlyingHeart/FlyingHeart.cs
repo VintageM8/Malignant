@@ -76,27 +76,8 @@ namespace Malignant.Content.NPCs.Crimson.FlyingHeart
             {
                 case (int)AIStates.Float:
 
-                    SlashPlayer = false;
-                    if (NPC.Hitbox.Intersects(player.Hitbox))
-                    {
-                        SlashPlayer = true;
-                    }
-
-
-                    if (!SlashPlayer)
-                    {
-                        NPC.velocity.X = MathHelper.Lerp(NPC.velocity.X, (player.Center.X > NPC.Center.X ? 1 : -1) * 2, 0.05f);
-                        NPC.velocity.Y = MathHelper.Lerp(NPC.velocity.Y, player.Center.Y > NPC.Center.Y ? 2.5f : -2.5f, 0.02f);
-                    }
-                    else
-                    {
-                        NPC.velocity = Vector2.Zero;
-                        MiscCounter++;
-                    }
-
                     if (AICounter++ == 180)
                     {
-                        SlashPlayer = false;
 
                         InitialPosition = NPC.Center;
                         NPC.velocity = Vector2.Zero;
@@ -158,9 +139,8 @@ namespace Malignant.Content.NPCs.Crimson.FlyingHeart
                         Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.DirectionTo(player.Center) * 2, ProjectileID.BloodNautilusShot, 30, 3f, Main.myPlayer, 0, NPC.whoAmI);
                     }
 
-                    if (!ThrewSword)
+                    if (AICounter == 180)
                     {
-                        ThrewSword = true;
                         AICase = (int)AIStates.Float;
                         AICounter = 0;
                     }
