@@ -10,7 +10,7 @@ using Terraria.WorldBuilding;
 using Malignant.Core;
 using Mono.Cecil;
 using System.Linq;
-using Malignant.Content.Items.Misc.Titania;
+using Malignant.Content.Items.Holy.Titania;
 using static Terraria.ModLoader.ModContent;
 using Malignant.Content.Items.Misc;
 using Malignant.Content.Items.Consumeable.Summons;

@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Malignant.Content.Items.Misc.Titania;
+using Malignant.Content.Items.Holy.Titania;
 using Malignant.Content.Projectiles.Prayer;
 using Mono.Cecil;
 using Terraria.DataStructures;

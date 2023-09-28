@@ -118,42 +118,42 @@ Mods: {
 
 		Items: {
 			SaveItem: {
-				Tooltip: ""
+				Tooltip: THIS IS A DEVELOPMENT ITEM
 				DisplayName: Save Item
 			}
 
 			PlaceItem: {
-				Tooltip: ""
+				Tooltip: THIS IS A DEVELOPMENT ITEM
 				DisplayName: Place Item
 			}
 
 			WebTome: {
-				Tooltip: ""
+				Tooltip: Shoots out a ball of cobwebs
 				DisplayName: Tome of Webs
 			}
 
 			StaffofSpiderEye: {
-				Tooltip: ""
+				Tooltip: RE-WORK PENDING
 				DisplayName: Stave of the Spider Eye
 			}
 
 			SpiderNeckless: {
-				Tooltip: ""
+				Tooltip: Fangs shoot out around the player when damaged
 				DisplayName: Spider Neckless
 			}
 
 			FangedDeceiver: {
-				Tooltip: ""
+				Tooltip: Every 5th shot, fangs circle the player
 				DisplayName: Fanged Deceiver
 			}
 
 			IceSword: {
-				Tooltip: ""
+				Tooltip: Gains more power as the sword attacks
 				DisplayName: Cerberus
 			}
 
 			NjorsStaff: {
-				Tooltip: ""
+				Tooltip: Hold left click to charge up an attack
 				DisplayName: Cocytus's Scepter
 			}
 
@@ -389,6 +389,11 @@ Mods: {
 
 			VisceraSummon: {
 				DisplayName: Viscera Summon
+				Tooltip: ""
+			}
+
+			BlessedMetal: {
+				DisplayName: Blessed Metal
 				Tooltip: ""
 			}
 		}

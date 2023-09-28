@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Malignant.Content.Buffs.Summon;
 
-namespace Malignant.Content.Items.Misc.CrossLord
+namespace Malignant.Content.Items.Holy.CrossLord
 {
     public class CrossSummon : ModProjectile
     {

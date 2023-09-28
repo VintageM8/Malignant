@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using Malignant.Content.Items.Misc.CrossLord;
+using Malignant.Content.Items.Holy.CrossLord;
 
 namespace Malignant.Content.Buffs.Summon
 {
