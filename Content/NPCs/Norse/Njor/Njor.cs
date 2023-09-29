@@ -70,7 +70,7 @@ namespace Malignant.Content.NPCs.Norse.Njor
 			{				
 				ItemType<NjorsStaff>(),
 				ItemType<IceSword>(),
-				ItemType<IcyTundra>(),
+				ItemType<ForgottenFrost>(),
 			}
 		));
 

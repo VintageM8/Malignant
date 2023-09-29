@@ -38,7 +38,7 @@ namespace Malignant.Content.Items.Misc.Bags
 
             for (int k = 0; k < (Main.masterMode ? 3 : 2); k++)
             {
-                 itemLoot.Add(ItemDropRule.Common(ItemType<IcyTundra>(), 1));
+                 itemLoot.Add(ItemDropRule.Common(ItemType<ForgottenFrost>(), 1));
                  itemLoot.Add(ItemDropRule.Common(ItemType<NjorsStaff>(), 1));
                  itemLoot.Add(ItemDropRule.Common(ItemType<IceSword>(), 1));
             }
