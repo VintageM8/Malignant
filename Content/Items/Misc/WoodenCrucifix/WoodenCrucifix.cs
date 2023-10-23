@@ -30,7 +30,6 @@ namespace Malignant.Content.Items.Misc.WoodenCrucifix
         {
             CreateRecipe(1)
                 .AddIngredient(ItemID.Wood, 28)
-                .AddIngredient(ItemID.Meteorite, 3)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

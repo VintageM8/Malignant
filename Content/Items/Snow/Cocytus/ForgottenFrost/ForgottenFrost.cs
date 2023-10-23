@@ -11,14 +11,14 @@ namespace Malignant.Content.Items.Snow.Cocytus.ForgottenFrost
     {
         public override void SetDefaults()
         {
-            Item.damage = 19;
+            Item.damage = 8;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 40;
             Item.height = 24;
-            Item.useTime = 15;
-            Item.useAnimation = 15;
+            Item.useTime = 35;
+            Item.useAnimation = 35;
             Item.noMelee = true;
-            Item.autoReuse = true;
+            Item.autoReuse = false;
             Item.knockBack = 4;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.useStyle = ItemUseStyleID.Shoot;
@@ -34,14 +34,13 @@ namespace Malignant.Content.Items.Snow.Cocytus.ForgottenFrost
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<ForgottenFrostProjectile>()] < 8)
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<ForgottenFrostProjectile>()] < 4)
                 Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<ForgottenFrostProjectile>(), damage, knockback, player.whoAmI);
             return base.Shoot(player, source, position, velocity, type, damage, knockback);
         }
     }
     class ForgottenFrostProjectile : ModProjectile
     {
-        public override string Texture => MalignantTexture.MISSINGTEXTURE;
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 10;
