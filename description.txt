@@ -1,1 +1,8 @@
-Malignant is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+he mod where you slay the wretched under the name of the Lord
+
+Malignant is a mod focused on slaying the evil of this land (heavily inspired by Christian theology) in a Blasphemous-like style.
+We also want to expand the Evil biomes of Terraria by adding content related to our theme (and to the spider biome).
+We also want to include:
+-A brutal execution system to terrify your unholy foes.
+-Multiple demon and pagan bosses to test your God's authority
+-A prayer system AND a morality system (remember, God watches)

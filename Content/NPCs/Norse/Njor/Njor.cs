@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Malignant.Content.Projectiles.Enemy.Njor;
 using Terraria.GameContent.ItemDropRules;
 using static Terraria.ModLoader.ModContent;
-using Malignant.Content.Items.Snow.Cocytus;
+using Malignant.Content.Items.Snow.Cocytus.ForgottenFrost;
 using Malignant.Content.Items.Snow.Cocytus.NjorStaff;
 using Malignant.Content.Items.Snow.Cocytus.NjorSword;
 
@@ -16,7 +16,7 @@ namespace Malignant.Content.NPCs.Norse.Njor
 	{
 		public override void SetStaticDefaults()
 		{
-			//Main.npcFrameCount[NPC.type] = 1;
+			Main.npcFrameCount[NPC.type] = 4;
 		}
 
 		public override void SetDefaults()
@@ -70,7 +70,7 @@ namespace Malignant.Content.NPCs.Norse.Njor
 			{				
 				ItemType<NjorsStaff>(),
 				ItemType<IceSword>(),
-				ItemType<IcyTundra>(),
+				ItemType<ForgottenFrost>(),
 			}
 		));
 
@@ -381,76 +381,20 @@ namespace Malignant.Content.NPCs.Norse.Njor
 			}
         }
 
-		/*private enum Frame
-		{
-			Asleep,
-			Chasing,
-			Chasing2,
-			Chasing3, //Jump
-			Chasing4,
-			Chasing5,
-			Chasing6,
-			Chasing7,
-			Chasing8,
-			Chasing9,
-		}
 
-		public override void FindFrame(int frameHeight)
-		{
-			NPC.spriteDirection = NPC.direction;
+	    public override void FindFrame(int frameHeight)
+        {
+            NPC.frameCounter++;
 
-			if (asleep == true)
-			{
-				NPC.frame.Y = (int)Frame.Asleep * frameHeight;
-			}
-			else if (asleep == false && wake == true && jumping == false)
-			{
-				counting += 0.5;
-				if (counting < 4.0)
-				{
-					NPC.frame.Y = (int)Frame.Chasing * frameHeight;
-				}
-				else if (counting < 6.0)
-				{
-					NPC.frame.Y = (int)Frame.Chasing2 * frameHeight;
-				}
-				else if (counting < 8.0)
-				{
-					NPC.frame.Y = (int)Frame.Chasing3 * frameHeight;
-				}
-				else if (counting < 10.0)
-				{
-					NPC.frame.Y = (int)Frame.Chasing4 * frameHeight;
-				}
-				else if (counting < 12.0)
-				{
-					NPC.frame.Y = (int)Frame.Chasing5 * frameHeight;
-				}
-				else if (counting < 13.0)
-				{
-					NPC.frame.Y = (int)Frame.Chasing6 * frameHeight;
-				}
-				else if (counting < 14.0)
-				{
-					NPC.frame.Y = (int)Frame.Chasing7 * frameHeight;
-				}
-				else if (counting < 16.0)
-				{
-					NPC.frame.Y = (int)Frame.Chasing8 * frameHeight;
-				}
-				else if (counting < 18.0)
-				{
-					NPC.frame.Y = (int)Frame.Chasing9 * frameHeight;
-				}
-				else
-				{
-					counting = 0.0;
-				}
-			}
-			else if (jumping == true)
-			{
-				NPC.frame.Y = (int)Frame.Chasing3 * frameHeight;
-			}
-		}*/
+            if (NPC.frameCounter % 6f == 5f)
+            {
+                NPC.frame.Y += frameHeight;
+            }
+            if (NPC.frame.Y >= frameHeight * 4) 
+            {
+                NPC.frame.Y = 0; // Reset back to default
+            }
+        }
+
 	}
 }

@@ -1,4 +1,4 @@
-using Malignant.Content.Items.Snow.Cocytus;
+using Malignant.Content.Items.Snow.Cocytus.ForgottenFrost;
 using Malignant.Content.Items.Snow.Cocytus.NjorStaff;
 using Malignant.Content.Items.Snow.Cocytus.NjorSword;
 using Malignant.Content.NPCs.Norse.Njor;
@@ -38,7 +38,7 @@ namespace Malignant.Content.Items.Misc.Bags
 
             for (int k = 0; k < (Main.masterMode ? 3 : 2); k++)
             {
-                 itemLoot.Add(ItemDropRule.Common(ItemType<IcyTundra>(), 1));
+                 itemLoot.Add(ItemDropRule.Common(ItemType<ForgottenFrost>(), 1));
                  itemLoot.Add(ItemDropRule.Common(ItemType<NjorsStaff>(), 1));
                  itemLoot.Add(ItemDropRule.Common(ItemType<IceSword>(), 1));
             }

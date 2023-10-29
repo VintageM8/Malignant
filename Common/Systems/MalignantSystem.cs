@@ -10,9 +10,10 @@ using Terraria.WorldBuilding;
 using Malignant.Core;
 using Mono.Cecil;
 using System.Linq;
-using Malignant.Content.Items.Misc.Titania;
+using Malignant.Content.Items.Holy.Titania;
 using static Terraria.ModLoader.ModContent;
 using Malignant.Content.Items.Misc;
+using Malignant.Content.Items.Consumeable.Summons;
 
 namespace Malignant.Common.Systems;
 
@@ -233,7 +234,7 @@ public class MalignantSystem : ModSystem
         foreach (int i in Chests)
         {
             //add with this
-            //Main.chest[i].AddItem(ModContent.ItemType<CursedFireballStaff>(), 1);
+            Main.chest[i].AddItem(ModContent.ItemType<FrostedBeacon>(), 1);
             //this will only run once since theirs 1 chest
         }
     }

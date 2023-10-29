@@ -97,6 +97,9 @@ Mods: {
 			BloodBombTwo.DisplayName: Blood Bomb Two
 			CrimsonStuff.DisplayName: Crimson Stuff
 			HeartThing.DisplayName: Heart Thing
+			SpiderEyeProj_Two.DisplayName: Spider Eye Proj_ Two
+			SpiderViz.DisplayName: Spider Viz
+			ForgottenFrostProjectile.DisplayName: Forgotten Frost Projectile
 		}
 
 		NPCs: {
@@ -112,273 +115,6 @@ Mods: {
 			SacraficedSoul.DisplayName: Sacraficed Soul
 			CursedRoller.DisplayName: Cursed Roller
 			CursedOccultist.DisplayName: Cursed Occultist
-		}
-
-		Items: {
-			SaveItem: {
-				Tooltip: ""
-				DisplayName: Save Item
-			}
-
-			PlaceItem: {
-				Tooltip: ""
-				DisplayName: Place Item
-			}
-
-			WebTome: {
-				Tooltip: ""
-				DisplayName: Tome of Webs
-			}
-
-			StaffofSpiderEye: {
-				Tooltip: ""
-				DisplayName: Stave of the Spider Eye
-			}
-
-			SpiderNeckless: {
-				Tooltip: ""
-				DisplayName: Spider Neckless
-			}
-
-			FangedDeceiver: {
-				Tooltip: ""
-				DisplayName: Fanged Deceiver
-			}
-
-			IceSword: {
-				Tooltip: ""
-				DisplayName: Cerberus
-			}
-
-			NjorsStaff: {
-				Tooltip: ""
-				DisplayName: Cocytus's Scepter
-			}
-
-			IcyTundra: {
-				Tooltip: ""
-				DisplayName: Winds of Hell
-			}
-
-			PrayerTest: {
-				Tooltip: ""
-				DisplayName: Prayer Test
-			}
-
-			SmiteOfSabbathPrayer: {
-				Tooltip: ""
-				DisplayName: Smite Of Sabbath Prayer
-			}
-
-			HolySpeedPrayer: {
-				Tooltip: ""
-				DisplayName: Holy Speed Prayer
-			}
-
-			FireballPrayer: {
-				Tooltip: ""
-				DisplayName: Fireball Prayer
-			}
-
-			CommunionPrayer: {
-				Tooltip: ""
-				DisplayName: Communion Prayer
-			}
-
-			BloodOfAnointedPrayer: {
-				Tooltip: ""
-				DisplayName: Blood Of Anointed Prayer
-			}
-
-			YamaTounge: {
-				Tooltip: ""
-				DisplayName: Yama's Tounge
-			}
-
-			WoodenCrucifix: {
-				Tooltip: ""
-				DisplayName: Wooden Crucifix
-			}
-
-			WarbladeofLight: {
-				Tooltip: ""
-				DisplayName: Tranquility, Warblade of Light
-			}
-
-			Titania: {
-				Tooltip: ""
-				DisplayName: Titania
-			}
-
-			HolyGreatsword: {
-				Tooltip: ""
-				DisplayName: Holy Greatsword
-			}
-
-			HolyGauntlet: {
-				Tooltip: ""
-				DisplayName: Holy Gauntlet
-			}
-
-			Head: {
-				Tooltip: ""
-				DisplayName: Head
-			}
-
-			FruitOfTheGarden: {
-				Tooltip: ""
-				DisplayName: Fruit Of The Garden
-			}
-
-			EvilEye: {
-				Tooltip: ""
-				DisplayName: Evil Eye
-			}
-
-			CrucfixConstructer: {
-				Tooltip: ""
-				DisplayName: Crucfix Constructer
-			}
-
-			CrossOfOurLord: {
-				Tooltip: ""
-				DisplayName: Cross Of Our Lord
-			}
-
-			BrokenDemonHorn: {
-				Tooltip: ""
-				DisplayName: Broken Demon Horn
-			}
-
-			BloodyChalice: {
-				Tooltip: ""
-				DisplayName: Bloody Chalice
-			}
-
-			WarlockBossBag: {
-				Tooltip: ""
-				DisplayName: Warlock Boss Bag
-			}
-
-			IceBossBag: {
-				Tooltip: ""
-				DisplayName: Cocytus Boss Bag
-			}
-
-			MarsHell: {
-				Tooltip: ""
-				DisplayName: Mars Hell
-			}
-
-			FlamesoftheDamned: {
-				Tooltip: ""
-				DisplayName: Flames of the Damned
-			}
-
-			DemonShot: {
-				Tooltip: ""
-				DisplayName: Demon Shot
-			}
-
-			P3Guitar: {
-				Tooltip: ""
-				DisplayName: P3's Guitar
-			}
-
-			BorgorGun: {
-				Tooltip: ""
-				DisplayName: Borgor Gun
-			}
-
-			FleshBlazer: {
-				Tooltip: ""
-				DisplayName: Flesh Blazer
-			}
-
-			HeartMoniter: {
-				Tooltip: ""
-				DisplayName: Heart Moniter
-			}
-
-			HerzanfallDagger: {
-				Tooltip: ""
-				DisplayName: Heart's Skean
-			}
-
-			BurstingArtery: {
-				Tooltip: ""
-				DisplayName: Bursting Artery
-			}
-
-			BloodyVein: {
-				Tooltip: ""
-				DisplayName: Bloody Vein
-			}
-
-			ArterionSoul: {
-				Tooltip: ""
-				DisplayName: Arterion's Soul
-			}
-
-			Abowmanation: {
-				Tooltip: ""
-				DisplayName: Abowmanation
-			}
-
-			CursedFireballStaff: {
-				Tooltip: ""
-				DisplayName: Cursed Fireball Staff
-			}
-
-			NightsisterBlade: {
-				Tooltip: ""
-				DisplayName: Nightsister Blade
-			}
-
-			Boeyr: {
-				Tooltip: ""
-				DisplayName: Death's Bite
-			}
-
-			HorridAccessory: {
-				Tooltip: ""
-				DisplayName: Lich's Phylactery
-			}
-
-			CorruptedCord: {
-				Tooltip: ""
-				DisplayName: Corrupted Cord
-			}
-
-			DepravedBlastBeat: {
-				Tooltip: ""
-				DisplayName: Depraved Blast Beat
-			}
-
-			CursedTome: {
-				Tooltip: ""
-				DisplayName: Cursed Tome
-			}
-
-			ArterionSpawn: {
-				Tooltip: ""
-				DisplayName: Arterion Spawn
-			}
-
-			BloodoftheLamb: {
-				Tooltip: ""
-				DisplayName: Blood of the Lamb
-			}
-
-			AlterTest: {
-				Tooltip: ""
-				DisplayName: Alter Test
-			}
-
-			ShieldOfRighteousness: {
-				Tooltip: ""
-				DisplayName: Shield Of Righteousness
-			}
 		}
 
 		Buffs: {
@@ -417,311 +153,285 @@ Mods: {
 			"Use Prayer Abilty.DisplayName": Use  Prayer  Abilty
 			"Change Prayer Ability.DisplayName": Change  Prayer  Ability
 		}
-	}
-}
 
-Buffs: {
-	Cooldown: {
-		DisplayName: Cooldown
-		Description: Your Prayers will not be heard
-	}
+		Items: {
+			AlterTest: {
+				DisplayName: Alter Test
+				Tooltip: THIS IS A DEVLOPMENT ITEM
+			}
 
-	NoMove: {
-		DisplayName: No Move
-		Description: Ha, cant move
-	}
+			BloodoftheLamb: {
+				DisplayName: Blood of the Lamb
+				Tooltip: Heals for 150 life
+			}
 
-	SicklyPower: {
-		DisplayName: Sickly Power
-		Description: Our Lord does not approve of this power
-	}
+			ArterionSpawn: {
+				DisplayName: Arterion Spawn
+				Tooltip: Summons Arterion, the Cursed Infector
+			}
 
-	SmokeDebuff: {
-		DisplayName: Smoke Debuff
-		Description: Mods.Malignant.Buffs.SmokeDebuff.Description
-	}
+			CursedTome: {
+				DisplayName: Cursed Tome
+				Tooltip: Summons The Warlock, Touched of Infection
+			}
 
-	LoyalLensBuff: {
-		DisplayName: Loyal Lens Buff
-		Description: Mods.Malignant.Buffs.LoyalLensBuff.Description
-	}
-}
+			FrostedBeacon: {
+				DisplayName: Frosted Beacon
+				Tooltip: Summons Cocytus, Keeper of Cold
+			}
 
-Items: {
-	ArterionSpawn: {
-		DisplayName: Pierced Heart
-		Tooltip: Summons the Infector of the Crimson
-	}
+			VisceraSummon: {
+				DisplayName: Viscera Summon
+				Tooltip: Summons Viscera, Primal Hunter
+			}
 
-	CursedTome: {
-		DisplayName: Cursed Tome
-		Tooltip: Summons the Infector of the Corruption
-	}
+			DepravedBlastBeat: {
+				DisplayName: Depraved Blast Beat
+				Tooltip: Increased in power with each target you hit
+			}
 
-	DepravedBlastBeat: {
-		DisplayName: Depraved Blast Beat
-		Tooltip: After 10 shots hit your projectile becomes empowered
-	}
+			CorruptedCord: {
+				DisplayName: Corrupted Cord
+				Tooltip: ""
+			}
 
-	CorruptedCord: {
-		DisplayName: Corrupted Cord
-		Tooltip: ""
-	}
+			HorridAccessory: {
+				DisplayName: Lich's Phylactery
+				Tooltip: Fuels your life in exchange of a critters
+			}
 
-	HorridAccessory: {
-		DisplayName: Lich's Phylactery
-		Tooltip: Killing critters refills your lifeforce
-	}
+			Boeyr: {
+				DisplayName: Death's Bite
+				Tooltip: Shoots a very hungry skull
+			}
 
-	Boeyr: {
-		DisplayName: Death's Bite
-		Tooltip: ""
-	}
+			NightsisterBlade: {
+				DisplayName: Darkness Fallen
+				Tooltip: This mod is still alive
+			}
 
-	NightsisterBlade: {
-		DisplayName: Nightsister Blade
-		Tooltip: ""
-	}
+			CursedFireballStaff: {
+				DisplayName: Cursed Fireball Staff
+				Tooltip:
+					'''
+					Shoots a ball of Cursed Flame
+					<right> to make it explode early
+					'''
+			}
 
-	CursedFireballStaff: {
-		DisplayName: Cursed Fireball Staff
-		Tooltip: "<right> to explode the Cursed Flames "
-	}
+			ArterionSoul: {
+				DisplayName: Arterion Soul
+				Tooltip: Does magic stuff
+			}
 
-	Abowmanation: {
-		DisplayName: Abowmanation
-		Tooltip: Shoots a Blood Arrow
-	}
+			BloodyVein: {
+				DisplayName: Bloody Vein
+				Tooltip: ""
+			}
 
-	ArterionSoul: {
-		DisplayName: Arterion's Soul
-		Tooltip: Summons the Infector of the Crimson
-	}
+			BurstingArtery: {
+				DisplayName: Bursting Artery
+				Tooltip: Shoots a blood burst that explodes on cursor hit
+			}
 
-	BloodyVein: {
-		DisplayName: Bloody Vein
-		Tooltip: ""
-	}
+			HerzanfallDagger: {
+				DisplayName: Heart's Skean
+				Tooltip:
+					'''
+					Summons 5 Skeans around the player
+					Decapitates the Wretched
+					'''
+			}
 
-	BurstingArtery: {
-		DisplayName: Bursting Artery
-		Tooltip: Bursts into shrapnal on cursor hit
-	}
+			HeartMoniter: {
+				DisplayName: Heart Moniter
+				Tooltip: Summons some blood shit when player gets hurt
+			}
 
-	HerzanfallDagger: {
-		DisplayName: Heart's Skean
-		Tooltip: Summons orbiting daggers around the player/nDaggers decapitate the Wretched
-	}
+			FleshBlazer: {
+				DisplayName: Flesh Blazer
+				Tooltip: Flames
+			}
 
-	HeartMoniter: {
-		DisplayName: Heart Moniter
-		Tooltip:
-			'''
-			Summons a bloody rune
-			Bloody rune summons homing heart clots when player takes damage
-			'''
-	}
+			BorgorGun: {
+				DisplayName: Borgor Gun
+				Tooltip: For that furry fuck
+			}
 
-	FleshBlazer: {
-		DisplayName: Flesh Blazer
-		Tooltip:
-			'''
-			Scorch your way through The Wretched
-			Uses gel as ammo
-			Right click to smite The Wretched with a cross
-			'''
-	}
+			P3Guitar: {
+				DisplayName: P3 Guitar
+				Tooltip: Epic composer man
+			}
 
-	BorgorGun: {
-		DisplayName: Borgor Gun
-		Tooltip:
-			'''
-			[c/eeff00f:Dedicated Item:] Dedicated to [c/ffa242:BladeBurger]
-			'Exo mechs was worth it tho lmao that boss is actually fun unlike DoG'.
-			How did you get enough burgers to acuire this?
-			'''
-	}
+			DemonShot: {
+				DisplayName: Demon Shot
+				Tooltip: ""
+			}
 
-	P3Guitar: {
-		DisplayName: P3's Guitar
-		Tooltip: Metal head of all time
-	}
+			MarsHell: {
+				DisplayName: Mars Hell
+				Tooltip: <right> to shoot out some cool crosses
+			}
 
-	DemonShot: {
-		DisplayName: Demon Shot
-		Tooltip: Bursts into a ball of flame
-	}
+			CrossOfOurLord: {
+				DisplayName: Cross Of Our Lord
+				Tooltip: Will fuck someone up
+			}
 
-	MarsHell: {
-		DisplayName: Mars Hell
-		Tooltip: Shoots out a bomb every 4 shots
-	}
+			CrucfixConstructer: {
+				DisplayName: Crucfix Constructer
+				Tooltip:
+					'''
+					Throws a hammer, so bonk tf outta people
+					<right> to throw a pointy crucifix that sticks into flesh
+					'''
+			}
 
-	SingedDevastation: {
-		DisplayName: Singed Devastation
-		Tooltip: ""
-	}
+			HolyGauntlet: {
+				DisplayName: Holy Gauntlet
+				Tooltip: Killing the Wretched repleneshes your life
+			}
 
-	IceBossBag: {
-		DisplayName: Cocytus Loot Bag
-		Tooltip: ""
-	}
+			HolyGreatsword: {
+				DisplayName: Holy Greatsword
+				Tooltip: Swing Swing
+			}
 
-	WarlockBossBag: {
-		DisplayName: Warlock Loot Bag
-		Tooltip: ""
-	}
+			Titania: {
+				DisplayName: Titania
+				Tooltip: Does extra damage to Unholy foe
+			}
 
-	BloodyChalice: {
-		DisplayName: Bloody Chalice
-		Tooltip:
-			'''
-			Applys a random debuff
-			Has unlimited uses
-			'''
-	}
+			WarbladeofLight: {
+				DisplayName: Tranquility, Warblade of Light
+				Tooltip: Now this....is a cool sword
+			}
 
-	BrokenDemonHorn: {
-		DisplayName: Broken Demon Horn
-		Tooltip: ""
-	}
+			IceBossBag: {
+				DisplayName: Cocytus Boss Bag
+				Tooltip: Congrats you beat a big ice boy
+			}
 
-	CrucfixConstructer: {
-		DisplayName: Crucfix Constructer
-		Tooltip:
-			'''
-			Has a slam throw combo attack
-			<right> to throw a crucifix
-			'''
-	}
+			WarlockBossBag: {
+				DisplayName: Warlock Boss Bag
+				Tooltip: Congrats you beat some magical dude
+			}
 
-	Head: {
-		DisplayName: Head
-		Tooltip: ""
-	}
+			BlessedMetal: {
+				DisplayName: Blessed Metal
+				Tooltip: SCRAP METEL
+			}
 
-	HolyGauntlet: {
-		DisplayName: Holy Gauntlet
-		Tooltip: Heals life for each Unholy Wretched slain
-	}
+			BloodyChalice: {
+				DisplayName: Bloody Chalice
+				Tooltip: RE-work pending
+			}
 
-	WarbladeofLight: {
-		DisplayName: Warblade of Light
-		Tooltip: Has a swing throw combo attack
-	}
+			BrokenDemonHorn: {
+				DisplayName: Broken Demon Horn
+				Tooltip: ""
+			}
 
-	BloodOfAnointedPrayer: {
-		DisplayName: Blood Of Anointed Prayer
-		Tooltip: ""
-	}
+			EvilEye: {
+				DisplayName: Evil Eye
+				Tooltip: I forgot what this does
+			}
 
-	CommunionPrayer: {
-		DisplayName: Communion Prayer
-		Tooltip: ""
-	}
+			FruitOfTheGarden: {
+				DisplayName: Fruit Of The Garden
+				Tooltip: Grants an extra 50 life for each boss beaten
+			}
 
-	FireballPrayer: {
-		DisplayName: Fireball Prayer
-		Tooltip: ""
-	}
+			Head: {
+				DisplayName: Head
+				Tooltip: Eat it
+			}
 
-	HolySpeedPrayer: {
-		DisplayName: Holy Speed Prayer
-		Tooltip: ""
-	}
+			WoodenCrucifix: {
+				DisplayName: Wooden Crucifix
+				Tooltip: Small boost to your stats cause you need it, pussy
+			}
 
-	SmiteOfSabbathPrayer: {
-		DisplayName: Smite Of Sabbath Prayer
-		Tooltip: ""
-	}
+			YamaTounge: {
+				DisplayName: Yama Tounge
+				Tooltip: this shit sucks dont use it
+			}
 
-	IcyTundra: {
-		DisplayName: Winds of Hell
-		Tooltip: Hold <left> to charge up an attack
-	}
+			BloodOfAnointedPrayer: {
+				DisplayName: Blood Of Anointed Prayer
+				Tooltip: Heals you I think
+			}
 
-	NjorsStaff: {
-		DisplayName: Scepter of Cocytus
-		Tooltip: Hold <right> to charge up an attack
-	}
+			CommunionPrayer: {
+				DisplayName: Communion Prayer
+				Tooltip: Feeds yo hungry, fat ass
+			}
 
-	IceSword: {
-		DisplayName: Ice Sword
-		Tooltip: The longer you swing the stronger the blade gets
-	}
+			FireballPrayer: {
+				DisplayName: Fireball Prayer
+				Tooltip: Shoots a big ass ball of fire
+			}
 
-	FangedDeceiver: {
-		DisplayName: Fanged Deceiver
-		Tooltip: Shoots fangs around the player after 6 shots
-	}
+			HolySpeedPrayer: {
+				DisplayName: Holy Speed Prayer
+				Tooltip: Makes you shoot faster...not that you need it
+			}
 
-	SpiderNeckless: {
-		DisplayName: Spider Neckless
-		Tooltip:
-			'''
-			All attacks inflict venom
-			Fangs shoot out of the player when hurt
-			'''
-	}
+			SmiteOfSabbathPrayer: {
+				DisplayName: Smite Of Sabbath Prayer
+				Tooltip: this shit sucks dont use it
+			}
 
-	StaffofSpiderEye: {
-		DisplayName: Spider Eye Staff
-		Tooltip: ""
-	}
+			PrayerTest: {
+				DisplayName: Prayer Test
+				Tooltip: DEVELOPMENT ITEM, DONT USE IT
+			}
 
-	WebTome: {
-		DisplayName: Web Tome
-		Tooltip: ""
-	}
+			ForgottenFrost: {
+				DisplayName: Forgotten Frost
+				Tooltip: Summons ice shards around cursor
+			}
 
-	PlaceItem: {
-		DisplayName: Place Item
-		Tooltip: ""
-	}
+			NjorsStaff: {
+				DisplayName: Njors Staff
+				Tooltip: ""
+			}
 
-	SaveItem: {
-		DisplayName: Save Item
-		Tooltip: ""
-	}
+			IceSword: {
+				DisplayName: Ice Sword
+				Tooltip: ""
+			}
 
-	Titania: {
-		Tooltip: ""
-		DisplayName: Titania
-	}
+			FangedDeceiver: {
+				DisplayName: Fanged Deceiver
+				Tooltip: ""
+			}
 
-	FlamesoftheDamned: {
-		Tooltip: ""
-		DisplayName: Flames of the Damned
-	}
+			SpiderNeckless: {
+				DisplayName: Spider Neckless
+				Tooltip: ""
+			}
 
-	BloodoftheLamb: {
-		DisplayName: Bloodofthe Lamb
-		Tooltip: ""
-	}
+			StaffofSpiderEye: {
+				DisplayName: Staffof Spider Eye
+				Tooltip: ""
+			}
 
-	LoyalLens: {
-		DisplayName: Loyal Lens
-		Tooltip: ""
-	}
+			WebTome: {
+				DisplayName: Web Tome
+				Tooltip: Shoots cobwebs
+			}
 
-	EvilEye: {
-		Tooltip: ""
-		DisplayName: Evil Eye
-	}
+			PlaceItem: {
+				DisplayName: Place Item
+				Tooltip: ""
+			}
 
-	WoodenCrucifix: {
-		Tooltip: ""
-		DisplayName: Wooden Crucifix
-	}
-
-	YamaTounge: {
-		DisplayName: Yama Tounge
-		Tooltip: ""
-	}
-
-	FruitOfTheGarden: {
-		DisplayName: Fruit of the Garden
-		Tooltip: You gain 50 life after each boss you beat
+			SaveItem: {
+				DisplayName: Save Item
+				Tooltip: ""
+			}
+		}
 	}
 }
 
