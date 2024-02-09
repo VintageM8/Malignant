@@ -106,6 +106,7 @@ Mods: {
 			LightningF.DisplayName: Lightning F
 			TitaniaThrow.DisplayName: Titania Throw
 			BaseFang.DisplayName: Base Fang
+			ChivalrousMirror.DisplayName: Chivalrous Mirror
 		}
 
 		NPCs: {
@@ -456,6 +457,11 @@ Mods: {
 
 			MirrorPrayer: {
 				DisplayName: Mirror Prayer
+				Tooltip: ""
+			}
+
+			ChivalrousMirrorPrayer: {
+				DisplayName: Chivalrous Mirror Prayer
 				Tooltip: ""
 			}
 		}

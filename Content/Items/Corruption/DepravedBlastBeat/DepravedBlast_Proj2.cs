@@ -43,7 +43,7 @@ namespace Malignant.Content.Items.Corruption.DepravedBlastBeat
         public override void Kill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, Projectile.position);
-            CameraSystem.ScreenShakeAmount = 5f;
+            //CameraSystem.ScreenShakeAmount = 5f;
             Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<CorruptVortex>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
             for (int k = 0; k < 20; k++)

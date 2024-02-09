@@ -48,7 +48,7 @@ namespace Malignant.Content.Items.Prayer.SmiteofSabbath
 
             Projectile.Center = spawnPosition;
 
-            Projectile.scale += 0.02f;
+            Projectile.scale += 0.03f;
             Projectile.Size += new Vector2(10f);
             Projectile.alpha += 10;
 
