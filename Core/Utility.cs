@@ -72,6 +72,8 @@ namespace Malignant.Core
             return baseVel;
         }
 
+       
+
         public static Vector2 GetInventoryPosition(Vector2 position, Rectangle frame, Vector2 origin, float scale)
         {
             return position + (((frame.Size() / 2f) - origin) * scale * Main.inventoryScale) + new Vector2(1.5f, 1.5f);

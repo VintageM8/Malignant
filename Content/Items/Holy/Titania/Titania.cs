@@ -7,6 +7,7 @@ using Malignant.Content.Projectiles;
 using System;
 using Microsoft.Xna.Framework.Graphics;
 using Malignant.Content.Buffs;
+using Malignant.Content.Items.Holy.CrucifixConstructer;
 
 namespace Malignant.Content.Items.Holy.Titania
 {
@@ -29,8 +30,33 @@ namespace Malignant.Content.Items.Holy.Titania
             Item.autoReuse = true;
             Item.crit = 4;
         }
+        public override bool CanUseItem(Player Player)
+        {
+            if (Player.altFunctionUse == 2)
+            {
+                Item.useStyle = ItemUseStyleID.Shoot;
+                Item.useTime = 15;
+                Item.useAnimation = 15;
+                Item.shootSpeed = 10f;
+                Item.noUseGraphic = true;
+                Item.shoot = ModContent.ProjectileType<TitaniaThrow>();
+            }
+            else
+            {
+                Item.useTime = 22;
+                Item.useAnimation = 22;
+                Item.useStyle = ItemUseStyleID.Swing;
+                Item.noUseGraphic = false;
+                Item.shoot = ProjectileID.PurificationPowder;
+            }
 
-       public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
+            return base.CanUseItem(Player);
+        }
+        public override bool AltFunctionUse(Player Player)
+        {
+            return true;
+        }
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (MalignantLists.unholyEnemies.Contains(target.type))
             {
@@ -38,6 +64,8 @@ namespace Malignant.Content.Items.Holy.Titania
             }
         }
     }
+
+
 
     public class HolyRune : ModProjectile
     {
