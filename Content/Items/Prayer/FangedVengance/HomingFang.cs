@@ -1,84 +1,77 @@
-﻿using Malignant.Core;
+﻿using Malignant.Common.Helper;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Malignant.Common.Helper;
-using Malignant.Content.Projectiles;
 
 namespace Malignant.Content.Items.Prayer.FangedVengance
 {
     public class HomingFang : ModProjectile
     {
-        public override string Texture => "Malignant/Content/Items/Spider/SpiderNeckless/SpiderFangProjectile";
-
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[Type] = 20;
-            ProjectileID.Sets.TrailingMode[Type] = 2;
+            ProjectileID.Sets.TrailCacheLength[base.Projectile.type] = 15;
+            ProjectileID.Sets.TrailingMode[base.Projectile.type] = 15;
         }
         public override void SetDefaults()
         {
-            Projectile.width = 42;
-            Projectile.height = 32;
-            Projectile.DamageType = DamageClass.Magic;
             Projectile.penetrate = -1;
+            Projectile.friendly = true;
             Projectile.hostile = false;
-            Projectile.friendly = false;
-            Projectile.tileCollide = false;
-            Projectile.timeLeft = 100;
+            Projectile.width = Projectile.height = 16;
+            Projectile.scale = 1f;
+            Projectile.tileCollide = true;
+            Projectile.aiStyle = 0;
+            Projectile.timeLeft = 300;
         }
+
         public override void AI()
         {
-            Player player = Main.player[Projectile.owner];
 
-            if (Projectile.ai[0]++ >= 30 && Projectile.ai[0] <= 240)
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
+            Projectile.velocity *= 0.98f;
+
+            Vector2 move = Vector2.Zero;
+            float distance = 200f;
+            bool target = false;
+            for (int k = 0; k < 200; k++)
             {
-                Projectile.velocity *= 0.9f;
-                Projectile.rotation.SlowRotation(0, (float)Math.PI / 20);
-            }
-            else if (Projectile.owner == player.whoAmI)
-            {
-                if (Projectile.ai[0] < 30) //Moves projectile to the players cursor.
+                if (Main.npc[k].active && !Main.npc[k].dontTakeDamage && !Main.npc[k].friendly && Main.npc[k].lifeMax > 5)
                 {
-                    Projectile.timeLeft = 100;
-                    Projectile.ai[0] = 0;
-                    Projectile.Move(Main.MouseWorld, 10, 10);
-                    if (Projectile.DistanceSQ(Main.MouseWorld) < 60 * 60)
-                        Projectile.ai[0] = 30;
+                    Vector2 newMove = Main.npc[k].Center - Projectile.Center;
+                    float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
+                    if (distanceTo < distance)
+                    {
+                        move = newMove;
+                        distance = distanceTo;
+                        target = true;
+                    }
                 }
-                Projectile.LookByVelocity();
-                Projectile.rotation += Projectile.velocity.Length() / 50 * Projectile.spriteDirection;
             }
-            if (Projectile.ai[0] == 60 && Main.myPlayer == Projectile.owner)
+            if (target)
             {
-                Projectile.ai[1] = 10;
-                //SoundEngine.PlaySound(SoundID. Projectile.position)
+                AdjustMagnitude(ref move);
+                Projectile.velocity = (10 * Projectile.velocity + move) / 11f;
+                AdjustMagnitude(ref Projectile.velocity);
             }
+
         }
 
-        public override void Kill(int timeLeft)
+        private void AdjustMagnitude(ref Vector2 vector)
         {
-            for (int i=0; i < 10; i++)
+            float magnitude = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
+            if (magnitude > 15f)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(16, 16), 0, 0, DustID.Shadowflame);
-                dust.velocity = Main.rand.NextVector2Circular(10, 10);
-                dust.scale = Main.rand.NextFloat(1.5f, 1.9f);
-                dust.alpha = 70 + Main.rand.Next(60);
-                dust.rotation = Main.rand.NextFloat(6.28f);
-            }
-            for (int i = 0; i < 10; i++)
-            {
-                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(16, 16), 0, 0, DustID.Shadowflame);
-                dust.velocity = Main.rand.NextVector2Circular(10, 10);
-                dust.scale = Main.rand.NextFloat(1.5f, 1.9f);
-                dust.alpha = Main.rand.Next(80) + 40;
-                dust.rotation = Main.rand.NextFloat(6.28f);
-
-                Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(25, 25), DustID.Shadowflame).scale = 0.9f;
+                vector *= 15f / magnitude;
             }
         }
+
     }
 }
+
+

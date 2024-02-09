@@ -39,14 +39,6 @@ namespace Malignant.Content.Items.Prayer.SmiteofSabbath
         protected override void OnUseAbility(Player player, EntitySource_PrayerAbility source)
         {
             Projectile.NewProjectile(source, Main.MouseWorld, Main.MouseWorld.DirectionTo(player.Center) * 10, ModContent.ProjectileType<SabbathProj>(), 45, 0f, player.whoAmI);
-
-            for (int i = 0; i < 360; i += 90)
-            {
-                Vector2 SpawnPos = Main.MouseWorld + new Vector2(90).RotatedBy(MathHelper.ToRadians(i));
-                Vector2 Velociry = Main.MouseWorld - SpawnPos;
-                Velociry.Normalize();
-                Projectile.NewProjectile(source, SpawnPos, Velociry * 5, 10, 0, player.whoAmI);
-            }
         }
 
 

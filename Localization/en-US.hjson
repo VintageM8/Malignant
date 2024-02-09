@@ -105,6 +105,7 @@ Mods: {
 			SabbathSmite.DisplayName: Sabbath Smite
 			LightningF.DisplayName: Lightning F
 			TitaniaThrow.DisplayName: Titania Throw
+			BaseFang.DisplayName: Base Fang
 		}
 
 		NPCs: {
@@ -379,13 +380,17 @@ Mods: {
 			}
 
 			HolySpeedPrayer: {
-				DisplayName: Holy Speed Prayer
-				Tooltip: Makes you shoot faster...not that you need it
+				DisplayName: Tooltip: Makes you shoot faster...not that you need it
+				Tooltip: ""
 			}
 
 			SmiteOfSabbathPrayer: {
-				DisplayName: Smite Of Sabbath Prayer
-				Tooltip: this shit sucks dont use it
+				DisplayName: Smite of the Sabbath
+				Tooltip:
+					'''
+					Inferus! Mutter this relics holy prayers to
+					summon a blazing fireball to eztungish any Wretched
+					'''
 			}
 
 			PrayerTest: {
@@ -409,8 +414,8 @@ Mods: {
 			}
 
 			FangedDeceiver: {
-				DisplayName: Fanged Deceiver
-				Tooltip: ""
+				DisplayName: Fanged Blunderbuss
+				Tooltip: Every 5th shot a circle of fangs burst out of the player
 			}
 
 			SpiderNeckless: {
@@ -439,8 +444,14 @@ Mods: {
 			}
 
 			FangedVengance: {
-				DisplayName: Fanged Vengance
-				Tooltip: ""
+				DisplayName: Fangs of a Deceiver
+				Tooltip:
+					'''
+					 Wisper this reclics gluttonous prayer to summon a fang pulled from the 
+					 very mouth of a temtatious deciver. 
+					 This fang goes to your cursor and splits into 3 smaller homing fangs.
+					 
+					'''
 			}
 
 			MirrorPrayer: {

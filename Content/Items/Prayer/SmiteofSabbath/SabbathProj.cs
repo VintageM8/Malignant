@@ -29,16 +29,41 @@ namespace Malignant.Content.Items.Prayer.SmiteofSabbath
         }
         public override void AI()
         {
-            Dust dust;
-            Vector2 position = Projectile.Center;
-            dust = Main.dust[Terraria.Dust.NewDust(position, 20, 20, DustID.Web, 0, 0, 0, new Color(255, 255, 255), 0.5f)];
-            Projectile.rotation += 0.5f;
-            Projectile.velocity *= 0.95f;
+            Player player = Main.player[Projectile.owner];
+
+            if (Projectile.ai[0]++ >= 30 && Projectile.ai[0] <= 240)
+            {
+                Projectile.velocity *= 0.9f;
+                Projectile.rotation.SlowRotation(0, (float)Math.PI / 20);
+            }
+            else if (Projectile.owner == player.whoAmI)
+            {
+                if (Projectile.ai[0] < 60) //Moves projectile to the players cursor.
+                {
+                    Projectile.timeLeft = 60;
+                    Projectile.ai[0] = 0;
+                    Projectile.Move(Main.MouseWorld, 10, 10);
+                    if (Projectile.DistanceSQ(Main.MouseWorld) < 60 * 60)
+                        Projectile.ai[0] = 30;
+                }
+                Projectile.LookByVelocity();
+                Projectile.rotation += Projectile.velocity.Length() / 50 * Projectile.spriteDirection;
+            }
+            if (Projectile.ai[0] == 60 && Main.myPlayer == Projectile.owner)
+            {
+                Projectile.ai[1] = 10;
+                //SoundEngine.PlaySound(SoundID. Projectile.position)
+            }
         }
+    
 
 
         public override void Kill(int timeLeft)
         {
+            for (int k = 0; k < 20; k++)
+            {
+                Dust.NewDustPerfect(Projectile.Center, DustID.GemRuby, Main.rand.NextVector2Circular(1f, 1f) * 10, 0, default, 2f).noGravity = true;
+            }
 
             Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<SabbathSmite>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
         }

@@ -38,7 +38,7 @@ namespace Malignant.Content.Items.Prayer.FangedVengance
         {
             for (int i = 0; i < 3; i++)
             {
-                Projectile.NewProjectile(source, player.Center, player.Center.DirectionTo(Main.MouseWorld) * 21, ModContent.ProjectileType<HomingFang>(), 45, 0f, player.whoAmI);
+                Projectile.NewProjectile(source, player.Center, player.Center.DirectionTo(Main.MouseWorld) * 21, ModContent.ProjectileType<BaseFang>(), 45, 0f, player.whoAmI);
             }
         }
 
