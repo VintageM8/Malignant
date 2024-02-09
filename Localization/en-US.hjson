@@ -100,6 +100,11 @@ Mods: {
 			SpiderEyeProj_Two.DisplayName: Spider Eye Proj_ Two
 			SpiderViz.DisplayName: Spider Viz
 			ForgottenFrostProjectile.DisplayName: Forgotten Frost Projectile
+			HomingFang.DisplayName: Homing Fang
+			MirrorProj.DisplayName: Mirror Proj
+			SabbathSmite.DisplayName: Sabbath Smite
+			LightningF.DisplayName: Lightning F
+			TitaniaThrow.DisplayName: Titania Throw
 		}
 
 		NPCs: {
@@ -115,6 +120,7 @@ Mods: {
 			SacraficedSoul.DisplayName: Sacraficed Soul
 			CursedRoller.DisplayName: Cursed Roller
 			CursedOccultist.DisplayName: Cursed Occultist
+			Succy.DisplayName: Succy
 		}
 
 		Buffs: {
@@ -429,6 +435,16 @@ Mods: {
 
 			SaveItem: {
 				DisplayName: Save Item
+				Tooltip: ""
+			}
+
+			FangedVengance: {
+				DisplayName: Fanged Vengance
+				Tooltip: ""
+			}
+
+			MirrorPrayer: {
+				DisplayName: Mirror Prayer
 				Tooltip: ""
 			}
 		}

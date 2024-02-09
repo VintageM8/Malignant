@@ -1,4 +1,4 @@
 displayName = Malignant
-author = Vintage & people
+author = Malignant Dev Team
 modReferences = ParticleLibrary
 version = 0.1.0.1

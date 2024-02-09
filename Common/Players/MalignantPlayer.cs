@@ -10,6 +10,7 @@ namespace Malignant.Common.Players
 {
     public class MalignantPlayer : ModPlayer
     {
+
         public Vector2[] PreviousVelocity = new Vector2[30];
 
         //Orbiting

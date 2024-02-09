@@ -12,13 +12,6 @@ namespace Malignant.Content.Items.Holy.CrucifixConstructer
 {
     public class CrucfixConstructer : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            //DisplayName.SetDefault("Crucifix Constructer");
-            //Tooltip.SetDefault("[c/eeff00f:Combo Weapon:] Hammer slams down then gets thrown at the nearest foe " +
-            //"\nHas chance to stick crucifixs in your foe" +
-            //"\nEach time the thrown hammer hits a crucifix, the crucifix deals damage.");
-        }
 
         public int AttackCounter = 1;
         public int combowombo = 0;
