@@ -123,6 +123,29 @@ Mods: {
 			CursedRoller.DisplayName: Cursed Roller
 			CursedOccultist.DisplayName: Cursed Occultist
 			Succy.DisplayName: Succy
+
+			Priest: {
+				DisplayName: Priest
+
+				TownNPCMood: {
+					Content: I am content.
+					NoHome: I hate not having a home.
+					FarFromHome: I am too far from home.
+					LoveSpace: I love having so much space.
+					DislikeCrowded: I dislike how crowded I am.
+					HateCrowded: I hate how crowded I am.
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+					LoveBiome: I love {BiomeName}.
+					LikeBiome: I like {BiomeName}.
+					DislikeBiome: I dislike {BiomeName}.
+					HateBiome: I hate {BiomeName}.
+					LoveNPC: I love {NPCName}.
+					LikeNPC: I like {NPCName}.
+					DislikeNPC: I dislike {NPCName}.
+					HateNPC: I hate {NPCName}.
+				}
+			}
 		}
 
 		Buffs: {
@@ -462,6 +485,11 @@ Mods: {
 
 			ChivalrousMirrorPrayer: {
 				DisplayName: Chivalrous Mirror Prayer
+				Tooltip: ""
+			}
+
+			PrayerToken: {
+				DisplayName: Prayer Token
 				Tooltip: ""
 			}
 		}
