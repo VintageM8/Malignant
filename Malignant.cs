@@ -1,5 +1,6 @@
 using Malignant.Common;
 using Malignant.Common.Systems;
+using Terraria.GameContent.UI;
 using Terraria.ModLoader;
 
 namespace Malignant
@@ -9,6 +10,8 @@ namespace Malignant
         public static Malignant Mod { get; set; }
         public static Malignant Instance { get; set; }
 
+        public static int PrayerToken;
+
         public Malignant()
         {
             Instance = this;
@@ -17,6 +20,8 @@ namespace Malignant
 
         public override void Load()
         {
+            PrayerToken = CustomCurrencyManager.RegisterCurrency(new Content.Currencies.PrayerTokenCurrency(ModContent.ItemType<Content.Items.Misc.PrayerToken>(), 999L, "Mods.Malignant.Currencies.PrayerTokenCurrency"));
+
             Instance = this;
             MalignantLists.LoadLists();
             PrayerContent.Load(Mod);

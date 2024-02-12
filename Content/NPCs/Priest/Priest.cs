@@ -141,7 +141,8 @@ namespace Malignant.Content.NPCs.Priest
         public override void AddShops()
         {
             var npcShop = new NPCShop(Type)
-            .Add<FangedVengance>();
+             .Add(new Item(ModContent.ItemType<FangedVengance>()) { shopCustomPrice = 30, shopSpecialCurrency = Malignant.PrayerToken });
+
 
             npcShop.Register();
         }
