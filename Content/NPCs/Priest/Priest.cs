@@ -13,6 +13,7 @@ using Terraria.GameContent.Personalities;
 using System.Collections.Generic;
 using ReLogic.Content;
 using Malignant.Content.Items.Prayer.FangedVengance;
+using System.Linq;
 
 namespace Malignant.Content.NPCs.Priest
 {
@@ -97,6 +98,26 @@ namespace Malignant.Content.NPCs.Priest
             return false;
         }
 
+        public override bool CanTownNPCSpawn(int numTownNPCs)
+        {
+            for (int k = 0; k < Main.maxPlayers; k++)
+            {
+                Player player = Main.player[k];
+                if (!player.active)
+                {
+                    continue;
+                }
+
+                //Basically when a boss is defeted (prayer tokens drop from bosses)
+                if (player.inventory.Any(item => item.type == ModContent.ItemType<PrayerToken>()))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
@@ -109,9 +130,9 @@ namespace Malignant.Content.NPCs.Priest
         }
         public override List<string> SetNPCNameList()
         {
-            return new List<string> { "Happins", "Tenvon", "Okvot" };
+            return new List<string> { "Abram" };
         }
-
+        //Button layout kinda fucked but it works
         public override void SetChatButtons(ref string button, ref string button2)
         {
             button2 = Language.GetTextValue("LegacyInterface.28");
@@ -142,8 +163,6 @@ namespace Malignant.Content.NPCs.Priest
         {
             var npcShop = new NPCShop(Type)
              .Add(new Item(ModContent.ItemType<FangedVengance>()) { shopCustomPrice = 30, shopSpecialCurrency = Malignant.PrayerToken });
-
-
             npcShop.Register();
         }
     }
