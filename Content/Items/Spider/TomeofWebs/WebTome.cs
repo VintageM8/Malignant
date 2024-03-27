@@ -2,6 +2,8 @@
 using Terraria.Localization;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework;
 
 namespace Malignant.Content.Items.Spider.TomeofWebs
 {
@@ -32,6 +34,13 @@ namespace Malignant.Content.Items.Spider.TomeofWebs
             Item.shoot = ModContent.ProjectileType<CobwebProj>();
             Item.shootSpeed = 22f;
             Item.channel = true;
+        }
+
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<CobwebProj>()] < 4)
+                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<CobwebProj>(), damage, knockback, player.whoAmI);
+            return base.Shoot(player, source, position, velocity, type, damage, knockback);
         }
     }
 }

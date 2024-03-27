@@ -15,10 +15,10 @@ using ReLogic.Content;
 using Malignant.Content.Items.Prayer.FangedVengance;
 using System.Linq;
 
-namespace Malignant.Content.NPCs.Priest
+namespace Malignant.Content.NPCs.Clerics
 {
     [AutoloadHead]
-    public class Priest : ModNPC
+    public class Abram : ModNPC
     {
         public override void SetStaticDefaults()
         {
